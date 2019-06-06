@@ -31,6 +31,7 @@ app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 
 app.listen(port, () => {
+  console.log('its working');
   debug(`listening at server ${chalk.green(port)}`);
 });
 
