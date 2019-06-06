@@ -6,7 +6,8 @@
     "start": "concurrently \"DEBUG=app,app:* nodemon app.js\"  \"npm run frontend\"",
     "lint": "eslint app.js",
     "frontend-install": "npm install --prefix client",
-    "frontend": "npm start --prefix client"
+    "frontend": "npm start --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "axios": "^0.18.0",

@@ -8,11 +8,16 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
 // replace the uri string with your connection string.
 const port = process.env.PORT || 3000;
 const app = express();
-process.env.NODE_ENV;
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('frontend/build'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+}
 
 app.use(morgan('tiny'));
 app.use(cors());
