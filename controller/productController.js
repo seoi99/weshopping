@@ -1,6 +1,6 @@
-const { MongoClient, ObjectID } = require('mongodb');
+const { MongoClient } = require('mongodb');
+const { ObjectID } = require('mongodb');
 const debug = require('debug')('app:productController');
-const request = require('request');
 
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
@@ -11,6 +11,7 @@ function productController(priceAPI) {
       let client;
       try {
         debug('hit');
+        client = await MongoClient.connect(uri);
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const products = await db.collection('product').find({}).toArray();
