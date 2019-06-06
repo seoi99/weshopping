@@ -94,11 +94,11 @@ function productController(priceAPI) {
       let client;
       try {
         debug(name);
-        client = await MongoClient.connect(uri);
+        client = await MongoClient.connect('mongodb://admin:admin@wecommerce-shard-00-00-uadte.mongodb.net:27017,wecommerce-shard-00-01-uadte.mongodb.net:27017,wecommerce-shard-00-02-uadte.mongodb.net:27017/test?ssl=true&replicaSet=wecommerce-shard-0&authSource=admin&retryWrites=true&w=majority');
         debug('waiting for connection');
         debug(dbname);
         debug(uri);
-        const db = await client.db(dbname);
+        const db = await client.db('wecom-dev');
         debug('db connected');
         productLists = await db.collection('product').find({ name: new RegExp(name, 'i') }).toArray();
         debug('connected');
@@ -142,7 +142,7 @@ function productController(priceAPI) {
       let client;
       try {
         client = await MongoClient.connect(uri);
-        const db = await client.db('wecom-dev');
+        const db = await client.db(dbname);
         product = await db.collection('product').findOne({ id });
         if (!(product.image_url)) {
           const details = await priceAPI.getSearchResult('product', 'id', id);
