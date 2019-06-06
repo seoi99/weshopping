@@ -88,18 +88,21 @@ function productController(priceAPI) {
 
   function searchProducts(req, res) {
     const { name } = req.query;
-    debug(process.env);
-    debug(dbname);
-    debug(uri);
+
     (async function go() {
       let productLists;
       let client;
       try {
         debug(name);
         client = await MongoClient.connect(uri);
+        debug('waiting for connection');
+        debug(dbname);
+        debug(uri);
         const db = await client.db(dbname);
-
+        debug('db connected');
         productLists = await db.collection('product').find({ name: new RegExp(name, 'i') }).toArray();
+        debug('connected');
+        debug(productLists);
         // it list does not exist in my mongodb
         if (productLists.length === 0) {
           // request to priceAPI to fetch info
