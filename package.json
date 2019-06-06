@@ -6,7 +6,7 @@
     "start": "concurrently \"DEBUG=app,app:* nodemon app.js\"  \"npm run frontend\"",
     "lint": "eslint app.js",
     "frontend-install": "npm install --prefix client",
-    "frontend": "npm start --prefix client",
+    "frontend": "npm start --prefix client"
   },
   "dependencies": {
     "axios": "^0.18.0",
