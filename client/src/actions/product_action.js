@@ -60,7 +60,7 @@ export const showloading = () => (
 
 
 export const fetchAllProducts = () => (dispatch) => {
-    const url = 'http://localhost:4000/products'
+    const url = '/products'
     fetch(url)
         .then(response => response.json())
         .then(products => dispatch(receiveAllProducts(products)))
@@ -68,7 +68,7 @@ export const fetchAllProducts = () => (dispatch) => {
 }
 
 export const fetchproduct = (id) => (dispatch) => {
-    const url = `http://localhost:4000/products/${id}`
+    const url = `/products/${id}`
     fetch(url)
         .then(response => response.json())
         .then(products => dispatch(receiveAllProducts(products)))
@@ -76,7 +76,7 @@ export const fetchproduct = (id) => (dispatch) => {
 }
 
 export const createProduct = (product) => (dispatch) => {
-    const url = 'http://localhost:4000/products/create'
+    const url = '/products/create'
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(product),
@@ -89,7 +89,7 @@ export const createProduct = (product) => (dispatch) => {
 }
 
 export const deleteProduct = (id) => (dispatch) => {
-    const url = 'http://localhost:4000/products/delete'
+    const url = '/products/delete'
     fetch(url, {
         method: 'DELETE',
         body: JSON.stringify({id}),
@@ -105,7 +105,7 @@ export const deleteProduct = (id) => (dispatch) => {
 export const searchByProducts = (name) => (dispatch) => {
     dispatch(clearError())
     dispatch(indexloading())
-    const url = `http://localhost:4000/products/search?name=${name}`;
+    const url = `/products/search?name=${name}`;
     fetch(url)
         .then(response => response.json())
         .then(products => {
@@ -117,7 +117,7 @@ export const searchByProducts = (name) => (dispatch) => {
 export const searchById = (id) => (dispatch) => {
     dispatch(clearError())
     dispatch(showloading())
-    const url = `http://localhost:4000/products/search/${id}`;
+    const url = `/products/search/${id}`;
     fetch(url)
         .then(response => response.json())
         .then(product =>{
