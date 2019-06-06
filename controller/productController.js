@@ -87,6 +87,7 @@ function productController(priceAPI) {
     const { name } = req.query;
     debug(process.env);
     debug(dbname);
+    debug(uri);
     (async function go() {
       let productLists;
       let client;

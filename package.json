@@ -7,7 +7,6 @@
     "lint": "eslint app.js",
     "frontend-install": "npm install --prefix client",
     "frontend": "npm start --prefix client",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "dependencies": {
     "axios": "^0.18.0",

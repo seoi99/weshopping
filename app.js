@@ -32,6 +32,8 @@ app.use('/orders', orderRouter);
 
 app.listen(port, () => {
   debug(process.env.PRICE_API);
+  debug(typeof process.env.MONGO_DB_URI);
+  debug(typeof process.env.DB_NAME);
   debug(`listening at server ${chalk.green(port)}`);
 });
 
