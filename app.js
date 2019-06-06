@@ -31,7 +31,7 @@ app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 
 app.listen(port, () => {
-  console.log('its working');
+  debug(process.env.PRICE_API);
   debug(`listening at server ${chalk.green(port)}`);
 });
 
