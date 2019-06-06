@@ -142,7 +142,7 @@ function productController(priceAPI) {
       let client;
       try {
         client = await MongoClient.connect(uri);
-        const db = await client.db(dbname);
+        const db = await client.db('wecom-dev');
         product = await db.collection('product').findOne({ id });
         if (!(product.image_url)) {
           const details = await priceAPI.getSearchResult('product', 'id', id);
