@@ -5,6 +5,8 @@ const debug = require('debug')('app:productController');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 
+debug(uri);
+debug(dbname);
 function productController(priceAPI) {
   function getIndex(req, res) {
     (async function mongo() {

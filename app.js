@@ -18,13 +18,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(session({ secret: 'Library' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const adminRouter = require('./routes/adminRoutes')();
 const productRouter = require('./routes/productRoutes')();
 const orderRouter = require('./routes/orderRoutes')();
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 app.use('/admin', adminRouter);
 app.use('/products', productRouter);
@@ -36,11 +41,3 @@ app.listen(port, () => {
   debug(typeof process.env.DB_NAME);
   debug(`listening at server ${chalk.green(port)}`);
 });
-
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
