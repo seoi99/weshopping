@@ -16,9 +16,8 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 const adminRouter = require('./routes/adminRoutes')();
 const productRouter = require('./routes/productRoutes')();
@@ -36,8 +35,5 @@ app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 
 app.listen(port, () => {
-  debug(process.env.PRICE_API);
-  debug(typeof process.env.MONGO_DB_URI);
-  debug(typeof process.env.DB_NAME);
   debug(`listening at server ${chalk.green(port)}`);
 });

@@ -94,7 +94,7 @@ function productController(priceAPI) {
       let client;
       try {
         debug(name);
-        client = await MongoClient.connect('mongodb://admin:admin@wecommerce-shard-00-00-uadte.mongodb.net:27017,wecommerce-shard-00-01-uadte.mongodb.net:27017,wecommerce-shard-00-02-uadte.mongodb.net:27017/test?ssl=true&replicaSet=wecommerce-shard-0&authSource=admin&retryWrites=true&w=majority');
+        client = await MongoClient.connect(uri);
         debug('waiting for connection');
         debug(typeof dbname);
         debug(dbname === 'wecom-dev');
@@ -102,7 +102,6 @@ function productController(priceAPI) {
         debug('db connected');
         productLists = await db.collection('product').find({ name: new RegExp(name, 'i') }).toArray();
         debug('connected');
-        debug(productLists);
         // it list does not exist in my mongodb
         if (productLists.length === 0) {
           // request to priceAPI to fetch info
