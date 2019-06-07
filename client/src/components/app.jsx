@@ -11,7 +11,7 @@ const App = () => (
     <div>
         <Route exact path='/products' component={ProductIndexContainer}/>
         <Route exact path='/products/form' component={ProductForm}/>
-        <Route exact path='/checkout' component={Cart}/>
+        <Route exact path='/' component={Main}/>
     </div>
 )
 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ProductShow from './product_show';
 import SearchBar from '../searchBar/search_bar_container';
-
+import '../../style/index.css'
 const ProductIndex = ({products, error, loading, filterOptions, searchById}) => {
 
     const items = products.map((item, i) => {
         return (
-            <div  className="col-md-3 border p-1" key={i}>
+            <div  className="row p-1" key={i}>
                 <ProductShow item={item}/>
             </div>
         )
@@ -25,11 +25,12 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
     return (
         <div className="container">
             <div className="row p-3">
-                <div className="col-md-6">
-                    <SearchBar />
+                <p className="col-md-2"><span className="title-1">We</span><span className="title-2">Shopping</span></p>
+                <div className="col-md-7">
+                    <SearchBar comp="index"/>
                 </div>
                 <div className="dropdown col-md-3 m-r">
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" className="btn dropdown-toggle bg-white border border-light" data-toggle="dropdown">
                             Sort By:
                     </button>
                     <div className="dropdown-menu">
@@ -39,14 +40,10 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
                     </div>
                 </div>
             </div>
-            <div className="progress">
-                <div className="progress-bar progress-check"></div>
-            </div>
 
-            <div className="row">
-                {modal}
-                {searchError}
-            </div>
+
+            {modal}
+            {searchError}
         </div>
     )
 }

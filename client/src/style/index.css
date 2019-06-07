@@ -1,0 +1,50 @@
+
+.index-header {
+  color: orange;
+  text-align: center;
+  margin-top: 2em;
+}
+
+.title-1 {
+    color: black;
+    background-color: green;
+    padding: 0.1rem;
+    border-radius: 50%;
+}
+
+.title-2 {
+  color: orange;
+}
+
+.index-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.index-search {
+  background-color: transparent;
+  height: min-content;
+  border: none;
+  max-width: 0px;
+  display: hidden;
+}
+
+.index-search:focus {
+  outline: none;
+}
+.index-search::before {
+  content: '\f002';
+  font-family: FontAwesome;
+  margin-left: -4rem;
+}
+
+.index-input {
+
+  margin-bottom: 2em;
+  border-radius: 1rem;
+
+}
+
+input:focus {
+    outline: none;
+}

@@ -4,7 +4,7 @@ import { fetchAllProducts, searchByProducts, filterOptions} from '../../actions/
 import SearchBar from './search_bar'
 
 
-const mdp = dispatch => {
+const mdp = (dispatch, ownProps) => {
     return {
         fetchAll: () => dispatch(fetchAllProducts()),
         searchByProducts: (value) => dispatch(searchByProducts(value)),

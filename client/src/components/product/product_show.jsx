@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchById } from '../../actions/product_action';
-
+import '../../style/product_show.css'
 
 const ProductShow  = ({product, searchById, error, loading}) => {
 
@@ -12,6 +12,7 @@ const ProductShow  = ({product, searchById, error, loading}) => {
     ) : (
         <div>
             <img src={product.image_url} alt={product.name} />
+            <p>Description</p>
             <p>{product.description}</p>
         </div>
     )
@@ -19,7 +20,6 @@ const ProductShow  = ({product, searchById, error, loading}) => {
     const modal = loading ? (
         <div className="d-flex flex-column">
             <div className="spinner-border text-primary align-self-center" role="status">
-                <p></p>
             </div>
             <p>Fetching Image From Price API</p>
         </div>
@@ -29,25 +29,40 @@ const ProductShow  = ({product, searchById, error, loading}) => {
         </div>
     )
 
+    const rateToStar = Array.from(Array(5).keys()).map((val, idx) => {
+        if (idx * 20 >= product.review_rating) {
+            return <span className="fa fa-star text-white"></span>
+        } else {
+            return <span className="fa fa-star text-warning"></span>
+        }
+    });
+
+    const numOfReview = product.review_count ? `${product.review_count} reviews` : "No review Yet"
+
     return (
-        <div key={product._id}>
+        <div className="col-md-9 p-2" key={product._id}>
             <a href={product.url} className="text-primary">{product.name}</a>
-            <p>${product.price} from <a href={product.shop_url}>{product.shop_name}</a> </p>
-            <p>{product.review_rating}</p>
-            <button type="button" className="btn btn-primary" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
-                onClick={() => searchById(product.id)}>
+            <p className="show-shop">${product.price} from <a href={product.shop_url}>{product.shop_name}</a></p>
+            <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
+            <div className="show-detail-button">
+                <button type="button" className="btn btn-primary" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
+                    onClick={() => searchById(product.id)}>
                     Details
-            </button>
+                </button>
+            </div>
 
             <div className="modal fade" id={`exampleModal-${product.id}`} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
+                    <div class="modal-header text-warning">
+                        <h5 className="modal-title">{product.name}</h5>
+                    </div>
                     <div className="modal-content">
                         <div className="modal-body" key={product._id}>
                             {modal}
-                            <p>${product.price} from <a href={product.shop_url}>{product.shop_name}</a> </p>
+                            <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
+                            <p className="show-shop">${product.price} from <a href={product.shop_url}>{product.shop_name}</a></p>
+                            <p className="to-store-p"><a href={product.url} className="to-store">To Store</a></p>
                         </div>
-
-
                     </div>
                 </div>
             </div>

@@ -93,13 +93,9 @@ function productController(priceAPI) {
       let productLists;
       let client;
       try {
-        debug(name);
         client = await MongoClient.connect(uri);
         debug('waiting for connection');
-        debug(typeof dbname);
-        debug(dbname === 'wecom-dev');
-        const db = await client.db('wecom-dev');
-        debug('db connected');
+        const db = await client.db(dbname);
         productLists = await db.collection('product').find({ name: new RegExp(name, 'i') }).toArray();
         debug('connected');
         // it list does not exist in my mongodb

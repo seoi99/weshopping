@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { withRouter } from 'react-router-dom';
+import '../../style/main.css'
 class SearchBar extends Component {
     constructor(props) {
         super(props)
@@ -17,6 +18,9 @@ class SearchBar extends Component {
         } else {
             this.props.searchByProducts(this.state.value)
         }
+        if (this.props.comp === "main") {
+            return this.props.history.push('/products')
+        }
     }
 
     handleChange(e) {
@@ -24,14 +28,16 @@ class SearchBar extends Component {
     }
 
     render() {
+        const buttonName = this.props.comp === "main" ? "Search" : ""
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className={`${this.props.comp}-form`}>
                 <input type="search"
-                    onChange= {this.handleChange} className="md-9"/>
-                <button className="md-3">Search</button>
+                    className={`col-sm-9 ${this.props.comp}-input`}
+                    onChange= {this.handleChange}/>
+                <button className={`col-sm-3 col-lg-2 ${this.props.comp}-search`}>{buttonName}</button>
             </form>
         )
     }
 }
 
-export default SearchBar
+export default withRouter(SearchBar)

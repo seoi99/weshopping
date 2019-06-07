@@ -1,0 +1,41 @@
+
+.fa-star {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+.show-shop {
+  text-align: right;
+}
+
+.show-rating {
+  text-align: right;
+}
+
+.show-detail-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.to-store-p {
+  text-align: right;
+}
+
+.to-store {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  padding: 3px 6px;
+  -webkit-transition: color 1s;
+  -moz-transition:    color 1s;
+  -ms-transition:     color 1s;
+  -o-transition:      color 1s;
+  transition:         color 1s;
+}
+.to-store:hover {
+  text-decoration: none;
+  background-color: green;
+  color: white;
+
+}
