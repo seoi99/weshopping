@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import ProductShow from './product_show';
 import SearchBar from '../searchBar/search_bar_container';
 import '../../style/index.css'
+import logo from '../../style/logo.png'
+import { Link } from 'react-router-dom'
 const ProductIndex = ({products, error, loading, filterOptions, searchById}) => {
 
     const items = products.map((item, i) => {
         return (
             <div  className="row p-1" key={i}>
-                <ProductShow item={item}/>
+                <ProductShow item={item} index={i + 1}/>
             </div>
         )
     })
@@ -24,13 +26,13 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
     )
     return (
         <div className="container">
-            <div className="row p-3">
-                <p className="col-md-2"><span className="title-1">We</span><span className="title-2">Shopping</span></p>
+            <div className="row p-3 justify-content-around header">
+                <Link to="/"><img className="col-md-2 logo" src={logo} alt="logo"/></Link>
                 <div className="col-md-7">
                     <SearchBar comp="index"/>
                 </div>
-                <div className="dropdown col-md-3 m-r">
-                    <button type="button" className="btn dropdown-toggle bg-white border border-light" data-toggle="dropdown">
+                <div className="dropdown col-md-3 m-r p-2">
+                    <button type="button" className="btn dropdown-toggle bg-white border" data-toggle="dropdown">
                             Sort By:
                     </button>
                     <div className="dropdown-menu">

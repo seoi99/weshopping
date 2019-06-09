@@ -38,8 +38,16 @@ function priceAPI() {
           debug(response.data);
           clearInterval(intervals);
           if (response.data.not_founds === 1) {
-            debug('no data is found');
-            resolve({});
+            if (response.data.key === "id") {
+              filtered = {
+                image_url: "",
+                description: "",
+              }
+              resolve(filtered)
+            } else {
+              debug('no data is found');
+              resolve([]);
+            }
           } else {
             return downloadResult(jobId, resolve);
           }
@@ -78,10 +86,7 @@ function priceAPI() {
             }
             return el;
           });
-        } else if (result === null) {
-          console.log(result);
-          filtered = 'not found';
-        } else {
+        }  else {
           filtered = {
             image_url: result.image_url,
             description: result.description,

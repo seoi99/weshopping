@@ -1,4 +1,17 @@
 
+.show-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.image-container {
+  min-width: 225px;
+  min-height: 200px;
+}
+.show-image {
+  max-width: 200px;
+  max-height: 200px;
+}
 .fa-star {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;

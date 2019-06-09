@@ -5,15 +5,8 @@
   margin-top: 2em;
 }
 
-.title-1 {
-    color: black;
-    background-color: green;
-    padding: 0.1rem;
-    border-radius: 50%;
-}
-
-.title-2 {
-  color: orange;
+.header {
+  align-items: center;
 }
 
 .index-form {
@@ -39,12 +32,15 @@
 }
 
 .index-input {
-
-  margin-bottom: 2em;
   border-radius: 1rem;
-
+  max-width: 500px;
+  min-width:200px;
 }
 
+.logo {
+  height: 100px;
+  max-width: 150px;
+}
 input:focus {
     outline: none;
 }

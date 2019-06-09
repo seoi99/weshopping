@@ -5,8 +5,6 @@ const debug = require('debug')('app:productController');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 
-debug(uri);
-debug(dbname);
 function productController(priceAPI) {
   function getIndex(req, res) {
     (async function mongo() {
@@ -139,7 +137,7 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         product = await db.collection('product').findOne({ id });
-        if (!(product.image_url)) {
+        if (product.image_url === undefined) {
           const details = await priceAPI.getSearchResult('product', 'id', id);
           debug(details);
           if (Object.keys(details).length === 0) {
@@ -148,7 +146,6 @@ function productController(priceAPI) {
           } else {
             const update = await db.collection('product').update({ id }, { $set: details });
             product = await db.collection('product').findOne({ id });
-            debug(product);
             res.json(product);
           }
         } else {
