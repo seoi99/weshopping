@@ -24,6 +24,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
     ) : (
         items
     )
+
     return (
         <div className="container">
             <div className="row p-3 justify-content-around header">
@@ -31,7 +32,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
                 <div className="col-md-7">
                     <SearchBar comp="index"/>
                 </div>
-                <div className="dropdown col-md-3 m-r p-2">
+                <div className="dropdown col-md-2 m-r p-2">
                     <button type="button" className="btn dropdown-toggle bg-white border" data-toggle="dropdown">
                             Sort By:
                     </button>
@@ -41,6 +42,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
                         <button className="dropdown-item" onClick={() => filterOptions("REVIEWS")}> Review Rating </button>
                     </div>
                 </div>
+                <Link to='/favorite' className="col-md-1">Go To Fav</Link>
             </div>
 
 

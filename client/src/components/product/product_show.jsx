@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchById } from '../../actions/product_action';
+import { addToFav , removeFav} from '../../actions/fav_action';
 import '../../style/product_show.css'
 import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
-const ProductShow  = ({product, searchById, error, loading, index}) => {
+const ProductShow  = ({product, searchById, addToFav, error, loading, index, fav, removeFav}) => {
     const searchResult = product.description === undefined ? (
         <div>
             <p>{error}</p>
@@ -43,6 +44,10 @@ const ProductShow  = ({product, searchById, error, loading, index}) => {
     const image = product.image_url ? product.image_url : NoImage;
     const image_url = product.image_url !== undefined ? image : NoPreview;
 
+    const toggleFav = fav === false ? (
+        <button onClick={() => addToFav(product)}>ADD TO FAV</button>)
+        : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
+
     return (
         <div className="col-md-10 p-2 show-container justify-content-between" key={product._id}>
             <div className="image-container">
@@ -53,6 +58,7 @@ const ProductShow  = ({product, searchById, error, loading, index}) => {
                 <p className="show-shop">${product.price} from <a target="_blank" rel="noopener noreferrer" href={product.shop_url}>{product.shop_name}</a></p>
                 <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
                 <div className="show-detail-button">
+                    {toggleFav}
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
                         onClick={() => searchById(product.id)}>
                     Details
@@ -83,13 +89,16 @@ const msp = (state, ownProps) => {
     return {
         product: state.product.items[ownProps.item.id],
         error: state.error,
+        fav: !!state.favList.list[ownProps.item.id],
         loading: state.ui.showLoading,
     }
 }
 
 const mdp = (dispatch) => {
     return {
-        searchById: (id) => dispatch(searchById(id))
+        searchById: (id) => dispatch(searchById(id)),
+        addToFav: (product) => dispatch(addToFav(product)),
+        removeFav: (id) => dispatch(removeFav(id))
     }
 }
 
