@@ -5,7 +5,6 @@ import {
 import ProductIndexContainer from './product/product_index_container';
 import ProductForm from './product/product_form_container';
 import Main from './splash/main';
-import Cart from './order/cart';
 
 const App = () => (
     <div>
