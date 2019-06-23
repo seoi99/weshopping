@@ -12,7 +12,6 @@ function productController(priceAPI) {
       try {
         debug('hit');
         client = await MongoClient.connect(uri);
-        client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const products = await db.collection('product').find({}).toArray();
         debug('products');
