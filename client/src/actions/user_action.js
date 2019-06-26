@@ -16,7 +16,7 @@ export const userError = () => {
 
 
 export const loginUser = () => (dispatch) => {
-    const url = `/auth/google/redirect`;
+    const url = `/auth/google`;
     fetch(url)
         .then(response => {
           console.log(response);

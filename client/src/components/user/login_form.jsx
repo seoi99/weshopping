@@ -4,7 +4,7 @@ import { loginUser } from '../../actions/user_action';
 
 const LoginForm = ({loginUser}) => {
     return(
-        <a href="http://localhost:4000/auth/google">Google+</a>
+        <a href="/auth/google">Google+</a>
     )
 }
 

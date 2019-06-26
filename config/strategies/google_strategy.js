@@ -13,34 +13,32 @@ function googleStrategy() {
     clientSecret,
     callbackURL,
   },
-  (token, refreshToken, profile, done) => {
-    let user;
-    (async function findUser() {
+    (async (token, refreshToken, profile, done) => {
       let client;
+      let user;
       try {
-        ans = await 'gg';
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const col = await db.collection('user');
         const userResult = await col.findOne({ googleid: profile.id });
         if (userResult) {
           debug('user is already registered in mongodb');
+          user = userResult;
         } else {
           const newUser = { username: profile.displayName, googleid: profile.id };
+          user = newUser;
           col.insertOne(newUser);
         }
       } catch (error) {
         debug(error);
       }
       client.close();
-    }());
-    debug('return done func');
 
-    return done(null, {
-      profile,
-      token,
-    });
-  }));
+      return done(null, {
+        user,
+        token,
+      });
+    })));
 }
 
 module.exports = googleStrategy;
