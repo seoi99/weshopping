@@ -4,7 +4,7 @@ import { loginUser } from '../../actions/user_action';
 
 const LoginForm = ({loginUser}) => {
     return(
-        <a href="/auth/google">Google+</a>
+        <button onClick={loginUser}>Google</button>
     )
 }
 

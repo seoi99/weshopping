@@ -7,14 +7,19 @@ import ProductForm from './product/product_form_container';
 import Favorite from './favorite/my_fav_list';
 import Main from './splash/main';
 
-const App = () => (
-    <div>
-        <Route exact path='/products' component={ProductIndexContainer}/>
-        <Route exact path='/products/form' component={ProductForm}/>
-        <Route exact path='/favorite' component={Favorite}/>
-        <Route exact path='/' component={Main}/>
-    </div>
-)
+class App extends React.Component {
 
+    render() {
+        return (
+            <div>
+                <Route exact path='/products' component={ProductIndexContainer}/>
+                <Route exact path='/products/form' component={ProductForm}/>
+                <Route exact path='/favorite' component={Favorite}/>
+                <Route exact path='/' component={Main}/>
+            </div>
+        )
+    }
+
+}
 
 export default App;

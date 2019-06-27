@@ -10,6 +10,10 @@ const cookieSession = require('cookie-session');
 // const $ = require('cheerio');
 // const puppeteer = require('puppeteer');
 const axios = require('axios');
+
+const productRouter = require('./routes/productRoutes')();
+const userRouter = require('./routes/userRoutes')();
+const profileRouter = require('./routes/profileRoutes')();
 const { cookieKey } = require('./config/keys').session;
 
 const port = process.env.PORT || 3000;
@@ -26,11 +30,9 @@ app.use(cookieSession({
   name: 'weshopping_session',
   keys: [cookieKey],
 }));
+
 app.use(cookieParser());
 
-
-const productRouter = require('./routes/productRoutes')();
-const userRouter = require('./routes/userRoutes')();
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -38,7 +40,9 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
 app.get('/', (req, res) => {
+  debug(req.cookies);
   if (req.session.token) {
     res.cookie('token', req.session.token);
     res.json({ status: 'session has been set' });
@@ -52,6 +56,7 @@ app.get('/', (req, res) => {
 
 app.use('/products', productRouter);
 app.use('/auth', userRouter);
+app.use('/profile', profileRouter);
 
 app.listen(port, () => {
   debug(`listening at server ${chalk.green(port)}`);

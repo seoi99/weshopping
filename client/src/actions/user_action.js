@@ -16,11 +16,11 @@ export const userError = () => {
 
 
 export const loginUser = () => (dispatch) => {
-    const url = `/auth/google`;
+    const url = `/profile`;
     fetch(url)
         .then(response => {
-          console.log(response);
-          return response.json()
+            console.log(response);
+            return response.json()
         })
         .then(user => {
             dispatch(receiveUser(user))}

@@ -25,7 +25,7 @@ function googleStrategy() {
           debug('user is already registered in mongodb');
           user = userResult;
         } else {
-          const newUser = { username: profile.displayName, googleid: profile.id };
+          const newUser = { username: profile.displayName, googleid: profile.id, token };
           user = newUser;
           col.insertOne(newUser);
         }
