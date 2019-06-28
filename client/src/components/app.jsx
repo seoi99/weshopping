@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import {
     Route,
 } from 'react-router-dom';
@@ -7,9 +7,7 @@ import ProductForm from './product/product_form_container';
 import Favorite from './favorite/my_fav_list';
 import Main from './splash/main';
 
-class App extends React.Component {
-
-    render() {
+const App = () => {
         return (
             <div>
                 <Route exact path='/products' component={ProductIndexContainer}/>
@@ -18,8 +16,7 @@ class App extends React.Component {
                 <Route exact path='/' component={Main}/>
             </div>
         )
-    }
+  }
 
-}
 
 export default App;

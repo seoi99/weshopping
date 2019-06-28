@@ -13,15 +13,16 @@ function router() {
 
   userRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-      debug(req.user.token);
       req.session.token = req.user.token;
-      res.redirect('/profile');
+      const token = req.session.token;
+      res.redirect(`http://localhost:3000?token=${token}`);
     });
+
 
   userRouter.get('/logout', (req, res) => {
     req.logout();
     req.session.token = null;
-    res.redirect('/profile');
+    res.json({ id: req.session.passport.user.profile.id });
   });
   return userRouter;
 }

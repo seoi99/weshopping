@@ -20,9 +20,10 @@ function googleStrategy() {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const col = await db.collection('user');
-        const userResult = await col.findOne({ googleid: profile.id });
+        let userResult = await col.findOne({ googleid: profile.id });
         if (userResult) {
-          debug('user is already registered in mongodb');
+          userResult = await col.findOneAndUpdate({ googleid: profile.id },
+            { $set: { token } }, { returnNewDocument: true });
           user = userResult;
         } else {
           const newUser = { username: profile.displayName, googleid: profile.id, token };
@@ -36,6 +37,7 @@ function googleStrategy() {
 
       return done(null, {
         user,
+        profile,
         token,
       });
     })));

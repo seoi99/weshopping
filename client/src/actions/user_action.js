@@ -1,4 +1,5 @@
 export const RECEIVE_USER = 'RECEIVE_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const USER_ERROR = 'USER_ERROR'
 
 export const receiveUser = (user) => {
@@ -14,12 +15,18 @@ export const userError = () => {
     }
 }
 
+export const removeUser = (id) => {
+  return {
+    type: LOGOUT_USER,
+    id,
+  }
+}
 
-export const loginUser = () => (dispatch) => {
-    const url = `/profile`;
+
+export const loginUser = (token) => (dispatch) => {
+    const url = `/profile/login?token=${token}`;
     fetch(url)
         .then(response => {
-            console.log(response);
             return response.json()
         })
         .then(user => {
@@ -28,6 +35,13 @@ export const loginUser = () => (dispatch) => {
         .catch(() => dispatch(userError("no item image is found")))
 }
 
-export const login = () => {
-
+export const logoutUser = () => (dispatch) => {
+    const url = '/auth/logout/#id';
+    fetch(url)
+        .then(response => {
+          return response.json()
+        })
+        .then(id => {
+        dispatch(removeUser(id))
+        })
 }

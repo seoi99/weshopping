@@ -17,18 +17,38 @@ function authUser(req, res, next) {
 }
 function router() {
   profileRouter.get('/', authUser, (req, res) => {
-    const token = req.session.token;
+    const { token } = req.session;
+    debug('token exist?', token);
     (async function getUser() {
+      let client;
       let user;
       try {
-        user = await MongoClient.connect(uri).db(dbname).collection('user').findOne({ token });
+        client = await MongoClient.connect(uri);
+        user = await client.db(dbname).collection('user').findOne({ token });
       } catch (err) {
         debug(err);
       }
-      res.json({ user });
+      client.close();
+      res.redirect(`http://localhost:3000/?token=${token}`);
+      res.json({ id: user.googleid, username: user.username });
     }());
   });
 
+  profileRouter.get('/login', (req, res) => {
+    const { token } = req.query;
+    (async function getUser() {
+      let client;
+      let user;
+      try {
+        client = await MongoClient.connect(uri);
+        user = await client.db(dbname).collection('user').findOne({ token });
+      } catch (err) {
+        debug(err);
+      }
+      client.close();
+      res.json({ id: user.googleid, username: user.username });
+    }());
+  });
   return profileRouter;
 }
 

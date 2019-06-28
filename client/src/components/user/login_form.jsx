@@ -1,17 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { loginUser } from '../../actions/user_action';
 
-const LoginForm = ({loginUser}) => {
-    return(
-        <button onClick={loginUser}>Google</button>
-    )
-}
+class LoginForm extends React.Component {
+    constructor(props) {
+      super(props)
+    }
 
-const mdp = (dispatch, ownProps) => {
-    return {
-        loginUser: () => dispatch(loginUser()),
+    render() {
+    return(
+      <a href="http://localhost:4000/auth/google">google</a>
+
+    )
     }
 }
 
-export default connect(null, mdp)(LoginForm)
+const msp = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+}
+const mdp = (dispatch, ownProps) => {
+    return {
+        loginUser: (token) => dispatch(loginUser(token)),
+    }
+}
+
+export default connect(msp, mdp)(LoginForm)
