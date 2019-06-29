@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchById } from '../../actions/product_action';
-import { addToFav , removeFav} from '../../actions/fav_action';
+import { addFavBackend , removeFav} from '../../actions/fav_action';
 import '../../style/product_show.css'
 import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
-const ProductShow  = ({product, searchById, addToFav, error, loading, index, fav, removeFav}) => {
+const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFav}) => {
     const searchResult = product.description === undefined ? (
         <div>
             <p>{error}</p>
@@ -33,9 +33,9 @@ const ProductShow  = ({product, searchById, addToFav, error, loading, index, fav
 
     const rateToStar = Array.from(Array(5).keys()).map((val, idx) => {
         if (idx * 20 >= product.review_rating) {
-            return <span className="fa fa-star text-white"></span>
+            return <span key={idx} className="fa fa-star text-white"></span>
         } else {
-            return <span className="fa fa-star text-warning"></span>
+            return <span key={idx}  className="fa fa-star text-warning"></span>
         }
     });
 
@@ -45,7 +45,7 @@ const ProductShow  = ({product, searchById, addToFav, error, loading, index, fav
     const image_url = product.image_url !== undefined ? image : NoPreview;
 
     const toggleFav = fav === false ? (
-        <button onClick={() => addToFav(product)}>ADD TO FAV</button>)
+        <button onClick={() => addFavBackend(product)}>ADD TO FAV</button>)
         : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
 
     return (
@@ -67,7 +67,7 @@ const ProductShow  = ({product, searchById, addToFav, error, loading, index, fav
             </div>
             <div className="modal fade" id={`exampleModal-${product.id}`} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
-                    <div class="modal-header text-warning">
+                    <div className="modal-header text-warning">
                         <h5 className="modal-title">{product.name}</h5>
                     </div>
                     <div className="modal-content">
@@ -97,7 +97,7 @@ const msp = (state, ownProps) => {
 const mdp = (dispatch) => {
     return {
         searchById: (id) => dispatch(searchById(id)),
-        addToFav: (product) => dispatch(addToFav(product)),
+        addFavBackend: (product) => dispatch(addFavBackend(product)),
         removeFav: (id) => dispatch(removeFav(id))
     }
 }

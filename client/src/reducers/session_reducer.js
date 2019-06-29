@@ -5,15 +5,16 @@ import {
 
 import merge from 'lodash/merge';
 
+const nullUser = {
+}
 
-const userReducer = (state = {}, action) => {
+const sessionReducer = (state = {}, action) => {
     Object.freeze(state);
     switch (action.type) {
     case RECEIVE_USER:
-        return merge({},state, {[action.user.id]: action.user});
+        return action.user
     case LOGOUT_USER:
-        console.log(action.id)
-        return action.id
+        return {};
     default:
         return state;
     }
@@ -21,4 +22,4 @@ const userReducer = (state = {}, action) => {
 
 
 
-export default userReducer;
+export default sessionReducer;

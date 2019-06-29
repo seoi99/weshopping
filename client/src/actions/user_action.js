@@ -15,16 +15,15 @@ export const userError = () => {
     }
 }
 
-export const removeUser = (id) => {
+export const removeUser = () => {
   return {
     type: LOGOUT_USER,
-    id,
   }
 }
 
 
 export const loginUser = (token) => (dispatch) => {
-    const url = `/profile/login?token=${token}`;
+    const url = `/user/login?token=${token}`;
     fetch(url)
         .then(response => {
             return response.json()
@@ -35,13 +34,35 @@ export const loginUser = (token) => (dispatch) => {
         .catch(() => dispatch(userError("no item image is found")))
 }
 
+
 export const logoutUser = () => (dispatch) => {
-    const url = '/auth/logout/#id';
-    fetch(url)
-        .then(response => {
-          return response.json()
-        })
-        .then(id => {
-        dispatch(removeUser(id))
+    const url = `/user/logout`;
+    fetch(url, { method: 'DELETE'})
+        .then(() => {
+          dispatch(removeUser())
         })
 }
+
+//
+// export const ADD_TO_FAV = 'ADD_TO_FAV'
+// export const REMOVE_FAV = 'REMOVE_FAV'
+//
+//
+// getfav
+// addToFav
+// removeFav
+
+
+
+// export const addToFav = (product) => {
+//     return {
+//         type: ADD_TO_FAV,
+//         product
+//     }
+// }
+// export const removeFav = (id) => {
+//     return {
+//         type: REMOVE_FAV,
+//         id
+//     }
+// }
