@@ -1,4 +1,5 @@
 export const RECEIVE_USER = 'RECEIVE_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const USER_ERROR = 'USER_ERROR'
 
 export const receiveUser = (user) => {
@@ -14,13 +15,18 @@ export const userError = () => {
     }
 }
 
+export const removeUser = () => {
+  return {
+    type: LOGOUT_USER,
+  }
+}
 
-export const loginUser = () => (dispatch) => {
-    const url = `/auth/google`;
+
+export const loginUser = (token) => (dispatch) => {
+    const url = `/user/login?token=${token}`;
     fetch(url)
         .then(response => {
-          console.log(response);
-          return response.json()
+            return response.json()
         })
         .then(user => {
             dispatch(receiveUser(user))}
@@ -28,6 +34,35 @@ export const loginUser = () => (dispatch) => {
         .catch(() => dispatch(userError("no item image is found")))
 }
 
-export const login = () => {
 
+export const logoutUser = () => (dispatch) => {
+    const url = `/user/logout`;
+    fetch(url, { method: 'DELETE'})
+        .then(() => {
+          dispatch(removeUser())
+        })
 }
+
+//
+// export const ADD_TO_FAV = 'ADD_TO_FAV'
+// export const REMOVE_FAV = 'REMOVE_FAV'
+//
+//
+// getfav
+// addToFav
+// removeFav
+
+
+
+// export const addToFav = (product) => {
+//     return {
+//         type: ADD_TO_FAV,
+//         product
+//     }
+// }
+// export const removeFav = (id) => {
+//     return {
+//         type: REMOVE_FAV,
+//         id
+//     }
+// }

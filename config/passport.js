@@ -9,20 +9,6 @@ module.exports = function passportConfig(app) {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  passport.serializeUser((user, done) => {
-    done(null, user);
-  });
-  passport.deserializeUser(async (id, done) => {
-    debug(id);
-    try {
-      const user = await MongoClient.connect(uri).db(dbname).collection('user').findOne({ googleid: id });
-      debug('deserial;', user);
-      if (!user) {
-        return done(new Error('user not found'));
-      }
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  });
+  passport.serializeUser((user, done) => done(null, user));
+  passport.deserializeUser((user, done) => done(null, user));
 };

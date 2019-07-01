@@ -1,17 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/user_action';
+import { Route } from 'react-router-dom';
+import { logoutUser } from '../../actions/user_action';
 
-const LoginForm = ({loginUser}) => {
-    return(
-        <a href="/auth/google">Google+</a>
+const LoginForm = ({user,logoutUser}) => {
+    return user ? (
+      <div>
+      <p> Hello, {user}</p>
+      <button onClick={logoutUser}>Logout</button>
+      </div>
     )
+    : (<a href="http://localhost:4000/auth/google">google</a>)
 }
 
-const mdp = (dispatch, ownProps) => {
-    return {
-        loginUser: () => dispatch(loginUser()),
-    }
+const msp = (state) => {
+  return {
+    user: state.session.username
+  }
 }
-
-export default connect(null, mdp)(LoginForm)
+const mdp = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(logoutUser())
+  }
+}
+export default connect(msp, mdp)(LoginForm)

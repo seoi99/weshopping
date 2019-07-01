@@ -13,3 +13,12 @@ export const removeFav = (id) => {
         id
     }
 }
+
+export const addFavBackend = (product) => (dispatch) => {
+  fetch(`/user/addFav/${product.id}`, {
+    method: 'POST'
+  })
+  .then((response) => {
+    dispatch(addToFav(product))
+  })
+}
