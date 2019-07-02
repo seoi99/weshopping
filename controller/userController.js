@@ -5,18 +5,19 @@ const { dbname } = require('../config/keys');
 
 function userController() {
   function login(req, res) {
-    const { token } = req.query;
+    const { token } = req.session;
     (async function getUser() {
       let client;
       let user;
+      debug(token);
       try {
         client = await MongoClient.connect(uri);
         user = await client.db(dbname).collection('user').findOne({ token });
       } catch (err) {
         debug(err);
       }
-      client.close();
       res.json({ id: user.googleid, username: user.username });
+      client.close();
     }());
   }
 
@@ -45,6 +46,28 @@ function userController() {
     }());
   }
 
+  function getFavList(req, res) {
+    const { token } = req.session;
+    (async function getUser() {
+      let client;
+      let products;
+      try {
+        client = await MongoClient.connect(uri);
+        const user = await client.db(dbname).collection('user');
+        const productIds = await user.find({ token }, { list: 1 }).project({ _id: 0, list: 1 }).toArray();
+
+
+        debug(productIds);
+        products = await client.db(dbname).collection('product').find({ id: { $in: productIds } }).toArray();
+        debug(products);
+      } catch (err) {
+        debug(err);
+      }
+      res.json(products);
+      client.close();
+    }());
+  }
+
   // function addFavList(req, res) {
   //
   // }
@@ -56,6 +79,7 @@ function userController() {
     login,
     logout,
     addFavList,
+    getFavList,
   };
 }
 

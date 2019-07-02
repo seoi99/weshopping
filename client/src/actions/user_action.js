@@ -22,8 +22,8 @@ export const removeUser = () => {
 }
 
 
-export const loginUser = (token) => (dispatch) => {
-    const url = `/user/login?token=${token}`;
+export const loginUser = () => (dispatch) => {
+    const url = `/user/login`;
     fetch(url)
         .then(response => {
             return response.json()

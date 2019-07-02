@@ -22,3 +22,10 @@ export const addFavBackend = (product) => (dispatch) => {
     dispatch(addToFav(product))
   })
 }
+
+export const requestFavList = () => (dispatch) => {
+  fetch(`/user/getFav`)
+  .then((response) => {
+    console.log(response);
+  })
+}
