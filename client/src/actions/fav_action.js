@@ -1,6 +1,13 @@
 export const ADD_TO_FAV = 'ADD_TO_FAV'
+export const GET_FAV = 'GET_FAV'
 export const REMOVE_FAV = 'REMOVE_FAV'
 
+export const getFav = (products) => {
+    return {
+        type: GET_FAV,
+        products
+    }
+}
 export const addToFav = (product) => {
     return {
         type: ADD_TO_FAV,
@@ -25,7 +32,8 @@ export const addFavBackend = (product) => (dispatch) => {
 
 export const requestFavList = () => (dispatch) => {
   fetch(`/user/getFav`)
-  .then((response) => {
-    console.log(response);
+  .then(response => response.json())
+  .then(list => {
+    dispatch(getFav(list))
   })
 }

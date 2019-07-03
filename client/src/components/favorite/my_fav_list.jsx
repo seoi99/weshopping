@@ -16,7 +16,7 @@ const MyFavList = ({ favList, requestFavList }) => {
     return (
         <div>
             <h1>My List</h1>
-            <button onClick={() => requestFavList()}>getList</button>
+            {requestFavList()}
             <Link to='/products'>Back to Search</Link>
             {map}
         </div>

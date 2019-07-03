@@ -14,7 +14,6 @@ const LoginForm = ({user,logoutUser}) => {
 }
 
 const msp = (state) => {
-  console.log(state.session);
   return {
     user: state.session.username
   }
@@ -24,4 +23,4 @@ const mdp = (dispatch) => {
     logoutUser: () => dispatch(logoutUser())
   }
 }
-export default connect(null, mdp)(LoginForm)
+export default connect(msp, mdp)(LoginForm)

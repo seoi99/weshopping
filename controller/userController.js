@@ -9,15 +9,19 @@ function userController() {
     (async function getUser() {
       let client;
       let user;
-      debug(token);
       try {
-        client = await MongoClient.connect(uri);
-        user = await client.db(dbname).collection('user').findOne({ token });
+        debug(token);
+        if (token) {
+          client = await MongoClient.connect(uri);
+          user = await client.db(dbname).collection('user').findOne({ token });
+        } else {
+          user = { username: null };
+        }
       } catch (err) {
         debug(err);
       }
-      res.json({ id: user.googleid, username: user.username });
-      client.close();
+      debug(user);
+      res.json(user);
     }());
   }
 
@@ -54,27 +58,16 @@ function userController() {
       try {
         client = await MongoClient.connect(uri);
         const user = await client.db(dbname).collection('user');
-        const productIds = await user.find({ token }, { list: 1 }).project({ _id: 0, list: 1 }).toArray();
-
-
-        debug(productIds);
-        products = await client.db(dbname).collection('product').find({ id: { $in: productIds } }).toArray();
-        debug(products);
+        const productIds = await user.findOne({ token });
+        products = await client.db(dbname).collection('product').find({ id: { $in: productIds.list } }).toArray();
       } catch (err) {
         debug(err);
       }
-      res.json(products);
-      client.close();
+      const list = products.reduce((acc, el) => { acc[el.id] = el; return acc; }, {});
+      res.json(list);
     }());
   }
 
-  // function addFavList(req, res) {
-  //
-  // }
-  //
-  // function removeFavList(req, res) {
-  //
-  // }
   return {
     login,
     logout,

@@ -3,6 +3,7 @@ const express = require('express');
 const passport = require('passport');
 
 const googleRouter = express.Router();
+const { mainUrl } = require('../config/keys');
 
 function router() {
   googleRouter.get('/google',
@@ -13,8 +14,7 @@ function router() {
   googleRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
       req.session.token = req.user.token;
-      const { token } = req.session;
-      res.redirect(`http://localhost:3000?token=${token}`);
+      res.redirect(mainUrl);
     });
 
   return googleRouter;
