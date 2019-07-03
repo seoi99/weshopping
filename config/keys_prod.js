@@ -8,5 +8,8 @@ module.exports = {
     clientSecret: process.env.clientSecret,
     callbackURL: process.env.callbackURL,
   },
+  session: {
+    cookieKey: 'weshoppingcookie',
+  },
   mainUrl: process.env.callbackURL,
 };

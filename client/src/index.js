@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             preloadedState.session = user
           }
         })
+        console.log(preloadedState);
         store = configureStore(preloadedState)
         const root = document.getElementById('root');
         window.getState = store.getState;
