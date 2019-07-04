@@ -10,10 +10,11 @@ function userController() {
       let client;
       let user;
       try {
-        debug(token);
+        debug('login hit first');
         if (token) {
           client = await MongoClient.connect(uri);
           user = await client.db(dbname).collection('user').findOne({ token });
+          user = { googleid: user.googleid, username: user.username, list: user.list };
         } else {
           user = { username: null };
         }
@@ -58,13 +59,19 @@ function userController() {
       try {
         client = await MongoClient.connect(uri);
         const user = await client.db(dbname).collection('user');
-        const productIds = await user.findOne({ token });
-        products = await client.db(dbname).collection('product').find({ id: { $in: productIds.list } }).toArray();
+        if (token) {
+          const productIds = await user.findOne({ token });
+          products = await client.db(dbname).collection('product').find({ id: { $in: productIds.list } }).toArray();
+          const list = products.reduce((acc, el) => { acc[el.id] = el; return acc; }, {});
+          res.json(list);
+        } else {
+          res.status = 404;
+          res.json(new Error('product not found'));
+        }
       } catch (err) {
         debug(err);
       }
-      const list = products.reduce((acc, el) => { acc[el.id] = el; return acc; }, {});
-      res.json(list);
+      client.close();
     }());
   }
 

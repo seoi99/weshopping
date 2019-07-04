@@ -4,7 +4,7 @@ import SearchBar from '../searchBar/search_bar_container';
 import '../../style/index.css'
 import logo from '../../style/logo.png'
 import { Link } from 'react-router-dom'
-const ProductIndex = ({products, error, loading, filterOptions, searchById}) => {
+const ProductIndex = ({products, error, loading, filterOptions, searchById, user}) => {
 
     const items = products.map((item, i) => {
         return (
@@ -24,6 +24,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
     ) : (
         items
     )
+    const currentUser = !!user ? <Link to='/favorite' className="col-md-1">Go To Fav</Link> : ""
 
     return (
         <div className="container">
@@ -42,7 +43,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById}) => 
                         <button className="dropdown-item" onClick={() => filterOptions("REVIEWS")}> Review Rating </button>
                     </div>
                 </div>
-                <Link to='/favorite' className="col-md-1">Go To Fav</Link>
+                {currentUser}
             </div>
 
 

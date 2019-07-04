@@ -3,8 +3,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {requestFavList} from '../../actions/fav_action'
 
-const MyFavList = ({ favList, requestFavList }) => {
-    const map = favList.map(fav => {
+class MyFavList extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {currentUser: null}
+    }
+
+    componentDidMount() {
+      this.props.requestFavList();
+    }
+
+    componentDidUpdate() {
+      if (this.props.user !== this.state.currentUser) {
+        this.setState({currentUser: this.props.user})
+      }
+    }
+    render() {
+    const map = this.props.favList.map(fav => {
         return (
             <ul>
                 <li>{fav.name}</li>
@@ -16,16 +31,17 @@ const MyFavList = ({ favList, requestFavList }) => {
     return (
         <div>
             <h1>My List</h1>
-            {requestFavList()}
             <Link to='/products'>Back to Search</Link>
             {map}
         </div>
     )
+  }
 }
 
 const msp = (state) => {
     return {
-        favList: Object.values(state.favList.list)
+        favList: Object.values(state.favList.list),
+        user: state.session.username
     }
 }
 

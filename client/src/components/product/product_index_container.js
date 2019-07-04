@@ -8,6 +8,7 @@ const msp = (state) => {
         products: state.ui.indexLoading ? [] : sortProductByPrice(Object.values(state.product.items), state.product.filter),
         error: state.error,
         loading: state.ui.indexLoading,
+        user: state.session.username
     }
 }
 

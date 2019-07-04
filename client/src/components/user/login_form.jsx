@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { logoutUser } from '../../actions/user_action';
-
+import '../../style/login_form.css'
 const LoginForm = ({user,logoutUser}) => {
     return user ? (
       <div>
@@ -10,7 +10,12 @@ const LoginForm = ({user,logoutUser}) => {
       <button onClick={logoutUser}>Logout</button>
       </div>
     )
-    : (<a href="http://localhost:4000/auth/google">google</a>)
+    : (
+      <button className="btn-google">
+        Sign In
+      <span></span><a href="http://localhost:4000/auth/google" className="google-button">google</a>
+      </button>
+    )
 }
 
 const msp = (state) => {
