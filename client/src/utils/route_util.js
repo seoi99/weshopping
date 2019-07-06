@@ -10,9 +10,6 @@ const Auth = ({ component: Component, path, loggedIn, exact, reviewURI }) => { /
         return <Redirect to='/'/>;
         }
       }
-      else if (path === "/businesses/login" || path === "/businesses/signup") {
-        return <Redirect to='/businesses'/>;
-      }
       }
      else {
       return <Component {...props} />;
