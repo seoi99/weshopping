@@ -8,7 +8,7 @@ import Favorite from './favorite/my_fav_list';
 import Main from './splash/main';
 import Login from './user/login_form';
 import queryString from 'query-string'
-import AuthRoute from '../utils/routes_util'
+import { AuthRoute } from '../utils/route_util'
 
 
 class App extends Component {

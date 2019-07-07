@@ -39,8 +39,35 @@ function userController() {
       let client;
       try {
         client = await MongoClient.connect(uri);
+        const item = await client.db(dbname).collection('product').findOne({ id: productId });
         const user = await client.db(dbname).collection('user');
-        const update = await user.update({ token }, { $addToSet: { list: productId } });
+        const findUser = await user.findOne({ token });
+        if (findUser.list[productId].savedPrice !== item.price) {
+          console.log('check if price has been decreased');
+        } else {
+          const listDetails = {};
+          listDetails[productId] = { savedPrice: item.price, updatedPrice: '' };
+        }
+        await user.update({ token }, { $addToSet: { list: listDetails } });
+        debug(findUser);
+      } catch (err) {
+        debug(err);
+      }
+      res.json('complete');
+      client.close();
+    }());
+  }
+
+  function removeFavList(req, res) {
+    const { productId } = req.params;
+    debug(productId);
+    const { token } = req.session;
+    (async function getUser() {
+      let client;
+      try {
+        client = await MongoClient.connect(uri);
+        const user = await client.db(dbname).collection('user');
+        const update = await user.update({ token }, { $pull: { list: productId } });
         const findUser = await user.findOne({ token });
         debug(findUser);
       } catch (err) {
@@ -79,6 +106,7 @@ function userController() {
     login,
     logout,
     addFavList,
+    removeFavList,
     getFavList,
   };
 }

@@ -15,6 +15,11 @@ class Main extends Component {
         <div className="container-fluid justify-content-around">
             <div className="row justify-content-center"><img src={logo} alt="logo"/></div>
             <SearchBar comp="main"/>
+            <p>Looking for the best price for your prouducts? Join WeShopping to get notified on your item</p>
+            <p>Categories</p>
+            <p>Electronics</p>
+            <p>Clothing</p>
+            <p></p>
         </div>
     )
     }

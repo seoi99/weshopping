@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {requestFavList} from '../../actions/fav_action'
+import {requestFavList, removeFavBackend} from '../../actions/fav_action'
 
 class MyFavList extends Component {
     constructor(props) {
       super(props)
-      this.state = {currentUser: null}
+      this.state = {currentUser: null, item: '', currentPrice: '', link: ''}
+      this.addItemList = this.addItemList.bind(this)
     }
 
     componentDidMount() {
@@ -18,21 +19,34 @@ class MyFavList extends Component {
         this.setState({currentUser: this.props.user})
       }
     }
+
+    addItemList() {
+      return (
+        <ul>
+            <li>Item : {this.state.item}</li>
+            <li>currentPrice : {this.state.currentPrice}</li>
+            <li> Link : {this.state.link}</li>
+        </ul>
+      )
+    }
     render() {
     const map = this.props.favList.map(fav => {
         return (
             <ul>
-                <li>{fav.name}</li>
-                <li>{fav.price}</li>
-                <li><a href={fav.url}>Link</a></li>
+                <li>Item : {fav.name}</li>
+                <li>currentPrice : {fav.price}</li>
+                <li> Link : <a href={fav.url}>Link</a></li>
+                <button onClick={() => this.props.removeFavBackend(fav.id)}>Remove</button>
             </ul>
         )
     })
+
     return (
         <div>
             <h1>My List</h1>
             <Link to='/products'>Back to Search</Link>
             {map}
+            <button onClick={this.addItemList}>Add Item</button>
         </div>
     )
   }
@@ -47,7 +61,8 @@ const msp = (state) => {
 
 const mdp = (dispatch) => {
   return {
-    requestFavList: () => dispatch(requestFavList())
+    requestFavList: () => dispatch(requestFavList()),
+    removeFavBackend: (id) => dispatch(removeFavBackend(id))
   }
 }
 export default connect(msp, mdp)(MyFavList);

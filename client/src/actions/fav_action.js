@@ -1,6 +1,7 @@
 export const ADD_TO_FAV = 'ADD_TO_FAV'
 export const GET_FAV = 'GET_FAV'
 export const REMOVE_FAV = 'REMOVE_FAV'
+export const ADD_ITEM = 'ADD_ITEM'
 
 export const getFav = (products) => {
     return {
@@ -21,6 +22,13 @@ export const removeFav = (id) => {
     }
 }
 
+export const addItem = (product) => {
+  return {
+    type: ADD_ITEM,
+    product
+  }
+}
+
 export const addFavBackend = (product) => (dispatch) => {
   fetch(`/user/addFav/${product.id}`, {
     method: 'POST'
@@ -29,6 +37,15 @@ export const addFavBackend = (product) => (dispatch) => {
     dispatch(addToFav(product))
   })
 }
+export const removeFavBackend = (id) => (dispatch) => {
+  fetch(`/user/removeFav/${id}`, {
+    method: 'DELETE'
+  })
+  .then((response) => {
+    dispatch(removeFav(id))
+  })
+}
+
 
 export const requestFavList = () => (dispatch) => {
   fetch(`/user/getFav`)
