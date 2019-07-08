@@ -11,7 +11,7 @@ function googleStrategy() {
   passport.use(new GoogleStrategy({
     clientID,
     clientSecret,
-    callbackURL,
+    callbackURL: `${callbackURL}/auth/google/redirect`,
   },
     (async (token, refreshToken, profile, done) => {
       let client;
