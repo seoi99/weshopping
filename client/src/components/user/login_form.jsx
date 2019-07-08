@@ -13,7 +13,7 @@ const LoginForm = ({user,logoutUser}) => {
     : (
       <button className="btn-google">
         Sign In
-      <span></span><a href="http://localhost:4000/auth/google" className="google-button">google</a>
+      <span></span><a href="http://localhost:8080/auth/google" className="google-button">google</a>
       </button>
     )
 }

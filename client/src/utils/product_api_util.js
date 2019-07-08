@@ -1,5 +1,5 @@
 export const fetchAllProducts = () => {
-    const url = 'http://localhost:4000/products'
+    const url = '/products'
     fetch(url)
         .then(response => response.json())
         .then(contents => contents)
@@ -7,7 +7,7 @@ export const fetchAllProducts = () => {
 }
 
 export const fetchOneProduct = (id) => {
-    const url = `http://localhost:4000/products/${id}`;
+    const url = `/products/${id}`;
     fetch(url)
         .then(response => response.json())
         .then(product => product)
