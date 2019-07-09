@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../style/main.css'
+import Login from '../user/login_form'
 class SearchBar extends Component {
     constructor(props) {
         super(props)
@@ -30,12 +31,15 @@ class SearchBar extends Component {
     render() {
         const buttonName = this.props.comp === "main" ? "Search" : ""
         return(
+          <div>
+            <Login classname='col-sm-3'/>
             <form onSubmit={this.handleSubmit} className={`${this.props.comp}-form`}>
                 <input type="search"
-                    className={`col-sm-9 ${this.props.comp}-input`}
+                    className={`col-sm-6 ${this.props.comp}-input`}
                     onChange= {this.handleChange}/>
                 <button className={`col-sm-3 col-lg-2 ${this.props.comp}-search`}>{buttonName}</button>
             </form>
+          </div>
         )
     }
 }

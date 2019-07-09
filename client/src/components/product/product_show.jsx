@@ -43,7 +43,6 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
 
     const image = product.image_url ? product.image_url : NoImage;
     const image_url = product.image_url !== undefined ? image : NoPreview;
-    console.log(fav);
     const toggleFav = fav === false ? (
         <button onClick={() => addFavBackend(product)}>ADD TO FAV</button>)
         : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)

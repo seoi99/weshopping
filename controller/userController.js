@@ -11,7 +11,6 @@ function userController() {
       let client;
       let user;
       try {
-        debug('login hit first');
         if (token) {
           client = await MongoClient.connect(uri);
           user = await client.db(dbname).collection('user').findOne({ token });
@@ -22,7 +21,6 @@ function userController() {
       } catch (err) {
         debug(err);
       }
-      debug(user);
       res.json(user);
     }());
   }
@@ -42,15 +40,25 @@ function userController() {
         client = await MongoClient.connect(uri);
         const item = await client.db(dbname).collection('product').findOne({ id: productId });
         const user = await client.db(dbname).collection('user');
-        const findUser = await user.findOne({ token });
-        if (findUser.list[productId].savedPrice !== item.price) {
-          console.log('check if price has been decreased');
+        let key = `list.${productId}`;
+        const checkPrice = await user.findOne({ token });
+
+        if (checkPrice.list[productId] && checkPrice.list[productId].savedPrice) {
+          if (checkPrice.list[productId].savedPrice !== item.price) {
+            debug('price is diff');
+            key = `list.${productId}.updatedPrice`;
+            await user.update({ token }, { $set: { [key]: item.price } });
+          } else {
+            debug('price is same');
+            debug(item.price, item.id);
+          }
         } else {
-          const listDetails = {};
-          listDetails[productId] = { savedPrice: item.price, updatedPrice: '' };
+          debug('this else statement should hit');
+          const listDetails = { savedPrice: item.price, updatedPrice: '' };
+          await user.update({ token }, { $set: { [key]: listDetails } });
         }
-        await user.update({ token }, { $addToSet: { list: listDetails } });
-        debug(findUser);
+        const result = await user.findOne({ token });
+        debug(result);
       } catch (err) {
         debug(err);
       }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const Auth = ({ component: Component, path, loggedIn, exact, reviewURI }) => { //prevents logged in user from seeing log in / sign up
   function toRender(props) {
     if (!(loggedIn)) {
-        return <Redirect to='/'/>;
+        return <Redirect to={`${path}`}/>;
       }
      else {
       return <Component {...props} />;

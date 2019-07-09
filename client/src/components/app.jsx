@@ -16,7 +16,6 @@ class App extends Component {
   render() {
         return (
             <div>
-                <Login/>
                 <Route exact path='/products' component={ProductIndexContainer}/>
                 <Route exact path='/products/form' component={ProductForm}/>
                 <AuthRoute exact path='/favorite' component={Favorite}/>

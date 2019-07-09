@@ -34,7 +34,6 @@ function googleStrategy() {
         debug(error);
       }
       client.close();
-      debug(user);
       return done(null, {
         user,
         profile,

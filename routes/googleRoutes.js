@@ -7,16 +7,18 @@ const googleRouter = express.Router();
 const { mainUrl } = require('../config/keys');
 
 function router() {
-  googleRouter.get('/google',
-    passport.authenticate('google', {
-      scope: ['https://www.googleapis.com/auth/userinfo.profile'],
-    }));
+  googleRouter.get('/google', ((req, res, next) => {
+    req.session.path = req.headers.referer;
+    next();
+  }),
+  passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile'],
+  }));
 
   googleRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
       req.session.token = req.user.token;
-      debug(req.session);
-      res.redirect(mainUrl);
+      res.redirect(req.session.path);
     });
 
   return googleRouter;

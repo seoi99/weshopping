@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Redirect} from 'react-router-dom';
 import { logoutUser } from '../../actions/user_action';
 import '../../style/login_form.css'
-const LoginForm = ({user,logoutUser}) => {
+const LoginForm = ({user, logoutUser}) => {
     return user ? (
       <div>
       <p> Hello, {user}</p>
@@ -15,7 +15,7 @@ const LoginForm = ({user,logoutUser}) => {
     )
 }
 
-const msp = (state) => {
+const msp = (state, ownProps) => {
   return {
     user: state.session.username
   }
