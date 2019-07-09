@@ -14,6 +14,7 @@ const axios = require('axios');
 const productRouter = require('./routes/productRoutes')();
 const googleRouter = require('./routes/googleRoutes')();
 const userRouter = require('./routes/userRoutes')();
+const emailRouter = require('./routes/emailRoutes')();
 const { cookieKey } = require('./config/keys').session;
 
 const port = process.env.PORT || 3000;
@@ -58,6 +59,7 @@ app.get('/', (req, res) => {
 app.use('/products', productRouter);
 app.use('/auth', googleRouter);
 app.use('/user', userRouter);
+app.use('/email', emailRouter);
 
 app.listen(port, () => {
   debug(`listening at server ${chalk.green(port)}`);
