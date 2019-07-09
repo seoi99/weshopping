@@ -11,13 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const preloadedState = {session: null};
       const request = async () => {
       const user = await fetch('/user/login')
-        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+          return response.json()
+        })
         .then(user => {
           if (user) {
             preloadedState.session = user
           }
         })
-        console.log(preloadedState);
         store = configureStore(preloadedState)
         const root = document.getElementById('root');
         window.getState = store.getState;

@@ -6,6 +6,7 @@ const { dbname } = require('../config/keys');
 function userController() {
   function login(req, res) {
     const { token } = req.session;
+    debug(req.session);
     (async function getUser() {
       let client;
       let user;

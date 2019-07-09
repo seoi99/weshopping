@@ -41,6 +41,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+
 app.get('/', (req, res) => {
   debug(req.cookies);
   if (req.session.token) {
@@ -53,6 +54,7 @@ app.get('/', (req, res) => {
     });
   }
 });
+
 
 app.use('/products', productRouter);
 app.use('/auth', googleRouter);

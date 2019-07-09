@@ -6,7 +6,7 @@ module.exports = {
   google: {
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
-    callbackURL: 'http://localhost:8080',
+    callbackURL: 'https://weshopping.herokuapp.com/',
   },
   session: {
     cookieKey: 'weshoppingcookie',

@@ -15,6 +15,7 @@ function router() {
   googleRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
       req.session.token = req.user.token;
+      debug(req.session);
       res.redirect(mainUrl);
     });
 
