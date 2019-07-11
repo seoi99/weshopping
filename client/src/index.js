@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const request = async () => {
       const user = await fetch('/user/login')
         .then(response => {
-          console.log(response);
           return response.json()
         })
         .then(user => {

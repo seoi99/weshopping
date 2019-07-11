@@ -23,10 +23,12 @@ function googleStrategy() {
         let userResult = await col.findOne({ googleid: profile.id });
         if (userResult) {
           userResult = await col.findOneAndUpdate({ googleid: profile.id },
-            { $set: { token } }, { returnNewDocument: true });
+            { $set: { token, email: profile.emails[0].value } }, { returnNewDocument: true });
           user = userResult;
         } else {
-          const newUser = { username: profile.displayName, googleid: profile.id, token };
+          const newUser = {
+            username: profile.displayName, googleid: profile.id, token, email: profile.emails[0].value,
+          };
           user = newUser;
           col.insertOne(newUser);
         }

@@ -2,11 +2,12 @@ const { MongoClient } = require('mongodb');
 const debug = require('debug')('app:userController');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
+const { ObjectID } = require('mongodb');
+
 
 function userController() {
   function login(req, res) {
     const { token } = req.session;
-    debug(req.session);
     (async function getUser() {
       let client;
       let user;
@@ -14,7 +15,9 @@ function userController() {
         if (token) {
           client = await MongoClient.connect(uri);
           user = await client.db(dbname).collection('user').findOne({ token });
-          user = { googleid: user.googleid, username: user.username, list: user.list };
+          user = {
+            googleid: user.googleid, username: user.username, list: user.list, email: user.email,
+          };
         } else {
           user = { username: null };
         }
@@ -34,29 +37,25 @@ function userController() {
   function addFavList(req, res) {
     const { productId } = req.params;
     const { token } = req.session;
+    const { product } = req.body;
+    debug(product);
     (async function getUser() {
       let client;
       try {
         client = await MongoClient.connect(uri);
-        const item = await client.db(dbname).collection('product').findOne({ id: productId });
-        const user = await client.db(dbname).collection('user');
-        let key = `list.${productId}`;
-        const checkPrice = await user.findOne({ token });
 
-        if (checkPrice.list[productId] && checkPrice.list[productId].savedPrice) {
-          if (checkPrice.list[productId].savedPrice !== item.price) {
-            debug('price is diff');
-            key = `list.${productId}.updatedPrice`;
-            await user.update({ token }, { $set: { [key]: item.price } });
-          } else {
-            debug('price is same');
-            debug(item.price, item.id);
-          }
-        } else {
-          debug('this else statement should hit');
-          const listDetails = { savedPrice: item.price, updatedPrice: '' };
-          await user.update({ token }, { $set: { [key]: listDetails } });
+        // item can be manually updated from user
+        const user = await client.db(dbname).collection('user');
+        if (!(product.id)) {
+          product.id = new ObjectID();
+          await client.db(dbname).collection('product').insertOne(product);
         }
+        const key = `list.${product.id}`;
+        const checkPrice = await user.findOne({ token });
+        const listDetails = {
+          url: product.url, name: product.name, savedPrice: product.price, updatedPrice: '',
+        };
+        await user.update({ token }, { $set: { [key]: listDetails } });
         const result = await user.findOne({ token });
         debug(result);
       } catch (err) {
@@ -69,15 +68,16 @@ function userController() {
 
   function removeFavList(req, res) {
     const { productId } = req.params;
-    debug(productId);
     const { token } = req.session;
+    const key = `list.${productId}`;
     (async function getUser() {
       let client;
       try {
         client = await MongoClient.connect(uri);
         const user = await client.db(dbname).collection('user');
-        const update = await user.update({ token }, { $pull: { list: productId } });
+        const update = await user.update({ token }, { $unset: { [key]: productId } });
         const findUser = await user.findOne({ token });
+        debug(key);
         debug(findUser);
       } catch (err) {
         debug(err);
@@ -96,10 +96,8 @@ function userController() {
         client = await MongoClient.connect(uri);
         const user = await client.db(dbname).collection('user');
         if (token) {
-          const productIds = await user.findOne({ token });
-          products = await client.db(dbname).collection('product').find({ id: { $in: productIds.list } }).toArray();
-          const list = products.reduce((acc, el) => { acc[el.id] = el; return acc; }, {});
-          res.json(list);
+          const list = await user.findOne({ token });
+          res.json(list.list);
         } else {
           res.status = 404;
           res.json(new Error('product not found'));

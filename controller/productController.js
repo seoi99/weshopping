@@ -129,6 +129,7 @@ function productController(priceAPI) {
 
   function searchById(req, res) {
     const { id } = req.params;
+    debug(id);
     (async function updateDetail() {
       let product;
       let client;

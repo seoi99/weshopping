@@ -12,7 +12,7 @@ function router() {
     next();
   }),
   passport.authenticate('google', {
-    scope: ['https://www.googleapis.com/auth/userinfo.profile'],
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
   }));
 
   googleRouter.get('/google/redirect',

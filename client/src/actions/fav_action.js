@@ -30,8 +30,13 @@ export const addItem = (product) => {
 }
 
 export const addFavBackend = (product) => (dispatch) => {
-  fetch(`/user/addFav/${product.id}`, {
-    method: 'POST'
+  fetch(`/user/addFav`, {
+    method: 'POST',
+    headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+    body: JSON.stringify({product})
   })
   .then((response) => {
     dispatch(addToFav(product))

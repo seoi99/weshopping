@@ -1,5 +1,6 @@
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const RECEIVE_EMAIL = 'RECEIVE_EMAIL';
 export const USER_ERROR = 'USER_ERROR'
 
 export const receiveUser = (user) => {
@@ -18,6 +19,12 @@ export const userError = () => {
 export const removeUser = () => {
   return {
     type: LOGOUT_USER,
+  }
+}
+
+export const receiveEmail = () => {
+  return {
+    type: RECEIVE_EMAIL,
   }
 }
 
@@ -40,6 +47,15 @@ export const logoutUser = () => (dispatch) => {
     fetch(url, { method: 'DELETE'})
         .then(() => {
           dispatch(removeUser())
+        })
+}
+
+export const sendGreeting = (res) => (dispatch) => {
+    const url = `/email/greeting/${res}`;
+    console.log(res)
+    fetch(url)
+        .then(() => {
+          dispatch(receiveEmail())
         })
 }
 

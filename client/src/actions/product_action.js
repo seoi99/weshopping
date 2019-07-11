@@ -119,7 +119,10 @@ export const searchById = (id) => (dispatch) => {
     dispatch(showloading())
     const url = `/products/search/${id}`;
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+          return response.json()
+        })
         .then(product =>{
             dispatch(receiveProductDetails(product))}
         )

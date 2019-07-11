@@ -7,9 +7,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-// const $ = require('cheerio');
-// const puppeteer = require('puppeteer');
 const axios = require('axios');
+const schedule = require('node-schedule');
 
 const productRouter = require('./routes/productRoutes')();
 const googleRouter = require('./routes/googleRoutes')();
@@ -24,8 +23,9 @@ require('./config/passport.js')(app);
 
 app.use(morgan('tiny'));
 app.use(cors());
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   name: 'weshopping_session',
@@ -41,9 +41,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-
 app.get('/', (req, res) => {
   debug(req.cookies);
+  debug(req.session.token);
   if (req.session.token) {
     res.cookie('token', req.session.token);
     res.json({ status: 'session has been set' });
@@ -53,6 +53,14 @@ app.get('/', (req, res) => {
       status: 'session cookie not set',
     });
   }
+});
+
+
+schedule.scheduleJob({ hour: 8 }, () => {
+  axios.get('/email')
+    .then((response) => {
+      console.log(response);
+    });
 });
 
 

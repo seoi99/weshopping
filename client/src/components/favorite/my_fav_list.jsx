@@ -1,52 +1,68 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {requestFavList, removeFavBackend} from '../../actions/fav_action'
+import {requestFavList, removeFavBackend, addFavBackend} from '../../actions/fav_action'
 
 class MyFavList extends Component {
     constructor(props) {
       super(props)
-      this.state = {currentUser: null, item: '', currentPrice: '', link: ''}
+      this.state = {name: '', url: '', price: '', removed: false}
       this.addItemList = this.addItemList.bind(this)
+      this.update = this.update.bind(this)
+      this.props.requestFavList()
     }
 
-    componentDidMount() {
-      this.props.requestFavList();
-    }
 
-    componentDidUpdate() {
-      if (this.props.user !== this.state.currentUser) {
-        this.setState({currentUser: this.props.user})
+    componentDidUpdate(props) {
+      if (this.state.removed) {
+        this.props.requestFavList()
+        this.setState({removed: false})
       }
     }
 
-    addItemList() {
-      return (
-        <ul>
-            <li>Item : {this.state.item}</li>
-            <li>currentPrice : {this.state.currentPrice}</li>
-            <li> Link : {this.state.link}</li>
-        </ul>
-      )
+    update(field) {
+      return(e) => {
+        this.setState({[field]: e.currentTarget.value});
+      };
     }
+
+    addItemList(e) {
+      this.preventDefault(e);
+      this.props.addFavBackend(this.state);
+    }
+
+    removeItem(favK) {
+      this.props.removeFavBackend(favK);
+      this.setState({removed: true})
+    }
+
     render() {
-    const map = this.props.favList.map(fav => {
+    console.log(this.props.favList);
+    let favObj = this.props.favList;
+    let favkey = Object.keys(favObj);
+    const map = favkey.map((favK, index) => {
+        const fav = favObj[favK]
         return (
-            <ul>
+            <ul key={index}>
                 <li>Item : {fav.name}</li>
-                <li>currentPrice : {fav.price}</li>
+                <li>currentPrice : {fav.savedPrice}</li>
+                <li>updatedPrice : {fav.updatedPrice}</li>
                 <li> Link : <a href={fav.url}>Link</a></li>
-                <button onClick={() => this.props.removeFavBackend(fav.id)}>Remove</button>
+                <button onClick={() => this.removeItem(favK)}>Remove</button>
             </ul>
         )
     })
-
     return (
         <div>
             <h1>My List</h1>
             <Link to='/products'>Back to Search</Link>
             {map}
-            <button onClick={this.addItemList}>Add Item</button>
+             <form onSubmit={this.addItemList}>
+               <label> name: <input type="text" value={this.state.name} onChange={this.update('name')}></input></label>
+               <label> url:  <input type="text" value={this.state.url} onChange={this.update('url')}></input> </label>
+               <label> price:  <input type="text" value={this.state.price} onChange={this.update('price')}></input> </label>
+               <button> submit </button>
+             </form>
         </div>
     )
   }
@@ -54,7 +70,7 @@ class MyFavList extends Component {
 
 const msp = (state) => {
     return {
-        favList: Object.values(state.favList.list),
+        favList: state.favList.list,
         user: state.session.username
     }
 }
@@ -62,6 +78,7 @@ const msp = (state) => {
 const mdp = (dispatch) => {
   return {
     requestFavList: () => dispatch(requestFavList()),
+    addFavBackend: (product) => dispatch(addFavBackend(product)),
     removeFavBackend: (id) => dispatch(removeFavBackend(id))
   }
 }

@@ -88,7 +88,7 @@ const msp = (state, ownProps) => {
     return {
         product: state.product.items[ownProps.item.id],
         error: state.error,
-        fav: state.session.list ? state.session.list.includes(ownProps.item.id) : !!state.favList.list[ownProps.item.id],
+        fav: state.session.list ? Object.values(state.session.list).includes(ownProps.item.id) : !!state.favList.list[ownProps.item.id],
         loading: state.ui.showLoading,
         user: state.session.username,
     }

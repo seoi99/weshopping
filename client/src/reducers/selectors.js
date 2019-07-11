@@ -24,3 +24,7 @@ export const sortProductByPrice = (products, option=initialState) => {
         return products
     }
 }
+
+export const getFavList = (favlist) => {
+  
+}

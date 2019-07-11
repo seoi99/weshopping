@@ -12,7 +12,7 @@ function router() {
 
   userRouter.delete('/logout', logout);
 
-  userRouter.post('/addFav/:productId', addFavList);
+  userRouter.post('/addFav', addFavList);
   userRouter.delete('/removeFav/:productId', removeFavList);
   userRouter.get('/getFav', getFavList);
 
