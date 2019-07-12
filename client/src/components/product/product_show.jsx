@@ -6,7 +6,7 @@ import '../../style/product_show.css'
 import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
-const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFav, user}) => {
+const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFav, user, userId}) => {
     const searchResult = product.description === undefined ? (
         <div>
             <p>{error}</p>
@@ -44,7 +44,7 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
     const image = product.image_url ? product.image_url : NoImage;
     const image_url = product.image_url !== undefined ? image : NoPreview;
     const toggleFav = fav === false ? (
-        <button onClick={() => addFavBackend(product)}>ADD TO FAV</button>)
+        <button onClick={() => addFavBackend(product, userId)}>ADD TO FAV</button>)
         : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
     const favButton = !!user ? toggleFav : ""
     return (
@@ -91,13 +91,14 @@ const msp = (state, ownProps) => {
         fav: state.session.list ? Object.values(state.session.list).includes(ownProps.item.id) : !!state.favList.list[ownProps.item.id],
         loading: state.ui.showLoading,
         user: state.session.username,
+        userId: state.session.googleid,
     }
 }
 
 const mdp = (dispatch) => {
     return {
         searchById: (id) => dispatch(searchById(id)),
-        addFavBackend: (product) => dispatch(addFavBackend(product)),
+        addFavBackend: (product, userid) => dispatch(addFavBackend(product, userid)),
         removeFav: (id) => dispatch(removeFav(id))
     }
 }

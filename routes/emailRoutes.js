@@ -46,8 +46,8 @@ function findAndUpdatePrice(url, price) {
           return $(this);
         }
       }).slice(0, 1).attr('class');
-      debug(product);
-      return product;
+      const parsedClass = product ? product.replace(/[\s]/g, '.') : 'not readable';
+      return parsedClass;
     });
 }
 
@@ -56,11 +56,10 @@ function getPriceFromClass(url, className) {
     .then((response) => {
       const html = response.data;
       const $ = cheerio.load(html);
-      const price = $(`.${className}`).slice(0, 1).text();
-      const image = $('img').slice(0, 1).attr('src');
-      debug(image);
-      debug(price);
-      return price;
+      const testing = $(`.current-price`).slice(0, 1).text();
+      const updatePrice = $(`.${className}`).slice(0, 1).text();
+      debug('price', updatePrice);
+      return updatePrice;
     });
 }
 
@@ -74,16 +73,16 @@ function router() {
   });
 
   emailRouter.get('/product/:userId', (req, res) => {
-    const { token } = req.session;
+    const token = req.params.userId;
     (async function receiveClass() {
       let client;
       let result;
       try {
         client = await MongoClient.connect(uri);
         const user = await client.db(dbname).collection('user');
-        const findUser = await user.findOne({ token });
+        const findUser = await user.findOne({ googleid: token });
+        debug(findUser, token, req.session);
         const list = findUser.list;
-        debug(findUser);
         for (let i = 0; i < Object.keys(list).length; i++) {
           const key = Object.keys(list)[i];
           const { url } = list[key];
@@ -96,18 +95,18 @@ function router() {
             debug('classname has been found', list[key].className);
             let queryPrice = await getPriceFromClass(url, list[key].className);
             queryPrice = queryPrice.replace(/[^0-9.]/g, '');
+            debug('queryprice', queryPrice);
             list[key].updatedPrice = queryPrice;
           }
         }
 
-        await user.update({ token }, { $set: { list } });
-        result = await user.findOne({ token });
+        await user.update({ googleid: token }, { $set: { list } });
+        result = await user.findOne({ googleid: token });
       } catch (err) {
         debug(err);
       }
       debug('route hit first');
       client.close();
-      debug(result);
       res.send(result);
     }());
   });

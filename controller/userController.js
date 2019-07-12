@@ -3,17 +3,19 @@ const debug = require('debug')('app:userController');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 const { ObjectID } = require('mongodb');
+const axios = require('axios');
 
 
 function userController() {
   function login(req, res) {
     const { token } = req.session;
+    debug('token', token);
     (async function getUser() {
       let client;
       let user;
       try {
-        if (token) {
-          client = await MongoClient.connect(uri);
+        client = await MongoClient.connect(uri);
+        if (token !== undefined) {
           user = await client.db(dbname).collection('user').findOne({ token });
           user = {
             googleid: user.googleid, username: user.username, list: user.list, email: user.email,
@@ -24,7 +26,9 @@ function userController() {
       } catch (err) {
         debug(err);
       }
+      debug(user)
       res.json(user);
+      client.close();
     }());
   }
 
@@ -43,7 +47,6 @@ function userController() {
       let client;
       try {
         client = await MongoClient.connect(uri);
-
         // item can be manually updated from user
         const user = await client.db(dbname).collection('user');
         if (!(product.id)) {
@@ -87,6 +90,13 @@ function userController() {
     }());
   }
 
+  function receiveUpdate(id) {
+    axios.get(`http://localhost:8080/email/product/${id}`)
+      .then((response) => {
+        return response.status;
+      });
+  }
+
   function getFavList(req, res) {
     const { token } = req.session;
     (async function getUser() {
@@ -97,7 +107,10 @@ function userController() {
         const user = await client.db(dbname).collection('user');
         if (token) {
           const list = await user.findOne({ token });
-          res.json(list.list);
+          const status = await receiveUpdate(list.googleid);
+          const result = await user.findOne({ token });
+          debug(result.list)
+          res.json(result.list);
         } else {
           res.status = 404;
           res.json(new Error('product not found'));

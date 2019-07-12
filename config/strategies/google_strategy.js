@@ -23,7 +23,7 @@ function googleStrategy() {
         let userResult = await col.findOne({ googleid: profile.id });
         if (userResult) {
           userResult = await col.findOneAndUpdate({ googleid: profile.id },
-            { $set: { token, email: profile.emails[0].value } }, { returnNewDocument: true });
+            { $set: { token }}, { returnNewDocument: true });
           user = userResult;
         } else {
           const newUser = {
@@ -35,12 +35,12 @@ function googleStrategy() {
       } catch (error) {
         debug(error);
       }
-      client.close();
       return done(null, {
         user,
         profile,
         token,
       });
+      client.close();
     })));
 }
 

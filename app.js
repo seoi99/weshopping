@@ -14,6 +14,7 @@ const productRouter = require('./routes/productRoutes')();
 const googleRouter = require('./routes/googleRoutes')();
 const userRouter = require('./routes/userRoutes')();
 const emailRouter = require('./routes/emailRoutes')();
+const favListRouter = require('./routes/favListRoutes')();
 const { cookieKey } = require('./config/keys').session;
 
 const port = process.env.PORT || 3000;
@@ -55,19 +56,18 @@ app.get('/', (req, res) => {
   }
 });
 
-
-schedule.scheduleJob({ hour: 8 }, () => {
-  axios.get('/email')
-    .then((response) => {
-      console.log(response);
-    });
-});
-
-
 app.use('/products', productRouter);
 app.use('/auth', googleRouter);
 app.use('/user', userRouter);
+app.use('/favlist', favListRouter);
 app.use('/email', emailRouter);
+
+schedule.scheduleJob({ minute: 27 }, () => {
+  axios.get('http://localhost:8080/email/product/104968562447721743715')
+    .then((response) => {
+      console.log(response.status);
+    });
+});
 
 app.listen(port, () => {
   debug(`listening at server ${chalk.green(port)}`);

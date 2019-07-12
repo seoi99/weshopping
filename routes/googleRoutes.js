@@ -9,6 +9,7 @@ const { mainUrl } = require('../config/keys');
 function router() {
   googleRouter.get('/google', ((req, res, next) => {
     req.session.path = req.headers.referer;
+    debug(req.session.path);
     next();
   }),
   passport.authenticate('google', {
@@ -18,7 +19,7 @@ function router() {
   googleRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
       req.session.token = req.user.token;
-      res.redirect(req.session.path);
+      res.redirect(`${req.session.path}`);
     });
 
   return googleRouter;

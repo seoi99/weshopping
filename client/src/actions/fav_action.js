@@ -23,39 +23,48 @@ export const removeFav = (id) => {
 }
 
 export const addItem = (product) => {
-  return {
-    type: ADD_ITEM,
-    product
-  }
+    return {
+        type: ADD_ITEM,
+        product
+    }
 }
 
-export const addFavBackend = (product) => (dispatch) => {
-  fetch(`/user/addFav`, {
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json'
-  },
-    body: JSON.stringify({product})
-  })
-  .then((response) => {
-    dispatch(addToFav(product))
-  })
+export const addFavBackend = (product, userId) => (dispatch) => {
+    fetch(`/favlist/addFav/${userId}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({product})
+    })
+        .then((response) => {
+            dispatch(addToFav(product))
+        })
 }
+
 export const removeFavBackend = (id) => (dispatch) => {
-  fetch(`/user/removeFav/${id}`, {
-    method: 'DELETE'
-  })
-  .then((response) => {
-    dispatch(removeFav(id))
-  })
+    fetch(`/user/removeFav/${id}`, {
+        method: 'DELETE'
+    })
+        .then((response) => {
+            dispatch(removeFav(id))
+        })
+        .then(list => {
+            dispatch(getFav(list))
+        })
 }
 
 
 export const requestFavList = () => (dispatch) => {
-  fetch(`/user/getFav`)
-  .then(response => response.json())
-  .then(list => {
-    dispatch(getFav(list))
-  })
+    fetch(`/user/getFav`)
+        .catch(error => console.error(error))
+        .then(response => {
+            console.log(response);
+            return response.json()
+        })
+        .then(list => {
+            console.log(list);
+            dispatch(getFav(list))
+        })
 }

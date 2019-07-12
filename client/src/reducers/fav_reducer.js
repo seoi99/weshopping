@@ -23,7 +23,6 @@ const favReducer = (state = initialState, action) => {
     case REMOVE_FAV:
         const removeItem = Object.assign({}, state);
         delete removeItem.list[action.id]
-        console.log(removeItem);
         return removeItem
     default:
         return state;
