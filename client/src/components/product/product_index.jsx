@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import ProductShow from './product_show';
 import SearchBar from '../searchBar/search_bar_container';
 import '../../style/index.css'
-import logo from '../../style/logo.png'
 import { Link } from 'react-router-dom'
+
+
 const ProductIndex = ({products, error, loading, filterOptions, searchById, user}) => {
 
     const items = products.map((item, i) => {
@@ -27,14 +28,11 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
     const currentUser = !!user ? <Link to='/favorite' className="col-md-1">Go To Fav</Link> : ""
 
     return (
-        <div className="container">
+        <div>
+          <SearchBar comp="index"/>
             <div className="row p-3 justify-content-around header">
-                <Link to="/"><img className="col-md-2 logo" src={logo} alt="logo"/></Link>
-                <div className="col-md-7">
-                    <SearchBar comp="index"/>
-                </div>
-                <div className="dropdown col-md-2 m-r p-2">
-                    <button type="button" className="btn dropdown-toggle bg-white border" data-toggle="dropdown">
+                <div className="row justify-content-end">
+                    <button type="button" className="btn dropdown-toggle" data-toggle="dropdown">
                             Sort By:
                     </button>
                     <div className="dropdown-menu">

@@ -24,3 +24,17 @@
   margin-bottom: 2em;
   max-width: 580px
 }
+
+.content-box {
+  display: flex;
+  font-family: 'Lucida Console';
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+}
+
+.logo-login {
+  display: flex;
+  justify-content: row;
+}

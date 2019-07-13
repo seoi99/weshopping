@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import '../../style/main.css';
 import SearchBar from '../searchBar/search_bar_container';
-import logo from '../../style/logo.png'
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { loginUser } from '../../actions/user_action';
@@ -12,15 +12,27 @@ class Main extends Component {
 
   render() {
     return (
+      <div className="main">
         <div className="container-fluid justify-content-around">
-            <div className="row justify-content-center"><img src={logo} alt="logo"/></div>
+          <div className="logo-login">
+            <div className='col-sm-3'></div>
+          </div>
             <SearchBar comp="main"/>
-            <p>Looking for the best price for your prouducts? Join WeShopping to get notified on your item</p>
-            <p>Categories</p>
-            <p>Electronics</p>
-            <p>Clothing</p>
-            <p></p>
+
+            </div>
+        <div>
+          <p className='description'>Search for items you want to purchase and save it on weShopping.</p>
+          <p>Categories</p>
+          <div className="content-box col-sm-6">
+          <p>Fashion</p>
+          <p>Electronics</p>
+          <p>Accessories</p>
+          </div>
+          <div className='example'>
+          </div>
+
         </div>
+      </div>
     )
     }
 }

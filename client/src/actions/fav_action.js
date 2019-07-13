@@ -30,13 +30,14 @@ export const addItem = (product) => {
 }
 
 export const addFavBackend = (product, userId) => (dispatch) => {
+    console.log(userId);
     fetch(`/favlist/addFav/${userId}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({product})
+        body: JSON.stringify({product:{id: product.id, name: product.name, url: product.url, price: product.price}})
     })
         .then((response) => {
             dispatch(addToFav(product))
@@ -44,7 +45,7 @@ export const addFavBackend = (product, userId) => (dispatch) => {
 }
 
 export const removeFavBackend = (id) => (dispatch) => {
-    fetch(`/user/removeFav/${id}`, {
+    fetch(`/favlist/removeFav/${id}`, {
         method: 'DELETE'
     })
         .then((response) => {
@@ -56,15 +57,12 @@ export const removeFavBackend = (id) => (dispatch) => {
 }
 
 
-export const requestFavList = () => (dispatch) => {
-    fetch(`/user/getFav`)
-        .catch(error => console.error(error))
+export const requestFavList = (userId) => (dispatch) => {
+    fetch(`/favlist/getFav/${userId}`)
         .then(response => {
-            console.log(response);
             return response.json()
         })
         .then(list => {
-            console.log(list);
             dispatch(getFav(list))
         })
 }

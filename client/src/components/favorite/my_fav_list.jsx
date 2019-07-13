@@ -11,6 +11,10 @@ class MyFavList extends Component {
         this.update = this.update.bind(this)
     }
 
+    componentDidMount() {
+        this.props.requestFavList(this.props.userId);
+    }
+
     update(field) {
         return(e) => {
             this.setState({[field]: e.currentTarget.value});
@@ -19,7 +23,8 @@ class MyFavList extends Component {
 
     addItemList(e) {
         e.preventDefault();
-        this.props.addFavBackend(this.state);
+        console.log(this.props.userId);
+        this.props.addFavBackend(this.state, this.props.userId);
     }
 
     removeItem(favK) {
@@ -34,9 +39,10 @@ class MyFavList extends Component {
             return (
                 <ul key={index}>
                     <li>Item : {fav.name}</li>
-                    <li>currentPrice : {fav.savedPrice}</li>
+                    <li>currentPrice : {fav.price}</li>
                     <li>updatedPrice : {fav.updatedPrice}</li>
                     <li> Link : <a href={fav.url}>Link</a></li>
+                    <button onClick={() => this.props.removeFavBackend(fav.id)}>Delete</button>
                 </ul>
             )
         })
@@ -59,14 +65,15 @@ class MyFavList extends Component {
 const msp = (state) => {
     return {
         favList: state.favList.list,
-        user: state.session.username
+        user: state.session.username,
+        userId: state.session.googleid
     }
 }
 
 const mdp = (dispatch) => {
     return {
-        requestFavList: () => dispatch(requestFavList()),
-        addFavBackend: (product) => dispatch(addFavBackend(product)),
+        requestFavList: (userId) => dispatch(requestFavList(userId)),
+        addFavBackend: (product,userId) => dispatch(addFavBackend(product,userId)),
         removeFavBackend: (id) => dispatch(removeFavBackend(id))
     }
 }

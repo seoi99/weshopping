@@ -7,21 +7,32 @@ const axios = require('axios');
 
 
 function favListController() {
-
   function addFavList(req, res) {
     const { userId } = req.params;
     const { product } = req.body;
 
-    (async function getUser() {
+
+    (async function addList() {
       let client;
       try {
         client = await MongoClient.connect(uri);
 
-        const favlist = await client.db(dbname).collection('favlist');
-        const key = `${userId}.${product.id}`;
-        await client.db(dbname).collection('favlist').updatex({[userId]: product});
-
-
+        // product validation
+        if (!(product.id)) {
+          product.id = new ObjectID();
+        }
+        debug(userId);
+        const userFavList = await client.db(dbname).collection('favlist').findOne({ _id: userId });
+        if (!(userFavList)) {
+          await client.db(dbname).collection('favlist').insertOne({ _id: userId, list: { [product.id]: product } });
+        } else {
+          const key = `list.${product.id}`;
+          debug(key);
+          debug('productid', product.id);
+          await client.db(dbname).collection('favlist').update({ _id: userId }, { $set: { [key]: product } });
+        }
+        const result = await client.db(dbname).collection('favlist').findOne({ _id: userId });
+        debug(result);
       } catch (err) {
         debug(err);
       }
@@ -38,11 +49,8 @@ function favListController() {
       let client;
       try {
         client = await MongoClient.connect(uri);
-        const user = await client.db(dbname).collection('user');
-        const update = await user.update({ userId }, { $unset: { [key]: productId } });
-        const findUser = await user.findOne({ userId });
-        debug(key);
-        debug(findUser);
+        const favList = await client.db(dbname).collection('favlist');
+        const update = await favList.update({ _id: userId }, { $unset: { [key]: productId } });
       } catch (err) {
         debug(err);
       }
@@ -51,26 +59,27 @@ function favListController() {
     }());
   }
 
-  function receiveUpdate(id) {
-    axios.get(`http://localhost:8080/email/product/${id}`)
-      .then((response) => {
-        return response.status;
-      });
-  }
 
   function getFavList(req, res) {
-    const { userId } = req.session;
+    const { userId } = req.params;
+
+    function receiveUpdate(id) {
+      axios.get(`http://localhost:8080/email/product/${id}`)
+        .then(response => response.status);
+    }
+
+
     (async function getUser() {
       let client;
-      let products;
+      let result;
       try {
         client = await MongoClient.connect(uri);
-        const user = await client.db(dbname).collection('user');
+        const favList = await client.db(dbname).collection('favlist');
         if (userId) {
-          const list = await user.findOne({ userId });
-          const status = await receiveUpdate(list.googleid);
-          const result = await user.findOne({ userId });
-          debug(result.list)
+          const status = await receiveUpdate(userId);
+          result = await favList.findOne({ _id: userId });
+          debug(userId);
+          debug('result', result);
           res.json(result.list);
         } else {
           res.status = 404;

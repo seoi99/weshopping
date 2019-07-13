@@ -38,8 +38,8 @@
 }
 
 .logo {
-  height: 100px;
-  max-width: 150px;
+  height: inherit;
+  margin: auto;
 }
 input:focus {
     outline: none;

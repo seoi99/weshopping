@@ -40,7 +40,6 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
     });
 
     const numOfReview = product.review_count ? `${product.review_count} reviews` : "No review Yet"
-
     const image = product.image_url ? product.image_url : NoImage;
     const image_url = product.image_url !== undefined ? image : NoPreview;
     const toggleFav = fav === false ? (

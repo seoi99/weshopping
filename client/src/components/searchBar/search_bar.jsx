@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import '../../style/main.css'
 import Login from '../user/login_form'
+import logo from '../../style/logo.png'
+import '../../style/search_bar.css';
+import { withRouter, Link } from 'react-router-dom';
+import '../../style/main.css'
 class SearchBar extends Component {
     constructor(props) {
         super(props)
@@ -29,17 +31,21 @@ class SearchBar extends Component {
     }
 
     render() {
-        const buttonName = this.props.comp === "main" ? "Search" : ""
         return(
-          <div>
-            <Login classname='col-sm-3'/>
-            <form onSubmit={this.handleSubmit} className={`${this.props.comp}-form`}>
+          <nav className='row search-bar-container'>
+            <div className="col-sm-8 logo-search">
+            <div><Link to='/'><img src={logo} alt="logo" className='logo'/></Link></div>
+            <form onSubmit={this.handleSubmit}>
                 <input type="search"
-                    className={`col-sm-6 ${this.props.comp}-input`}
+                    results="5" name="s" placeholder="Search..."
+                    className={`col-sm-6 input`}
                     onChange= {this.handleChange}/>
-                <button className={`col-sm-3 col-lg-2 ${this.props.comp}-search`}>{buttonName}</button>
+
+                  <button className={`search-button`}><span><i class="fa fa-search"></i></span></button>
             </form>
-          </div>
+            </div>
+            <Login className='col-sm-2 '/>
+          </nav>
         )
     }
 }

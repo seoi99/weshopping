@@ -3,29 +3,32 @@ import { connect } from 'react-redux';
 import { Route, Redirect} from 'react-router-dom';
 import { logoutUser, sendGreeting } from '../../actions/user_action';
 import '../../style/login_form.css'
-const LoginForm = ({user, email, logoutUser, sendGreeting}) => {
-    return user ? (
-        <div>
-            <p> Hello, {user}</p>
-            <button onClick={logoutUser}>Logout</button>
-            <button onClick={() => sendGreeting(email)}>subscribe</button>
+const LoginForm = ({user, logoutUser, sendGreeting}) => {
+    return user.username ? (
+        <div className="user-loggedin">
+            <button className="btn dropdown-toggle" data-toggle="dropdown"> Hello, {user.username[0]}</button>
+            <div className="dropdown-menu">
+              <button className="dropdown-item" onClick={logoutUser}>Logout</button>
+              <button className="dropdown-item" onClick={() => sendGreeting(user)}>subscribe</button>
+            </div>
         </div>
     )
         : (
-            <a href="/auth/google">google</a>
+          <button className="loginBtn--google loginBtn">
+            <a href="/auth/google">Login with Google</a>
+          </button>
         )
 }
 
 const msp = (state, ownProps) => {
     return {
-        user: state.session.username,
-        email: state.session.email,
+        user: state.session,
     }
 }
 const mdp = (dispatch) => {
     return {
         logoutUser: () => dispatch(logoutUser()),
-        sendGreeting: (email) => dispatch(sendGreeting(email))
+        sendGreeting: (user) => dispatch(sendGreeting(user))
     }
 }
 export default connect(msp, mdp)(LoginForm)
