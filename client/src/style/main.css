@@ -1,40 +1,32 @@
 
-
-.main-header {
-  color: orange;
-  text-align: center;
-  margin-top: 2em;
-}
-
-.main-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.main-search {
-  background-color: black;
-  border-radius: 15px;
-  border: none;
+body {
+  font-family: soleil,Helvetica,Arial,sans-serif;
+  background: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/QIAQ9Rd/videoblocks-laptop-online-shopping-carts-and-bag-blue-background-animation-hd_bueyrjcbm_thumbnail-full01.png');
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 
-.main-input {
-  border-radius: 1rem;
-  margin-bottom: 2em;
-  max-width: 580px
+.main-contents {
+  text-align: center;
 }
 
-.content-box {
+
+.main-contents > * {
+  text-align: center;
+}
+
+.img-thumbnail {
+  width: 300px;
+}
+
+img {
+  max-width: 200px;
+  border-radius: 50%;
+}
+
+.main-list {
   display: flex;
-  font-family: 'Lucida Console';
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  width: 100%;
-  margin: auto;
-}
-
-.logo-login {
-  display: flex;
-  justify-content: row;
 }

@@ -25,7 +25,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
     ) : (
         items
     )
-    const currentUser = !!user ? <Link to='/favorite' className="col-md-1">Go To Fav</Link> : ""
+    const currentUser = !!user ? <Link to='/favorite' className="col-md-1 favlist">Go To Fav</Link> : ""
 
     return (
         <div>

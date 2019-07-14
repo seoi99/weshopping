@@ -26,9 +26,8 @@ function userController() {
       } catch (err) {
         debug(err);
       }
-      debug(user);
-      res.json(user);
       client.close();
+      res.json(user);
     }());
   }
 

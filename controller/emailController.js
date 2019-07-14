@@ -11,6 +11,7 @@ const adminKeys = require('../config/keys');
 function emailController() {
   function updateUserFavList(req, res) {
     const { userId } = req.params;
+
     function findPriceThenClass(url, price, className = '') {
       return axios.get(url)
         .then((response) => {
@@ -23,9 +24,14 @@ function emailController() {
                 return $(this);
               }
             }).slice(0, 1).attr('class');
-            const parsedClass = product ? product.replace(/[\s]/g, '.') : 'not readable';
+            const parsedClass = product ? product.replace(/[\s]/g, '.') : null;
             return parsedClass;
           }
+          // const testing = $('div').filter(function findPrice(i, el) {
+          //   if ($(this).text().includes(price) && $(this).attr('class')) {
+          //     return $(this);
+          //   }
+          // }).slice(0, 1).attr('class');
           const updatePrice = $(`.${className}`).slice(0, 1).text();
           debug('price', updatePrice);
           return updatePrice;
@@ -58,9 +64,9 @@ function emailController() {
       } catch (err) {
         debug(err);
       }
+      client.close();
+      res.send(result);
     }());
-    client.close();
-    res.send(result);
   }
 
   function emailFormat(email) {

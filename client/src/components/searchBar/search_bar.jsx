@@ -3,7 +3,6 @@ import Login from '../user/login_form'
 import logo from '../../style/logo.png'
 import '../../style/search_bar.css';
 import { withRouter, Link } from 'react-router-dom';
-import '../../style/main.css'
 class SearchBar extends Component {
     constructor(props) {
         super(props)
@@ -32,19 +31,21 @@ class SearchBar extends Component {
 
     render() {
         return(
-          <nav className='row search-bar-container'>
-            <div className="col-sm-8 logo-search">
-            <div><Link to='/'><img src={logo} alt="logo" className='logo'/></Link></div>
-            <form onSubmit={this.handleSubmit}>
+          <nav className='search-bar-container row'>
+            <div className="web-content col-sm-10">
+            <Link to="/" className="logo"><img src={logo} alt="logo"/></Link>
+            <form onSubmit={this.handleSubmit} className="search-form">
                 <input type="search"
                     results="5" name="s" placeholder="Search..."
-                    className={`col-sm-6 input`}
+
                     onChange= {this.handleChange}/>
 
                   <button className={`search-button`}><span><i class="fa fa-search"></i></span></button>
             </form>
             </div>
-            <Login className='col-sm-2 '/>
+            <div className="user-content col-sm-2">
+              <Login/>
+            </div>
           </nav>
         )
     }
