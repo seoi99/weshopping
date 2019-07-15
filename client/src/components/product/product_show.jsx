@@ -47,9 +47,9 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
         : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
     const favButton = !!user ? toggleFav : ""
     return (
-        <div className="col-md-10 p-2 show-container justify-content-between" key={product._id}>
+        <div className="product-show-box" key={product._id}>
             <div className="image-container">
-                <img src={image_url} alt={product.name} className="show-image"/>
+                <img src={image_url} alt={product.name}/>
             </div>
             <div>
                 <a target="_blank" rel="noopener noreferrer" href={product.url} className="text-primary"> {index}) {product.name}</a>

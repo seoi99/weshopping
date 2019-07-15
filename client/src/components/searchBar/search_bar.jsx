@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Login from '../user/login_form'
 import logo from '../../style/logo.png'
 import '../../style/search_bar.css';
 import { withRouter, Link } from 'react-router-dom';
@@ -21,7 +20,7 @@ class SearchBar extends Component {
             this.props.searchByProducts(this.state.value)
         }
         if (this.props.comp === "main") {
-            return this.props.history.push('/products')
+            return this.props.history.push('/productlists')
         }
     }
 
@@ -30,21 +29,22 @@ class SearchBar extends Component {
     }
 
     render() {
+
+        const mainTheme = this.props.comp === 'main' ? (<h2>Shop at the Best Price at the Right Time</h2>) : <span></span>
         return(
-          <nav className='search-bar-container row'>
-            <div className="web-content col-sm-10">
-            <Link to="/" className="logo"><img src={logo} alt="logo"/></Link>
+          <nav>
+            <div className="web-content">
+            <Link to="/" className={`${this.props.comp}-logo`}><img src={logo} alt="logo"/></Link>
+            {mainTheme}
             <form onSubmit={this.handleSubmit} className="search-form">
                 <input type="search"
                     results="5" name="s" placeholder="Search..."
 
-                    onChange= {this.handleChange}/>
-
-                  <button className={`search-button`}><span><i class="fa fa-search"></i></span></button>
+                    onChange= {this.handleChange}></input>
+                  <button className={`search-button`}><span><i className="fa fa-search"></i></span></button>
             </form>
             </div>
-            <div className="user-content col-sm-2">
-              <Login/>
+            <div className="user-content">
             </div>
           </nav>
         )

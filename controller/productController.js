@@ -1,11 +1,31 @@
 const { MongoClient } = require('mongodb');
 const { ObjectID } = require('mongodb');
 const debug = require('debug')('app:productController');
-
+const axios = require('axios');
+const cheerio = require('cheerio');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 
 function productController(priceAPI) {
+  function getImage(url) {
+    return axios.get(url)
+
+      .then((response) => {
+        if (response.status === 400) {
+          debug('what happened/');
+          return '';
+        }
+        debug(response.status);
+        const html = response.data;
+        const $ = cheerio.load(html);
+        debug('complete');
+        return $('img').slice(0, 1).attr('src');
+      })
+      .catch((error) => {
+        debug('error has been found');
+        return '';
+      });
+  }
   function getIndex(req, res) {
     (async function mongo() {
       let client;
@@ -14,7 +34,19 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const products = await db.collection('product').find({}).toArray();
-        debug('products');
+        // debug(products);
+        // for (product of products) {
+        //   const imageUrl = await getImage(product.url);
+        //   if (imageUrl === '') {
+        //     debug('image not found', imageUrl);
+        //     const deleteobject = await db.collection('product').findOneAndDelete({ _id: product._id });
+        //   } else {
+        //     await db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
+        //     debug('updated');
+        //   }
+        // }
+        // res.json(products);
+        debug(products);
         const obj = products.reduce((object, item) => {
           object[item.id] = item;
           return object;

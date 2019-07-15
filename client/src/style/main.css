@@ -1,14 +1,15 @@
 
 body {
-  font-family: soleil,Helvetica,Arial,sans-serif;
-  background: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/QIAQ9Rd/videoblocks-laptop-online-shopping-carts-and-bag-blue-background-animation-hd_bueyrjcbm_thumbnail-full01.png');
+  font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: rgb(245, 245, 245);
   background-position: center;
   background-repeat: no-repeat;
-  color: white;
+  font-weight: 200;
 }
 
 .main-contents {
   text-align: center;
+  background-color: rgb(255, 255, 255);
 }
 
 
@@ -22,11 +23,26 @@ body {
 
 img {
   max-width: 200px;
-  border-radius: 50%;
 }
 
 .main-list {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.main-list p {
+  font-size: 1em;
+}
+.main-list > * {
+  color: blue;
+}
+
+.main-list .icon-container:hover {
+  color: rgba(255, 0, 0, 0.5);
+}
+
+.login-container {
+  margin-top: 10px;
 }

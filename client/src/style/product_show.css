@@ -1,4 +1,13 @@
 
+.product-show-box {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
 .show-container {
   display: flex;
   flex-direction: row;
@@ -8,10 +17,15 @@
   min-width: 225px;
   min-height: 200px;
 }
-.show-image {
+
+.image-container img {
+  display: block;
   max-width: 200px;
   max-height: 200px;
+  margin: auto;
+  padding-bottom: 10px;
 }
+
 .fa-star {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;

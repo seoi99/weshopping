@@ -9,8 +9,8 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
 
     const items = products.map((item, i) => {
         return (
-            <div  className="row p-1" key={i}>
-                <ProductShow item={item} index={i + 1}/>
+            <div className="col-sm-3">
+              <ProductShow item={item} index={i + 1}/>
             </div>
         )
     })
@@ -23,12 +23,14 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
             <h2 className="align-self-center">searching products...</h2>
         </div>
     ) : (
-        items
+      <div className="row">
+        {items}
+      </div>
     )
     const currentUser = !!user ? <Link to='/favorite' className="col-md-1 favlist">Go To Fav</Link> : ""
 
     return (
-        <div>
+        <div className="container">
           <SearchBar comp="index"/>
             <div className="row p-3 justify-content-around header">
                 <div className="row justify-content-end">
