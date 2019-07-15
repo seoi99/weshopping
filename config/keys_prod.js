@@ -12,4 +12,6 @@ module.exports = {
     cookieKey: 'weshoppingcookie',
   },
   mainUrl: process.env.callbackURL,
+  adminEmail: process.env.ADMIN_ID,
+  adminPassword: process.env.ADMIN_PASSWORD,
 };
