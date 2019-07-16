@@ -8,7 +8,7 @@ const axios = require('axios');
 
 function favListController() {
   function InputValidation(product) {
-    return !!product.name && !!product.price && product.url;
+    return !!product.name && !!product.price && !!product.url;
   }
   function addFavList(req, res) {
     const { userId } = req.params;
@@ -29,20 +29,22 @@ function favListController() {
           }
           debug(userId);
           const userFavList = await client.db(dbname).collection('favlist').findOne({ _id: userId });
-          if (!(userFavList)) {
+          debug(!!(userFavList));
+          if (userFavList === null) {
+            debug('hit here');
             await client.db(dbname).collection('favlist').insertOne({ _id: userId, list: { [product.id]: product } });
           } else {
+            debug('hit current list');
             const key = `list.${product.id}`;
             debug(key);
             debug('productid', product.id);
             await client.db(dbname).collection('favlist').update({ _id: userId }, { $set: { [key]: product } });
           }
           const result = await client.db(dbname).collection('favlist').findOne({ _id: userId });
-          res.send(result);
         } catch (err) {
           debug(err);
         }
-        res.json('complete');
+        res.send('complete');
         client.close();
       }());
     }
@@ -50,7 +52,7 @@ function favListController() {
 
   function removeFavList(req, res) {
     const { productId } = req.params;
-    const { userId } = req.session;
+    const userId = req.session.passport.user.profile.id;
     const key = `list.${productId}`;
     (async function getUser() {
       let client;
@@ -71,7 +73,7 @@ function favListController() {
     const { userId } = req.params;
 
     function receiveUpdate(id) {
-      axios.get(`http://localhost:8080/email/product/${id}`)
+      return axios.get(`http://localhost:8080/email/product/${id}`)
         .then(response => response.status);
     }
 

@@ -48,6 +48,12 @@
   border-radius: 5px;
   color: white;
 }
+
+.detail-fav-button button {
+  background-color: #ee5851;
+  border-radius: 5px;
+  color: white;
+}
 .to-store-p {
   text-align: right;
 }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchById } from '../../actions/product_action';
-import { addFavBackend , removeFav} from '../../actions/fav_action';
+import { addFavBackend , removeFavBackend} from '../../actions/fav_action';
 import '../../style/product_show.css'
 import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
-const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFav, user, userId}) => {
+const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFavBackend, user, userId}) => {
     const searchResult = product.description === undefined ? (
         <div>
             <p>{error}</p>
@@ -42,8 +42,8 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
     const image = product.image_url ? product.image_url : NoImage;
     const image_url = product.image_url !== undefined ? image : NoPreview;
     const toggleFav = fav === false ? (
-        <button onClick={() => addFavBackend(product, userId)}>ADD TO FAV</button>)
-        : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
+        <button onClick={() => addFavBackend(product, userId)}>ADD <i className="fa fa-heart"></i></button>)
+        : (<button onClick={() => removeFavBackend(product.id)}>REMOVE <i className="fa fa-times"></i></button>)
     const favButton = !!user ? toggleFav : ""
 
     return (
@@ -56,10 +56,12 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
                 <p className="show-shop">${product.price} from <a target="_blank" rel="noopener noreferrer" href={product.shop_url}>{product.shop_name}</a></p>
                 <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
                 <div className="show-button-container">
+                    <div className="detail-fav-button">
                     {favButton}
+                    </div>
                     <button type="button" className="detail-button" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
                         onClick={() => searchById(product.id)}>
-                    Details
+                    Details <i className="fa fa-external-link"></i>
                     </button>
                 </div>
             </div>
@@ -98,7 +100,7 @@ const mdp = (dispatch) => {
     return {
         searchById: (id) => dispatch(searchById(id)),
         addFavBackend: (product, userid) => dispatch(addFavBackend(product, userid)),
-        removeFav: (id) => dispatch(removeFav(id))
+        removeFavBackend: (id) => dispatch(removeFavBackend(id))
     }
 }
 

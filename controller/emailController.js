@@ -24,7 +24,8 @@ function emailController() {
                 return $(this);
               }
             }).slice(0, 1).attr('class');
-            const parsedClass = product ? product.replace(/[\s]/g, '.') : null;
+
+            const parsedClass = product !== undefined ? product.replace(/[\s]/g, '.') : null;
             return parsedClass;
           }
           // const testing = $('div').filter(function findPrice(i, el) {
@@ -55,7 +56,7 @@ function emailController() {
             list[key].className = className;
           } else {
             let queryPrice = await findPriceThenClass(url, price, list[key].className);
-            queryPrice = queryPrice.replace(/[^0-9.]/g, '');
+            queryPrice = queryPrice ? queryPrice.replace(/[^0-9.]/g, '') : list[key].price;
             list[key].updatedPrice = queryPrice;
           }
         }

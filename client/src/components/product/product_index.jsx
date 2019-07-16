@@ -28,7 +28,6 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
         {items}
       </div>
     )
-    const currentUser = !!user ? <Link to='/favorite' className="col-md-1 favlist">Go To Fav</Link> : ""
 
     const filter = (
       <div className="index-filter">
@@ -54,8 +53,6 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
           </div>
 
             <div className="row p-3 justify-content-around header">
-
-                {currentUser}
             </div>
 
 

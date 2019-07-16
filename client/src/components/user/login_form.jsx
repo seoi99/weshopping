@@ -9,7 +9,7 @@ const LoginForm = ({user, logoutUser, sendGreeting, comp}) => {
             <button className="btn dropdown-toggle" data-toggle="dropdown"> Hello, {user.username[0]}</button>
             <div className="dropdown-menu">
               <button className="dropdown-item" onClick={logoutUser}>Logout</button>
-              <button className="dropdown-item" onClick={() => sendGreeting(user)}>subscribe</button>
+              <button className="dropdown-item" onClick={() => sendGreeting(user)}>Subscribe</button>
               <Link to='/favorite'  className="dropdown-item">My List</Link>
             </div>
         </div>

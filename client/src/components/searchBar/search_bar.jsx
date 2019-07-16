@@ -12,6 +12,11 @@ class SearchBar extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentDidMount() {
+      if (this.props.id) {
+        this.props.requestFavList(this.props.id);
+      }
+    }
     handleSubmit(e) {
         e.preventDefault()
         if (this.state.value.length === 0) {
