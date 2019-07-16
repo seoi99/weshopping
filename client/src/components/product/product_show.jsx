@@ -14,7 +14,6 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
     ) : (
         <div>
             <img src={product.image_url} alt={product.name} />
-            <p>Description</p>
             <p>{product.description}</p>
         </div>
     )
@@ -46,6 +45,7 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
         <button onClick={() => addFavBackend(product, userId)}>ADD TO FAV</button>)
         : (<button onClick={() => removeFav(product.id)}>REMOVE FAV</button>)
     const favButton = !!user ? toggleFav : ""
+
     return (
         <div className="product-show-box" key={product._id}>
             <div className="image-container">
@@ -55,9 +55,9 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
                 <a target="_blank" rel="noopener noreferrer" href={product.url} className="text-primary"> {index}) {product.name}</a>
                 <p className="show-shop">${product.price} from <a target="_blank" rel="noopener noreferrer" href={product.shop_url}>{product.shop_name}</a></p>
                 <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
-                <div className="show-detail-button">
+                <div className="show-button-container">
                     {favButton}
-                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
+                    <button type="button" className="detail-button" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
                         onClick={() => searchById(product.id)}>
                     Details
                     </button>

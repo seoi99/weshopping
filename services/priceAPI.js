@@ -38,12 +38,12 @@ function priceAPI() {
           debug(response.data);
           clearInterval(intervals);
           if (response.data.not_founds === 1) {
-            if (response.data.key === "id") {
+            if (response.data.key === 'id') {
               filtered = {
-                image_url: "",
-                description: "",
-              }
-              resolve(filtered)
+                image_url: '',
+                description: '',
+              };
+              resolve(filtered);
             } else {
               debug('no data is found');
               resolve([]);
@@ -84,9 +84,10 @@ function priceAPI() {
               el.review_count = el.shop_review_count == null ? 0 : el.shop_review_count;
               delete el.shop_review_count;
             }
+            el.image_url = '';
             return el;
           });
-        }  else {
+        } else {
           filtered = {
             image_url: result.image_url,
             description: result.description,

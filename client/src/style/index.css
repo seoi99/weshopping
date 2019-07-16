@@ -1,22 +1,51 @@
 
-.index-header {
-  color: orange;
-  text-align: center;
-  margin-top: 2em;
+
+.index-container {
+  background-color: rgb(255,255,255)
 }
 
-.header {
-  align-items: center;
+.index-nav {
+  border: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .index-form {
+  max-height: 40px;
+}
+
+
+.index-nav * > {
+  max-height: 30px;
+  margin: auto 0;
+}
+
+.index-logo a {
+  margin: auto;
+}
+.index-nav .index-search-container .index-logo img {
+  max-width: 100px;
+  margin: auto;
+  padding-right: 20px;
+}
+
+.index-login, .index-filter {
+  margin: auto;
+}
+
+.index-nav:last-child {
+  display: block;
+  max-width: 20px;
+}
+
+.index-search-container {
   display: flex;
   flex-direction: row;
 }
 
-.favlist {
-  color: red;
-}
+
+
 .index-search {
   background-color: transparent;
   height: min-content;

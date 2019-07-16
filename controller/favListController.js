@@ -7,38 +7,45 @@ const axios = require('axios');
 
 
 function favListController() {
+  function InputValidation(product) {
+    return !!product.name && !!product.price && product.url;
+  }
   function addFavList(req, res) {
     const { userId } = req.params;
     const { product } = req.body;
+    const inputCheck = InputValidation(product);
+    if (!(inputCheck)) {
+      res.status(400);
+      res.send(new Error({ error: 'no product is found' }));
+    } else {
+      (async function addList() {
+        let client;
+        try {
+          client = await MongoClient.connect(uri);
 
-
-    (async function addList() {
-      let client;
-      try {
-        client = await MongoClient.connect(uri);
-
-        // product validation
-        if (!(product.id)) {
-          product.id = new ObjectID();
+          // product validation
+          if (!(product.id)) {
+            product.id = new ObjectID();
+          }
+          debug(userId);
+          const userFavList = await client.db(dbname).collection('favlist').findOne({ _id: userId });
+          if (!(userFavList)) {
+            await client.db(dbname).collection('favlist').insertOne({ _id: userId, list: { [product.id]: product } });
+          } else {
+            const key = `list.${product.id}`;
+            debug(key);
+            debug('productid', product.id);
+            await client.db(dbname).collection('favlist').update({ _id: userId }, { $set: { [key]: product } });
+          }
+          const result = await client.db(dbname).collection('favlist').findOne({ _id: userId });
+          res.send(result);
+        } catch (err) {
+          debug(err);
         }
-        debug(userId);
-        const userFavList = await client.db(dbname).collection('favlist').findOne({ _id: userId });
-        if (!(userFavList)) {
-          await client.db(dbname).collection('favlist').insertOne({ _id: userId, list: { [product.id]: product } });
-        } else {
-          const key = `list.${product.id}`;
-          debug(key);
-          debug('productid', product.id);
-          await client.db(dbname).collection('favlist').update({ _id: userId }, { $set: { [key]: product } });
-        }
-        const result = await client.db(dbname).collection('favlist').findOne({ _id: userId });
-        debug(result);
-      } catch (err) {
-        debug(err);
-      }
-      res.json('complete');
-      client.close();
-    }());
+        res.json('complete');
+        client.close();
+      }());
+    }
   }
 
   function removeFavList(req, res) {

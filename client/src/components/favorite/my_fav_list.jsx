@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import '../../style/my_fav_list.css';
+
 import {requestFavList, removeFavBackend, addFavBackend} from '../../actions/fav_action'
 
 class MyFavList extends Component {
@@ -23,7 +25,6 @@ class MyFavList extends Component {
 
     addItemList(e) {
         e.preventDefault();
-        console.log(this.props.userId);
         this.props.addFavBackend(this.state, this.props.userId);
     }
 
@@ -37,7 +38,7 @@ class MyFavList extends Component {
         const map = favkey.map((favK, index) => {
             const fav = favObj[favK]
             return (
-                <ul key={index}>
+                <ul key={index} className='col-6 col-md-3'>
                     <li>Item : {fav.name}</li>
                     <li>currentPrice : {fav.price}</li>
                     <li>updatedPrice : {fav.updatedPrice}</li>
@@ -47,14 +48,16 @@ class MyFavList extends Component {
             )
         })
         return (
-            <div>
+            <div className="container fav-list">
                 <h1>My List</h1>
-                <Link to='/products'>Back to Search</Link>
+                <Link to='/productlists'>Back to Search</Link>
+                <div className="row">
                 {map}
-                <form onSubmit={this.addItemList}>
+                </div>
+                <form className="add-form" onSubmit={this.addItemList}>
                     <label> name: <input type="text" value={this.state.name} onChange={this.update('name')}></input></label>
                     <label> url:  <input type="text" value={this.state.url} onChange={this.update('url')}></input> </label>
-                    <label> price:  <input type="text" value={this.state.price} onChange={this.update('price')}></input> </label>
+                    <label> price:  <input type="number" value={this.state.price} onChange={this.update('price')}></input> </label>
                     <button> submit </button>
                 </form>
             </div>

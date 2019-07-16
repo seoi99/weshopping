@@ -37,10 +37,14 @@ export const addFavBackend = (product, userId) => (dispatch) => {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({product:{id: product.id, name: product.name, url: product.url, price: product.price}})
-    })
+        body: JSON.stringify({product:{id: product.id, name: product.name, url: product.url, price: product.price}})})
         .then((response) => {
-            dispatch(addToFav(product))
+          console.log(response.status);
+          if (response.status === 400) {
+              console.log('error has been found');
+          } else {
+          dispatch(addToFav(product))
+          }
         })
 }
 

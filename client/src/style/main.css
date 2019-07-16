@@ -17,6 +17,14 @@ body {
   text-align: center;
 }
 
+.main-login-container {
+    display: inline;
+}
+
+.main-login-container:first-child, .user-loggedin:first-child {
+  margin-inline-end: -80%;
+}
+
 .img-thumbnail {
   width: 300px;
 }
@@ -45,4 +53,20 @@ img {
 
 .login-container {
   margin-top: 10px;
+}
+
+.brand h1 {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 300;
+}
+
+.brand-list {
+  display: flex;
+  justify-content: center;
+}
+.brand-list > * {
+  padding: 10px;
+  max-width: 200px;
+  max-height: 200px;
 }

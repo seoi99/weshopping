@@ -1,0 +1,25 @@
+.fav-list {
+  background-color: rgb(255,255,255)
+}
+
+.fav-list h1 {
+  text-align: center;
+}
+
+.fav-list a:first {
+  align-self: flex-end;
+}
+.fav-list li {
+  list-style: none;
+}
+
+.add-form {
+  border-radius: 5px;
+  border: 1px solid black;
+  border-bottom: 1px solid rgb(233,233,233,0.8);
+  padding: 5px;
+}
+.add-form button {
+  display: block;
+  margin: auto;
+}

@@ -29,14 +29,13 @@ class SearchBar extends Component {
     }
 
     render() {
-
         const mainTheme = this.props.comp === 'main' ? (<h2>Shop at the Best Price at the Right Time</h2>) : <span></span>
         return(
           <nav>
-            <div className="web-content">
+            <div className={`web-content ${this.props.comp}-search-container`}>
             <Link to="/" className={`${this.props.comp}-logo`}><img src={logo} alt="logo"/></Link>
             {mainTheme}
-            <form onSubmit={this.handleSubmit} className="search-form">
+            <form onSubmit={this.handleSubmit} className={`search-form ${this.props.comp}-form`}>
                 <input type="search"
                     results="5" name="s" placeholder="Search..."
 

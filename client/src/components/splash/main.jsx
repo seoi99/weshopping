@@ -15,7 +15,7 @@ class Main extends Component {
     return (
       <div className="main container">
         <div className="main-contents">
-          <div className="d-flex flex-row-reverse">
+          <div className="main-login-container">
             <Login/>
           </div>
           <SearchBar comp="main"/>
@@ -44,15 +44,6 @@ class Main extends Component {
             </div>
           </div>
 
-          <div className="brand">
-            <ul>
-              <li>Supported Brand</li>
-              <li>Uniqlo</li>
-              <li>BestBuy</li>
-              <li>J Crew</li>
-              <li>Ebay</li>
-            </ul>
-          </div>
 
           <div className="how-it-works">
             <p>How it Works ?</p>
@@ -60,6 +51,18 @@ class Main extends Component {
             <p>2. Add to Your Favorite List </p>
             <p>3. Set up the Schedule to get price update on your items </p>
           </div>
+
+
+          <div className="brand">
+              <h1>Current Brands</h1>
+              <div className="row brand-list">
+              <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UNIQLO_logo.svg/1200px-UNIQLO_logo.svg.png" alt="UNIQLO"/>
+              <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Best_Buy_Logo.svg" alt="UNIQLO"/>
+              <img className="col-sm-3" src="https://cblproperty.blob.core.windows.net/production/assets/blt7a2a824e499bc040-J.Crew_628.png" alt="UNIQLO"/>
+              <img className="col-sm-3" src="https://www.insight.com/content/dam/insight-web/logos/partner-logos/380x210/lenovo.png" alt="UNIQLO"/>
+              </div>
+          </div>
+
 
 
 
