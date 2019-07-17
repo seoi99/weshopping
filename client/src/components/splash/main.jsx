@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../style/main.css';
 import SearchBar from '../searchBar/search_bar_container';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { loginUser } from '../../actions/user_action';
 import { searchByProducts} from '../../actions/product_action';
 import Login from '../user/login_form'
@@ -18,7 +18,7 @@ class Main extends Component {
     }
 
   render() {
-    console.log(this.props);
+    const listUrl = this.props.loggedin ? "/favorite" : "/productlists"
     return (
       <div className="main container">
         <div className="main-contents">
@@ -35,7 +35,7 @@ class Main extends Component {
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-mobile"></i>
-              <p onClick={() => this.handleSubmit('Smart Phone')}>Smart Phone</p>
+              <p onClick={() => this.handleSubmit('phone')}>Smart Phone</p>
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-laptop"></i>
@@ -57,15 +57,15 @@ class Main extends Component {
             <div className="procedure">
               <div>
                 <p> Search Item </p>
-                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                    <Link to="/productlists"><img className=" border" src="/images/search.png" alt="Search"/></Link>
                 </div>
               <div>
                 <p> Add To Personal List </p>
-                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                  <Link to={`${listUrl}`}><img className=" border" src="/images/list.png" alt="Search"/></Link>
                 </div>
               <div>
-                <p> Receive Notification From your List </p>
-                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                <p> Receive Notification </p>
+                <a href="/auth/google"><img className=" border" src="https://cdn2.hubspot.net/hubfs/4056626/Gmail-logo-760x380.jpg" alt="Search"/></a>
                 </div>
 
             </div>
@@ -88,6 +88,11 @@ class Main extends Component {
     }
 }
 
+const msp = (state) => {
+  return {
+    loggedin : !!state.session.username
+  }
+}
 const mdp = (dispatch) => {
   return {
     searchByProducts: (val) => dispatch(searchByProducts(val))
@@ -95,4 +100,4 @@ const mdp = (dispatch) => {
 }
 
 
-export default connect(null, mdp)(Main)
+export default connect(msp, mdp)(Main)

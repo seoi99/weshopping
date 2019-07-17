@@ -8,16 +8,7 @@ const { dbname } = require('../config/keys');
 
 function productController(priceAPI, emailService) {
   function updateAllImage(products) {
-    for (product of products) {
-      const imageUrl = emailService.getImage(product.url);
-      if (imageUrl === '' || !(imageUrl)) {
-        debug('image not found', imageUrl);
-        const deleteobject = db.collection('product').findOneAndDelete({ _id: product._id });
-      } else {
-        db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
-        debug('updated');
-      }
-    }
+
   }
   function getIndex(req, res) {
     (async function mongo() {
@@ -28,7 +19,6 @@ function productController(priceAPI, emailService) {
         const db = await client.db(dbname);
         const products = await db.collection('product').find({}).toArray();
         debug(products);
-
         res.json(products);
       } catch (err) {
         debug(err.stack);
@@ -95,7 +85,6 @@ function productController(priceAPI, emailService) {
 
   function searchProducts(req, res) {
     const { name } = req.query;
-
     (async function go() {
       let productLists;
       let client;
@@ -110,26 +99,35 @@ function productController(priceAPI, emailService) {
           // request to priceAPI to fetch info
           productLists = await priceAPI.getSearchResult('search_results', 'term', name);
           if (productLists.length !== 0) {
-            // insert to my mongodb and update collection
-            // send response as a object with key of id, and value of each item
             const updateTable = await db.collection('product').insertMany(productLists);
-            const obj = productLists.reduce((object, item) => {
-              object[item.id] = item;
-              return object;
-            }, {});
-            res.json(obj);
           } else {
-            // if nothing found from price api return error with status 404
             res.status(404).send('Sorry, product you searched is not found');
           }
           debug('update Finished');
-        } else {
-          const obj = productLists.reduce((object, item) => {
-            object[item.id] = item;
-            return object;
-          }, {});
-          res.json(obj);
         }
+
+        // image filter
+        for (product of productLists) {
+          if (product.image_url && typeof product.image_url === 'string' && product.image_url.includes('http')) {
+            debug('ok');
+          } else {
+            const imageUrl = await emailService.getImage(product.url);
+            debug(product.url);
+            if (imageUrl === '' || !(imageUrl)) {
+              debug('image not found', imageUrl);
+              const deleteobject = await db.collection('product').findOneAndDelete({ _id: product._id });
+            } else {
+              await db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
+              debug('image is found');
+            }
+          }
+        }
+        productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
+        const obj = productLists.reduce((object, item) => {
+          object[item.id] = item;
+          return object;
+        }, {});
+        res.json(obj);
       } catch (err) {
         debug(err);
       }

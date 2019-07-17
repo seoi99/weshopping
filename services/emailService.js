@@ -31,14 +31,14 @@ function emailService() {
         const html = response.data;
         const $ = cheerio.load(html);
         const image = $('img').filter(function findPrice(i, el) {
-          if ($(this).attr('class')) {
+          if ($(this) !== undefined && $(this).attr('class') && $(this).attr('src') && $(this).attr('src').includes('http')) {
             return $(this);
           }
         }).slice(0, 1).attr('src');
         debug(image, 'first round');
         if (image === undefined) {
           test = $('img').filter(function findPrice(i, el) {
-            if (!($(this)) && $(this).attr('src').includes('http')) {
+            if ($(this).attr('src') && $(this).attr('src').includes('http')) {
               return $(this);
             }
           }).slice(0, 1).attr('src');

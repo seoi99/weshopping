@@ -53,7 +53,7 @@ class MyFavList extends Component {
                   <li>Item : {fav.name}</li>
                   <li>currentPrice : {fav.price}</li>
                   <li>updatedPrice : {fav.updatedPrice}</li>
-                  <li> Link : <a href={fav.url}>Link</a></li>
+                  <a target="_blank" rel="noopener noreferrer" href={fav.url} className="store-link">Store</a>
                   </div>
                   <button onClick={() => this.props.removeFavBackend(fav.id)}><i className="fa fa-times"></i></button>
               </ul>

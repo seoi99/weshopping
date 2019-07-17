@@ -36,7 +36,6 @@ p {
 
 .form-contents-show {
   border-radius: 5px;
-  border: 1px solid rgb(233,233,233,0.8);
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -130,4 +129,14 @@ p {
   border-radius: 5px;
   background-color: #2a77ca;
   color: white;
+}
+
+.store-link {
+  color: white;
+  background-color: #ee5851;
+  padding: 5px 10px;
+  margin: 2px 5px;
+  border-radius: 4px;
+  max-width: 54px;
+
 }

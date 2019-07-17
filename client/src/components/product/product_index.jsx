@@ -4,6 +4,7 @@ import SearchBar from '../searchBar/search_bar_container';
 import Login from '../user/login_form'
 import '../../style/index.css'
 import { Link } from 'react-router-dom'
+import HashLoader from 'react-spinners/HashLoader';
 
 
 const ProductIndex = ({products, error, loading, filterOptions, searchById, user}) => {
@@ -18,9 +19,14 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
     const searchError = error;
     const modal = loading ? (
         <div className="col-md-12 d-flex flex-column">
-            <div className="spinner-border text-primary align-self-center" role="status">
-                <p></p>
-            </div>
+          <div className='hash-loading'>
+            <HashLoader
+              sizeUnit={"px"}
+              size={100}
+              color={'#123abc'}
+              loading={loading}
+            />
+        </div>
             <h2 className="align-self-center">searching products...</h2>
         </div>
     ) : (
