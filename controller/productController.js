@@ -169,20 +169,7 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         product = await db.collection('product').findOne({ id });
-        if (product.image_url === undefined) {
-          const details = await priceAPI.getSearchResult('product', 'id', id);
-          debug(details);
-          if (Object.keys(details).length === 0) {
-            debug('no data is found');
-            res.status(404).send('Sorry, No detail information is found');
-          } else {
-            const update = await db.collection('product').update({ id }, { $set: details });
-            product = await db.collection('product').findOne({ id });
-            res.json(product);
-          }
-        } else {
-          product = await db.collection('product').findOne({ id });
-          res.json(product);
+        if (product.image_url === '' || product.image_url === undefined) {
         }
       } catch (error) {
         debug(error);
