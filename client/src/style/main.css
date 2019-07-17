@@ -70,3 +70,16 @@ img {
   max-width: 200px;
   max-height: 200px;
 }
+
+.procedure {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px 10px;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 20px;
+}
+
+.procedure img {
+  min-width: 200px;
+}

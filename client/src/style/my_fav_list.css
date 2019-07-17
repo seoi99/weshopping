@@ -23,3 +23,33 @@
   display: block;
   margin: auto;
 }
+
+.fav-image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  max-height: 120px;
+}
+.fav-image-container > * {
+  padding-right: 10px;
+}
+.fav-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto 0;
+}
+
+.fav-list button {
+  border: none;
+  color: blue;
+}
+
+.fav-details button {
+  display: inline;
+  margin: auto;
+  border-radius: 5px;
+  color: white;
+  background-color: #ee5851;
+
+}

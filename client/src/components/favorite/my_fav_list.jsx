@@ -32,28 +32,38 @@ class MyFavList extends Component {
         this.props.removeFavBackend(favK);
     }
 
+    
     render() {
         let favObj = this.props.favList;
         let favkey = Object.keys(favObj);
-        const map = favkey.map((favK, index) => {
+        let map;
+        if (favkey.length === 0) {
+          map = <p>No Watchlist is found</p>
+        }
+        else {
+          map = favkey.map((favK, index) => {
             const fav = favObj[favK]
             return (
-                <ul key={index} className='col-6 col-md-3'>
+                <ul key={index} className='fav-image-container'>
+                  <span> {index + 1}</span>
+                    <img src={fav.image_url}></img>
+                    <div className="fav-details">
                     <li>Item : {fav.name}</li>
                     <li>currentPrice : {fav.price}</li>
                     <li>updatedPrice : {fav.updatedPrice}</li>
                     <li> Link : <a href={fav.url}>Link</a></li>
-                    <button onClick={() => this.props.removeFavBackend(fav.id)}>Delete</button>
+                    <button onClick={() => this.props.removeFavBackend(fav.id)}>Remove</button>
+                    </div>
                 </ul>
             )
         })
+        }
         return (
             <div className="container fav-list">
                 <h1>My List</h1>
                 <Link to='/productlists'>Back to Search</Link>
-                <div className="row">
+                <button onClick={() => this.props.requestFavList(this.props.userId, 'requested')} className="update-button">request Update</button>
                 {map}
-                </div>
                 <form className="add-form" onSubmit={this.addItemList}>
                     <label> name: <input type="text" value={this.state.name} onChange={this.update('name')}></input></label>
                     <label> url:  <input type="text" value={this.state.url} onChange={this.update('url')}></input> </label>
@@ -67,6 +77,7 @@ class MyFavList extends Component {
 
 const msp = (state) => {
     return {
+        favUi: state.ui.favLoading,
         favList: state.favList.list,
         user: state.session.username,
         userId: state.session.googleid
@@ -75,7 +86,7 @@ const msp = (state) => {
 
 const mdp = (dispatch) => {
     return {
-        requestFavList: (userId) => dispatch(requestFavList(userId)),
+        requestFavList: (userId, update) => dispatch(requestFavList(userId, update)),
         addFavBackend: (product,userId) => dispatch(addFavBackend(product,userId)),
         removeFavBackend: (id) => dispatch(removeFavBackend(id))
     }

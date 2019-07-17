@@ -71,24 +71,28 @@ function favListController() {
 
   function getFavList(req, res) {
     const { userId } = req.params;
-
+    const { update } = req.query;
     function receiveUpdate(id) {
+      debug('i m hit', id);
       return axios.get(`http://localhost:8080/email/product/${id}`)
         .then(response => response.status);
     }
 
-
     (async function getUser() {
       let client;
       let result;
+      debug('update', update);
+
       try {
+        if (update === 'requested') {
+          debug(update);
+          const status = await receiveUpdate(userId);
+        }
         client = await MongoClient.connect(uri);
         const favList = await client.db(dbname).collection('favlist');
         if (userId) {
-          const status = await receiveUpdate(userId);
           result = await favList.findOne({ _id: userId });
           debug(userId);
-          debug('result', result);
           res.json(result.list);
         } else {
           res.status = 404;

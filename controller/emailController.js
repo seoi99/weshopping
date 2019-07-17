@@ -24,7 +24,6 @@ function emailController() {
                 return $(this);
               }
             }).slice(0, 1).attr('class');
-
             const parsedClass = product !== undefined ? product.replace(/[\s]/g, '.') : null;
             return parsedClass;
           }

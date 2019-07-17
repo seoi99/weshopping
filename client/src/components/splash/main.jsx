@@ -46,20 +46,32 @@ class Main extends Component {
 
 
           <div className="how-it-works">
-            <p>How it Works ?</p>
-            <p>1. Search Item you want to purchase </p>
-            <p>2. Add to Your Favorite List </p>
-            <p>3. Set up the Schedule to get price update on your items </p>
+            <p> Feature </p>
+            <div className="procedure">
+              <div>
+                <p> Search Item </p>
+                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                </div>
+              <div>
+                <p> Add To Personal List </p>
+                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                </div>
+              <div>
+                <p> Receive Notification From your List </p>
+                  <img className="col-sm-3" src="/images/search.png" alt="Search"/>
+                </div>
+
+            </div>
           </div>
 
 
           <div className="brand">
-              <h1>Current Brands</h1>
+              <h1>Brands</h1>
               <div className="row brand-list">
-              <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UNIQLO_logo.svg/1200px-UNIQLO_logo.svg.png" alt="UNIQLO"/>
-              <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Best_Buy_Logo.svg" alt="UNIQLO"/>
-              <img className="col-sm-3" src="https://cblproperty.blob.core.windows.net/production/assets/blt7a2a824e499bc040-J.Crew_628.png" alt="UNIQLO"/>
-              <img className="col-sm-3" src="https://www.insight.com/content/dam/insight-web/logos/partner-logos/380x210/lenovo.png" alt="UNIQLO"/>
+              <img className="col-sm-3" src="http://logok.org/wp-content/uploads/2015/05/UNIQLO-logo-880x660.png" alt="UNIQLO"/>
+              <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Best_Buy_Logo.svg" alt="BEST BUY"/>
+              <img className="col-sm-3" src="https://cblproperty.blob.core.windows.net/production/assets/blt7a2a824e499bc040-J.Crew_628.png" alt="J CREW"/>
+              <img className="col-sm-3" src="https://www.insight.com/content/dam/insight-web/logos/partner-logos/380x210/lenovo.png" alt="LENOVO"/>
               </div>
           </div>
 
