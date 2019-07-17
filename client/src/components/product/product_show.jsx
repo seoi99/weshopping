@@ -7,7 +7,7 @@ import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
 const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFavBackend, user, userId}) => {
-    const searchResult = product.description === undefined ? (
+    const searchResult = product.image_url === undefined ? (
         <div>
             <p>{error}</p>
         </div>
@@ -59,27 +59,15 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
                     <div className="detail-fav-button">
                     {favButton}
                     </div>
-                    <button type="button" className="detail-button" data-toggle="modal" data-target={`#exampleModal-${product.id}`}
-                        onClick={() => searchById(product.id)}>
-                    Details <i className="fa fa-external-link"></i>
-                    </button>
+                    <button type="button" className="detail-button"
+                      onClick={() => searchById(product.id)}>
+                      <a target="_blank" rel="noopener noreferrer" href={product.url}>
+                      Details <i className="fa fa-external-link"></i>
+                  </a>
+                  </button>
                 </div>
             </div>
-            <div className="modal fade" id={`exampleModal-${product.id}`} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-header text-warning">
-                        <h5 className="modal-title">{product.name}</h5>
-                    </div>
-                    <div className="modal-content">
-                        <div className="modal-body" key={product._id}>
-                            {modal}
-                            <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
-                            <p className="show-shop">${product.price} from <a target="_blank" rel="noopener noreferrer" href={product.shop_url} >{product.shop_name}</a></p>
-                            <p className="to-store-p"><a target="_blank" rel="noopener noreferrer" href={product.url} className="to-store">To Store</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     );
 }

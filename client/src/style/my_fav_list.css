@@ -1,6 +1,8 @@
 * {
   font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
-
+}
+*:focus {
+    outline: 0 !important;
 }
 p {
   text-align: center;
@@ -34,7 +36,7 @@ p {
 
 .form-contents-show {
   border-radius: 5px;
-  border-bottom: 1px solid rgb(233,233,233,0.8);
+  border: 1px solid rgb(233,233,233,0.8);
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -53,8 +55,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  max-height: 120px;
-  border-bottom: 1px solid #e8e8e8;
+  border: 1px solid #e8e8e8;
   max-width: 65%;
 }
 
@@ -62,14 +63,15 @@ p {
   padding-right: 10px;
 }
 
-.fav-image {
+.fav-image-container .fav-image {
+  display: flex;
+  justify-content: center;
+  align-self: center;
   min-width: 150px;
-  margin: auto 0;
-
 }
-.fav-image-container .fav-image img {
+.fav-image-container img {
   max-width: 150px;
-  max-height: 120px;
+  max-height: 100px;
 }
 
 
@@ -78,13 +80,13 @@ p {
   flex-direction: column;
   justify-content: center;
   margin: auto 0;
-  max-width: 40%;
+  max-width: 50%;
+  flex-wrap: wrap;
 }
 
 .fav-list button {
   color:#ff5969;
   max-height: 2em;
-  margin-top: -5px;
   border: none;
   border-radius: 5px;
 }

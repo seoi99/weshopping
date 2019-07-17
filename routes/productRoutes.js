@@ -1,13 +1,14 @@
 const express = require('express');
 const productController = require('../controller/productController');
 const priceAPI = require('../services/priceAPI');
+const emailService = require('../services/emailService');
 
 const productRouter = express.Router();
 
 function router() {
   const {
     getIndex, getById, createProduct, deleteProduct, searchProducts, searchById,
-  } = productController(priceAPI);
+  } = productController(priceAPI, emailService);
   productRouter.route('/')
     .get(getIndex);
   // productRouter.route('/:id')

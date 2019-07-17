@@ -6,25 +6,18 @@ const cheerio = require('cheerio');
 const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 
-function productController(priceAPI) {
-  function getImage(url) {
-    return axios.get(url)
-
-      .then((response) => {
-        if (response.status === 400) {
-          debug('what happened/');
-          return '';
-        }
-        debug(response.status);
-        const html = response.data;
-        const $ = cheerio.load(html);
-        debug('complete');
-        return $('img').slice(0, 1).attr('src');
-      })
-      .catch((error) => {
-        debug('error has been found');
-        return '';
-      });
+function productController(priceAPI, emailService) {
+  function updateAllImage(products) {
+    for (product of products) {
+      const imageUrl = emailService.getImage(product.url);
+      if (imageUrl === '' || !(imageUrl)) {
+        debug('image not found', imageUrl);
+        const deleteobject = db.collection('product').findOneAndDelete({ _id: product._id });
+      } else {
+        db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
+        debug('updated');
+      }
+    }
   }
   function getIndex(req, res) {
     (async function mongo() {
@@ -34,24 +27,9 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const products = await db.collection('product').find({}).toArray();
-        // debug(products);
-        // for (product of products) {
-        //   const imageUrl = await getImage(product.url);
-        //   if (imageUrl === '') {
-        //     debug('image not found', imageUrl);
-        //     const deleteobject = await db.collection('product').findOneAndDelete({ _id: product._id });
-        //   } else {
-        //     await db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
-        //     debug('updated');
-        //   }
-        // }
-        // res.json(products);
         debug(products);
-        const obj = products.reduce((object, item) => {
-          object[item.id] = item;
-          return object;
-        }, {});
-        res.json(obj);
+
+        res.json(products);
       } catch (err) {
         debug(err.stack);
       }
@@ -125,7 +103,7 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         debug('waiting for connection');
         const db = await client.db(dbname);
-        productLists = await db.collection('product').find({ name: new RegExp(name, 'i') }).toArray();
+        productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
         debug('connected');
         // it list does not exist in my mongodb
         if (productLists.length === 0) {
@@ -133,8 +111,8 @@ function productController(priceAPI) {
           productLists = await priceAPI.getSearchResult('search_results', 'term', name);
           if (productLists.length !== 0) {
             // insert to my mongodb and update collection
-            const updateTable = await db.collection('product').insertMany(productLists);
             // send response as a object with key of id, and value of each item
+            const updateTable = await db.collection('product').insertMany(productLists);
             const obj = productLists.reduce((object, item) => {
               object[item.id] = item;
               return object;
@@ -169,11 +147,18 @@ function productController(priceAPI) {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         product = await db.collection('product').findOne({ id });
-        if (product.image_url === '' || product.image_url === undefined) {
+        debug(product.image_url);
+        if (product.image_url === '' || !product.image_url) {
+          debug('hit under if statement');
+          const image = await emailService.getImage(product.url);
+          debug(image);
+          await db.collection('product').findOneAndUpdate({ id }, { $set: { image_url: image } });
         }
+        product = await db.collection('product').findOne({ id });
       } catch (error) {
         debug(error);
       }
+      res.json(product);
       client.close();
     }());
   }

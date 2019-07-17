@@ -24,9 +24,7 @@ class SearchBar extends Component {
         } else {
             this.props.searchByProducts(this.state.value)
         }
-        if (this.props.comp === "main") {
-            return this.props.history.push('/productlists')
-        }
+        return this.props.history.push(`/productlists/${this.state.value}`)
     }
 
     handleChange(e) {

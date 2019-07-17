@@ -1,12 +1,13 @@
 const express = require('express');
 
 const emailController = require('../controller/emailController');
+const emailService = require('../services/emailService');
 
 const emailRouter = express.Router();
 
 const {
   updateUserFavList, sendEmail,
-} = emailController();
+} = emailController(emailService);
 
 
 function router() {

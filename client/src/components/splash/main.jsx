@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import '../../style/main.css';
 import SearchBar from '../searchBar/search_bar_container';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { loginUser } from '../../actions/user_action';
+import { searchByProducts} from '../../actions/product_action';
 import Login from '../user/login_form'
 
 class Main extends Component {
@@ -11,7 +12,13 @@ class Main extends Component {
       super(props)
     }
 
+    handleSubmit(val) {
+        this.props.searchByProducts(val)
+        return this.props.history.push(`/productlists/${val}`)
+    }
+
   render() {
+    console.log(this.props);
     return (
       <div className="main container">
         <div className="main-contents">
@@ -24,19 +31,19 @@ class Main extends Component {
           <div className="row main-list">
             <div className="col-sm-2 icon-container">
               <i className="fa fa-television"></i>
-              <p>Electronics</p>
+              <p onClick={() => this.handleSubmit('Electronics')}>Electronics</p>
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-mobile"></i>
-              <p>Smart Phone</p>
+              <p onClick={() => this.handleSubmit('Smart Phone')}>Smart Phone</p>
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-laptop"></i>
-              <p>Laptop</p>
+              <p onClick={() => this.handleSubmit('Laptop')}>Laptop</p>
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-shopping-bag"></i>
-              <p>Fashion</p>
+              <p onClick={() => this.handleSubmit('Fashion')}>Fashion</p>
             </div>
             <div className="col-sm-2 icon-container">
               <i className="fa fa-tags"></i>
@@ -75,14 +82,17 @@ class Main extends Component {
               </div>
           </div>
 
-
-
-
         </div>
       </div>
     )
     }
 }
 
+const mdp = (dispatch) => {
+  return {
+    searchByProducts: (val) => dispatch(searchByProducts(val))
+  }
+}
 
-export default Main
+
+export default connect(null, mdp)(Main)

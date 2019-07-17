@@ -46,11 +46,10 @@ class MyFavList extends Component {
           const fav = favObj[favK]
           return (
               <ul key={index} className='fav-image-container'>
-                <span> {index + 1}</span>
-                <div className="fav-image">
+                <div className="fav-image col-sm-3">
                   <img src={fav.image_url}></img>
                 </div>
-                  <div className="fav-details">
+                  <div className="fav-details col-sm-9">
                   <li>Item : {fav.name}</li>
                   <li>currentPrice : {fav.price}</li>
                   <li>updatedPrice : {fav.updatedPrice}</li>
