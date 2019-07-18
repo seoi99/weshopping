@@ -13,6 +13,7 @@ function favListController() {
   function addFavList(req, res) {
     const { userId } = req.params;
     const { product } = req.body;
+    debug(userId);
     const inputCheck = InputValidation(product);
     if (!(inputCheck)) {
       res.status(400);

@@ -47,7 +47,7 @@ class MyFavList extends Component {
                 return (
                     <ul key={index} className='fav-image-container'>
                         <div className="fav-image col-sm-3">
-                            <img src={fav.image_url}></img>
+                            <img src={fav.image_url} alt={fav.name}></img>
                         </div>
                         <div className="fav-details col-sm-9">
                             <li>Item : {fav.name}</li>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { searchById } from '../../actions/product_action';
 import { addFavBackend , removeFavBackend} from '../../actions/fav_action';
@@ -7,28 +7,6 @@ import NoPreview from '../../style/no_preview.png'
 import NoImage from '../../style/no_image.jpg'
 
 const ProductShow  = ({product, searchById, addFavBackend, error, loading, index, fav, removeFavBackend, user, userId}) => {
-    const searchResult = product.image_url === undefined ? (
-        <div>
-            <p>{error}</p>
-        </div>
-    ) : (
-        <div>
-            <img src={product.image_url} alt={product.name} />
-            <p>{product.description}</p>
-        </div>
-    )
-
-    const modal = loading ? (
-        <div className="d-flex flex-column">
-            <div className="spinner-border text-primary align-self-center" role="status">
-            </div>
-            <p>Fetching Image From Price API</p>
-        </div>
-    ) : (
-        <div>
-            {searchResult}
-        </div>
-    )
 
     const rateToStar = Array.from(Array(5).keys()).map((val, idx) => {
         if (idx * 20 >= product.review_rating) {

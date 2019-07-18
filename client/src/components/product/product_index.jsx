@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ProductShow from './product_show';
 import SearchBar from '../searchBar/search_bar_container';
 import Login from '../user/login_form'
 import '../../style/index.css'
-import { Link } from 'react-router-dom'
 import HashLoader from 'react-spinners/HashLoader';
 
 

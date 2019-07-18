@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../../style/main.css';
 import SearchBar from '../searchBar/search_bar_container';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { loginUser } from '../../actions/user_action';
+import { Link } from 'react-router-dom';
 import { searchByProducts} from '../../actions/product_action';
 import Login from '../user/login_form'
 

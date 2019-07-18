@@ -4,6 +4,7 @@ module.exports = function(app) {
     app.use(proxy('/auth/google', { target: 'http://localhost:8080' }));
     app.use(proxy('/auth/google/redirect*', { target: 'http://localhost:8080' }));
     app.use(proxy('/user/login', { target: 'http://localhost:8080' }));
+    app.use(proxy('/user/demo', { target: 'http://localhost:8080' }));
     app.use(proxy('/user/logout', { target: 'http://localhost:8080' }));
     app.use(proxy('/products/*', { target: 'http://localhost:8080' }));
     app.use(proxy('/products/search/*', { target: 'http://localhost:8080' }));

@@ -1,9 +1,6 @@
 const passport = require('passport');
 require('./strategies/google_strategy.js')();
-const { MongoClient } = require('mongodb');
-const debug = require('debug')('app:passport');
-const { uri } = require('./keys');
-const { dbname } = require('./keys');
+require('./strategies/jwt_strategy.js')();
 
 module.exports = function passportConfig(app) {
   app.use(passport.initialize());

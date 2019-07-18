@@ -1,57 +1,68 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect, Link} from 'react-router-dom';
-import { logoutUser, sendGreeting } from '../../actions/user_action';
+import {Link} from 'react-router-dom';
+import { logoutUser, sendGreeting, demo } from '../../actions/user_action';
 import '../../style/login_form.css'
-const LoginForm = ({user, logoutUser, sendGreeting, comp}) => {
-    const userForm = (
-        <form className="d-flex flex-col justify-content-center">
-            <label> Email :
-                <input type="email"></input>
-            </label>
-            <label> Password :
-                <input type="password"></input>
-            </label>
-            <button className="m-auto">login</button>
-        </form>
-    )
+class LoginForm extends Component {
 
-    return user.username ? (
-        <div className="user-loggedin">
-            <button className="btn dropdown-toggle" data-toggle="dropdown"> Hello, {user.username[0]}</button>
-            <div className="dropdown-menu">
-                <button className="dropdown-item" onClick={logoutUser}>Logout</button>
-                <button className="dropdown-item" onClick={() => sendGreeting(user)}>Subscribe</button>
-                <Link to='/favorite'  className="dropdown-item">My List</Link>
-            </div>
-        </div>
-    )
-        : (
-            <div className="login-modal">
-                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal">
-              Login
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div>
-                                    <button className="loginBtn--google loginBtn">
-                                        <a href="/auth/google">G</a>
-                                    </button>
-                                    {userForm}
-                                    <button>Demo</button>
-                                </div>
-                                <div>
-                                </div>
-                            </div>
+    userForm (type) {
+        return (
+            <form className="d-flex flex-col justify-content-center">
+                <label> Username :
+                    <input type="email"></input>
+                </label>
+                <label> Password :
+                    <input type="password"></input>
+                </label>
+                <button className="m-auto">{type}</button>
+            </form>
+        )
+    }
 
-                        </div>
-                    </div>
+    redirect() {
+      
+    }
+    render () {
+        return this.props.user.username ? (
+            <div className="user-loggedin">
+                <button className="btn dropdown-toggle" data-toggle="dropdown"> Hello, {this.props.user.username[0]}</button>
+                <div className="dropdown-menu">
+                    <button className="dropdown-item" onClick={this.props.logoutUser}>Logout</button>
+                    <button className="dropdown-item" onClick={() => this.props.sendGreeting(this.props.user)}>Subscribe</button>
+                    <Link to='/favorite'  className="dropdown-item">My List</Link>
                 </div>
-
             </div>
         )
+            : (
+                <div className="login-modal">
+                    <button type="button" className="btn btn-primary " data-toggle="modal" data-target="#exampleModal">
+              Login
+                    </button>
+                    <div className="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-body">
+
+                                    <div>
+                                        <button className="loginBtn--google loginBtn">
+                                            <a href="/auth/google">G</a>
+                                        </button>
+                                        <h2>Login</h2>
+                                        <span> New User ? <button onClick={this.handleClick}>Sign Up</button> Instead</span>
+                                        {this.userForm("Login")}
+                                        <button aria-hidden="true" onClick={this.props.demo}>Demo</button>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            )
+    }
 }
 
 const msp = (state, ownProps) => {
@@ -62,6 +73,7 @@ const msp = (state, ownProps) => {
 const mdp = (dispatch) => {
     return {
         logoutUser: () => dispatch(logoutUser()),
+        demo: () => dispatch(demo()),
         sendGreeting: (user) => dispatch(sendGreeting(user))
     }
 }

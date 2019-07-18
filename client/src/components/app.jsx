@@ -7,7 +7,6 @@ import ProductForm from './product/product_form_container';
 import Favorite from './favorite/my_fav_list';
 import Main from './splash/main';
 import Footer from './footer/footer';
-import queryString from 'query-string'
 import { AuthRoute } from '../utils/route_util'
 
 

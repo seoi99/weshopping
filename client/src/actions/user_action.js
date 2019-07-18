@@ -40,6 +40,18 @@ export const loginUser = () => (dispatch) => {
         )
         .catch(() => dispatch(userError("no item image is found")))
 }
+export const demo = () => (dispatch) => {
+    const url = `/user/demo`;
+    fetch(url)
+        .then(response => {
+            return response.json()
+        })
+        .then(user => {
+          console.log(user);
+            dispatch(receiveUser(user))}
+        )
+        .catch(() => dispatch(userError("user demo failed")))
+}
 
 
 export const logoutUser = () => (dispatch) => {

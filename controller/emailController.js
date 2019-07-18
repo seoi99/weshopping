@@ -10,7 +10,6 @@ function emailController(emailService) {
   function updateUserFavList(req, res) {
     const { userId } = req.params;
 
-
     (async function readPriceFromURL() {
       let client;
       let result;
