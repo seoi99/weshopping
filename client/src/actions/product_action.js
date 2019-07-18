@@ -64,9 +64,9 @@ export const fetchAllProducts = () => (dispatch) => {
     fetch(url)
         .then(response => response.json())
         .then(products => {
-          console.log(products);
-           return dispatch(receiveAllProducts(products))
-         })
+            console.log(products);
+            return dispatch(receiveAllProducts(products))
+        })
         .catch((err) => dispatch(receiveErrors(err)))
 }
 
@@ -123,8 +123,8 @@ export const searchById = (id) => (dispatch) => {
     const url = `/products/search/${id}`;
     fetch(url)
         .then(response => {
-          console.log(response);
-          return response.json()
+            console.log(response);
+            return response.json()
         })
         .then(product =>{
             dispatch(receiveProductDetails(product))}

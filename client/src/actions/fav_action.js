@@ -32,15 +32,15 @@ export const addItem = (product) => {
 }
 
 export const favComplete = () => {
-  return {
-    type: FAV_COMPLETE
-  }
+    return {
+        type: FAV_COMPLETE
+    }
 }
 
 export const favLoading = () => {
-  return {
-    type: FAV_LOADING
-  }
+    return {
+        type: FAV_LOADING
+    }
 }
 
 export const addFavBackend = (product, userId) => (dispatch) => {
@@ -53,12 +53,12 @@ export const addFavBackend = (product, userId) => (dispatch) => {
         },
         body: JSON.stringify({product:{id: product.id, name: product.name, url: product.url, price: product.price, image_url: product.image_url}})})
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 400) {
-              console.log('error has been found');
-          } else {
-          dispatch(addToFav(product))
-          }
+            console.log(response.status);
+            if (response.status === 400) {
+                console.log('error has been found');
+            } else {
+                dispatch(addToFav(product))
+            }
         })
 }
 

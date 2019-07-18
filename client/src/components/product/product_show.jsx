@@ -57,14 +57,14 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
                 <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
                 <div className="show-button-container">
                     <div className="detail-fav-button">
-                    {favButton}
+                        {favButton}
                     </div>
                     <button type="button" className="detail-button"
-                      onClick={() => searchById(product.id)}>
-                      <a target="_blank" rel="noopener noreferrer" href={product.url}>
+                        onClick={() => searchById(product.id)}>
+                        <a target="_blank" rel="noopener noreferrer" href={product.url}>
                       Details <i className="fa fa-external-link"></i>
-                  </a>
-                  </button>
+                        </a>
+                    </button>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@ class ProductForm  extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.props.createProduct(this.state);
-        
+
     }
 
     render() {

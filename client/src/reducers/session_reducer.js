@@ -7,20 +7,20 @@ import {
 import merge from 'lodash/merge';
 
 const nullUser = {
-  user: '',
-  subscription: false
+    user: '',
+    subscription: false
 }
 
 const sessionReducer = (state = nullUser, action) => {
     Object.freeze(state);
     switch (action.type) {
     case RECEIVE_USER:
-      console.log(state);
-        return merge({}, state, {['user']: action.user});
+        console.log(state);
+        return merge({}, state, {'user': action.user});
     case LOGOUT_USER:
         return nullUser;
     case RECEIVE_EMAIL:
-      return merge({}, state, {['subscription']: true})
+        return merge({}, state, {'subscription': true})
     default:
         return state;
     }

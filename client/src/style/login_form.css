@@ -49,3 +49,8 @@ body {
   color:white;
   text-decoration: none;
 }
+
+.login-modal {
+  display: flex;
+  justify-content: flex-end;
+}

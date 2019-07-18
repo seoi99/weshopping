@@ -3,7 +3,7 @@ import {
 } from '../actions/product_action';
 
 import {
-  FAV_LOADING, FAV_COMPLETE
+    FAV_LOADING, FAV_COMPLETE
 } from '../actions/fav_action';
 
 const initializeState = {
@@ -28,9 +28,9 @@ const uiReducer = (state = initializeState, action) => {
         fav.favLoading = true;
         return fav
     case FAV_COMPLETE:
-      const complete = Object.assign({}, state)
-      complete.favLoading = false;
-      return complete
+        const complete = Object.assign({}, state)
+        complete.favLoading = false;
+        return complete
 
 
     case RECEIVE_SEARCH_PRODUCT:

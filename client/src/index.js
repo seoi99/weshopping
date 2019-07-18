@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
 import configureStore from './store/store';
-import { loginUser } from './actions/user_action'
-import axios from 'axios'
 
 document.addEventListener('DOMContentLoaded', () => {
     let store;

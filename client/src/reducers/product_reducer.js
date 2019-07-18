@@ -3,7 +3,6 @@ import {
     RECEIVE_SEARCH_PRODUCT,
     FILTER_OPTIONS,
     RECEIVE_PRODUCT_DETAIL,
-    INDEX_LOADING,
 } from '../actions/product_action';
 
 import merge from 'lodash/merge';

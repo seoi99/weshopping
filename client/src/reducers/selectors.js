@@ -26,5 +26,5 @@ export const sortProductByPrice = (products, option=initialState) => {
 }
 
 export const getFavList = (favlist) => {
-  
+
 }

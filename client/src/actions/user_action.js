@@ -17,15 +17,15 @@ export const userError = () => {
 }
 
 export const removeUser = () => {
-  return {
-    type: LOGOUT_USER,
-  }
+    return {
+        type: LOGOUT_USER,
+    }
 }
 
 export const receiveEmail = () => {
-  return {
-    type: RECEIVE_EMAIL,
-  }
+    return {
+        type: RECEIVE_EMAIL,
+    }
 }
 
 
@@ -46,7 +46,7 @@ export const logoutUser = () => (dispatch) => {
     const url = `/user/logout`;
     fetch(url, { method: 'DELETE'})
         .then(() => {
-          dispatch(removeUser())
+            dispatch(removeUser())
         })
 }
 
@@ -54,37 +54,13 @@ export const sendGreeting = (user) => (dispatch) => {
     console.log(user.googleid);
     const url = `/email/greeting/${user.email}`;
     fetch(url, {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({user})})
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user})})
         .then(() => {
-          dispatch(receiveEmail())
+            dispatch(receiveEmail())
         })
 }
-
-//
-// export const ADD_TO_FAV = 'ADD_TO_FAV'
-// export const REMOVE_FAV = 'REMOVE_FAV'
-//
-//
-// getfav
-// addToFav
-// removeFav
-
-
-
-// export const addToFav = (product) => {
-//     return {
-//         type: ADD_TO_FAV,
-//         product
-//     }
-// }
-// export const removeFav = (id) => {
-//     return {
-//         type: REMOVE_FAV,
-//         id
-//     }
-// }

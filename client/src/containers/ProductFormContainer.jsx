@@ -4,16 +4,16 @@ import React from "react";
 import { addProduct } from "../actions/product_action";
 
 class ProductFormContainer extends React.Component {
-  render() {
-    return <ProductForm {...this.props} />;
-  }
+    render() {
+        return <ProductForm {...this.props} />;
+    }
 }
 
 const mdp = dispatch => ({
-  addProduct: () => dispatch(addProduct())
+    addProduct: () => dispatch(addProduct())
 });
 
 export default connect(
-  () => ({}),
-  mdp
+    () => ({}),
+    mdp
 )(ProductFormContainer);

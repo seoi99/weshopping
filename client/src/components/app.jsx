@@ -13,7 +13,7 @@ import { AuthRoute } from '../utils/route_util'
 
 class App extends Component {
 
-  render() {
+    render() {
         return (
             <div>
                 <Route exact path='/productlists/:name' component={ProductIndexContainer}/>
@@ -24,8 +24,8 @@ class App extends Component {
                 <Footer/>
             </div>
         )
-      }
-  }
+    }
+}
 
 
 export default App;
