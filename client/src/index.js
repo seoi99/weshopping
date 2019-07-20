@@ -8,7 +8,12 @@ import { logout } from './actions/user_action';
 
 document.addEventListener('DOMContentLoaded', () => {
     let store;
+
     if (window.location.search) {
+      localStorage.google = window.location.search
+      window.location.search = "";
+    }
+    if (localStorage.google) {
       return fetch('auth/google/login')
         .then(res => {
           return res.json()
@@ -16,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(user => {
           const preloadedState = { session: { isAuthenticated: true, user: user } };
           store = configureStore(preloadedState);
-          window.getState = store.getState
           const root = document.getElementById('root');
           ReactDOM.render(<Root store={store} />, root);
+          window.location.search = ""
         })
     }
     else if (localStorage.jwtToken) {
