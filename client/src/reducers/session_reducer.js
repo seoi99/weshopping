@@ -8,7 +8,7 @@ import merge from 'lodash/merge';
 
 const nullUser = {
     user: '',
-    subscription: false
+    isAuthenticated: false
 }
 
 const sessionReducer = (state = nullUser, action) => {

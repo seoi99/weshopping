@@ -34,6 +34,7 @@ function jwtStrategy() {
       } catch (error) {
         debug(error);
       }
+      client.close();
     })));
 }
 
