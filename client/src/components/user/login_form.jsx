@@ -1,79 +1,82 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { logoutUser, sendGreeting, demo } from '../../actions/user_action';
+import { loginUser, sendGreeting,logout, googlelogout} from '../../actions/user_action';
 import '../../style/login_form.css'
 class LoginForm extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: '',
+            password: '',
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
 
-    userForm (type) {
-        return (
-            <form className="d-flex flex-col justify-content-center">
-                <label> Username :
-                    <input type="email"></input>
-                </label>
-                <label> Password :
-                    <input type="password"></input>
-                </label>
-                <button className="m-auto">{type}</button>
-            </form>
-        )
+    }
+    update(field) {
+        return e => this.setState({
+            [field]: e.currentTarget.value.toLowerCase()
+        });
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+
+        let user = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        this.props.loginUser(user);
     }
 
-    redirect() {
-      
-    }
-    render () {
-        return this.props.user.username ? (
-            <div className="user-loggedin">
-                <button className="btn dropdown-toggle" data-toggle="dropdown"> Hello, {this.props.user.username[0]}</button>
-                <div className="dropdown-menu">
-                    <button className="dropdown-item" onClick={this.props.logoutUser}>Logout</button>
-                    <button className="dropdown-item" onClick={() => this.props.sendGreeting(this.props.user)}>Subscribe</button>
-                    <Link to='/favorite'  className="dropdown-item">My List</Link>
-                </div>
+    loginForm() {
+        return(
+            <div>
+                <a href="/auth/google">Google</a>
+                <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <input type="text"
+                            value={this.state.email}
+                            onChange={this.update('email')}
+                            placeholder="Email"
+                        />
+                        <br/>
+                        <input type="password"
+                            value={this.state.password}
+                            onChange={this.update('password')}
+                            placeholder="Password"
+                        />
+                        <br/>
+                        <input type="submit" value="Submit" />
+                    </div>
+                </form>
             </div>
         )
-            : (
-                <div className="login-modal">
-                    <button type="button" className="btn btn-primary " data-toggle="modal" data-target="#exampleModal">
-              Login
-                    </button>
-                    <div className="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-body">
+    }
 
-                                    <div>
-                                        <button className="loginBtn--google loginBtn">
-                                            <a href="/auth/google">G</a>
-                                        </button>
-                                        <h2>Login</h2>
-                                        <span> New User ? <button onClick={this.handleClick}>Sign Up</button> Instead</span>
-                                        {this.userForm("Login")}
-                                        <button aria-hidden="true" onClick={this.props.demo}>Demo</button>
-                                    </div>
-                                    <div>
-                                    </div>
-                                </div>
+    greetingForm() {
+        return (
+            <div>
+                <h1>Hi {this.props.user}</h1>
+                <button onClick={() => this.props.googlelogout()}>Logout</button>
+            </div>
+        )
+    }
+    render() {
+        return !this.props.user ? this.loginForm()  : this.greetingForm()
 
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            )
     }
 }
 
 const msp = (state, ownProps) => {
     return {
-        user: state.session,
+        user: state.session.user.email,
     }
 }
 const mdp = (dispatch) => {
     return {
-        logoutUser: () => dispatch(logoutUser()),
-        demo: () => dispatch(demo()),
+        loginUser: (user) => dispatch(loginUser(user)),
+        logout: () => dispatch(logout()),
+        googlelogout: () => dispatch(googlelogout()),
         sendGreeting: (user) => dispatch(sendGreeting(user))
     }
 }

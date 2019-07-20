@@ -15,7 +15,6 @@ function router() {
   userRouter.post('/signup', signup);
   userRouter.delete('/logout', logout);
   userRouter.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-    debug(req.user);
     res.json({
       id: req.user._id,
       name: req.user.name,

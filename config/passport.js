@@ -1,4 +1,5 @@
 const passport = require('passport');
+const debug = require('debug')('app:passport');
 require('./strategies/google_strategy.js')();
 require('./strategies/jwt_strategy.js')();
 

@@ -6,13 +6,12 @@ const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 const { secretOrKey } = require('../config/keys');
 const { ObjectID } = require('mongodb');
-
+const validateRegisterInput = require('./../validation/register');
+const validateLoginInput = require('./../validation/login');
 
 function userController() {
   function login(req, res) {
     const { token } = req.session;
-    console.log(req.session);
-    debug('token', token);
     (async function getUser() {
       let client;
       let user;
@@ -57,6 +56,10 @@ function userController() {
 
   function signup(req, res) {
   // Check to make sure nobody has already registered with a duplicate email
+    const { errors, isValid } = validateRegisterInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
     (async function registerUser() {
       let client;
@@ -73,6 +76,7 @@ function userController() {
           password: req.body.password,
         };
         debug(newUser);
+
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, async (err, hash) => {
             if (err) throw err;
@@ -94,9 +98,15 @@ function userController() {
   }
 
   function loginlocal(req, res) {
-    debug(secretOrKey);
+    const { errors, isValid } = validateLoginInput(req.body);
     let client;
     let user;
+
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     const { password } = req.body;
     (async function loginUser() {
       try {
@@ -109,7 +119,7 @@ function userController() {
         bcrypt.compare(password, user.password)
           .then((isMatch) => {
             if (isMatch) {
-              const payload = { id: user._id, email: user.email };
+              const payload = { id: user._id, email: user.email, name: user.name };
 
               jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
                 res.json({

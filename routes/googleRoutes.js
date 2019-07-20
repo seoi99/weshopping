@@ -19,8 +19,27 @@ function router() {
   googleRouter.get('/google/redirect',
     passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
       req.session.token = req.user.token;
-      res.redirect(`${req.session.path}`);
+      res.redirect(`${mainUrl}?token=${req.session.token}`);
     });
+
+  const authCheck = (req, res, next) => {
+    debug(req.session.token, req.session);
+    if (!req.session.token) {
+      res.status(401).json({
+        authenticated: false,
+        message: 'user has not been authenticated',
+      });
+    } else {
+      next();
+    }
+  };
+  googleRouter.get('/google/login', authCheck, (req, res) => {
+    res.json(req.session.passport.user.user);
+  });
+  googleRouter.delete('/google/logout', authCheck, (req, res) => {
+    req.session.token = null;
+    res.send('session has been cleared');
+  });
 
   return googleRouter;
 }

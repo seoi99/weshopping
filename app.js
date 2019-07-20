@@ -42,18 +42,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+
 app.get('/', (req, res) => {
-  debug(req.cookies);
-  debug(req.session.token);
-  if (req.session.token) {
-    res.cookie('token', req.session.token);
-    res.json({ status: 'session has been set' });
-  } else {
-    res.cookie('token', '');
-    res.json({
-      status: 'session cookie not set',
-    });
-  }
+  res.send('hello');
 });
 
 app.use('/products', productRouter);
@@ -62,12 +53,12 @@ app.use('/user', userRouter);
 app.use('/favlist', favListRouter);
 app.use('/email', emailRouter);
 
-schedule.scheduleJob({ minute: 40 }, () => {
-  axios.get('http://localhost:8080/email/product/104968562447721743715')
-    .then((response) => {
-      console.log(response.status);
-    });
-});
+// schedule.scheduleJob({ minute: 40 }, () => {
+//   axios.get('http://localhost:8080/email/product/104968562447721743715')
+//     .then((response) => {
+//       console.log(response.status);
+//     });
+// });
 
 app.listen(port, () => {
   debug(`listening at server ${chalk.green(port)}`);

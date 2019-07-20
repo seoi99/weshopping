@@ -20,27 +20,26 @@ function googleStrategy() {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const col = await db.collection('user');
-        let userResult = await col.findOne({ googleid: profile.id });
+        const userResult = await col.findOne({ googleid: profile.id });
         if (userResult) {
-          userResult = await col.findOneAndUpdate({ googleid: profile.id },
-            { $set: { token }}, { returnNewDocument: true });
           user = userResult;
         } else {
           const newUser = {
-            username: profile.displayName, googleid: profile.id, token, email: profile.emails[0].value,
+            name: profile.displayName, id: profile.id, email: profile.emails[0].value,
           };
           user = newUser;
-          col.insertOne(newUser);
+          await col.insertOne(newUser);
         }
+        user = await col.findOne({ email: profile.emails[0].value });
       } catch (error) {
         debug(error);
       }
+      debug(user);
+      client.close();
       return done(null, {
         user,
-        profile,
         token,
       });
-      client.close();
     })));
 }
 

@@ -20,14 +20,15 @@ function jwtStrategy() {
     // This payload includes the items we specified earlier
     (async (jwt_payload, done) => {
       let client;
+
       debug('payload', jwt_payload);
       try {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         debug('hit here');
         const user = await db.collection('user').findOne({ _id: ObjectID(jwt_payload.id) });
+        debug(user);
         if (user) {
-          debug(user);
           return done(null, user);
         }
         return done(null, false);
