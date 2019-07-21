@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     else if (localStorage.jwtToken) {
-
+      console.log('hit here');
         setAuthToken(localStorage.jwtToken);
 
         // Decode the token to obtain the user's information

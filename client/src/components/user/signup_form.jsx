@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { loginUser, sendGreeting,logout, googlelogout} from '../../actions/user_action';
+import { loginUser, sendGreeting,logout, googlelogout, signup} from '../../actions/user_action';
 import '../../style/login_form.css'
-class LoginForm extends Component {
+class SignupForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            name: '',
             email: '',
             password: '',
+            password2: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -28,7 +30,7 @@ class LoginForm extends Component {
             password2: this.state.password2,
 
         };
-        this.props.loginUser(user);
+        this.props.signup(user);
     }
 
     loginForm() {
@@ -36,7 +38,13 @@ class LoginForm extends Component {
             <div>
                 <a href="/auth/google">Google</a>
                 <form onSubmit={this.handleSubmit}>
-
+                    <div>
+                        <input type="text"
+                            value={this.state.name}
+                            onChange={this.update('name')}
+                            placeholder="Name"
+                        />
+                        <br/>
                         <input type="text"
                             value={this.state.email}
                             onChange={this.update('email')}
@@ -49,8 +57,14 @@ class LoginForm extends Component {
                             placeholder="Password"
                         />
                         <br/>
+                        <input type="password"
+                            value={this.state.password2}
+                            onChange={this.update('password2')}
+                            placeholder="Password"
+                        />
+                        <br/>
                         <input type="submit" value="Submit" />
-        
+                    </div>
                 </form>
             </div>
         )
@@ -60,7 +74,7 @@ class LoginForm extends Component {
         return (
             <div>
                 <h1>Hi {this.props.user}</h1>
-                <button onClick={() => this.props.googlelogout()}>Logout</button>
+                <button onClick={() => this.props.logout()}>Logout</button>
             </div>
         )
     }
@@ -79,9 +93,10 @@ const msp = (state, ownProps) => {
 const mdp = (dispatch) => {
     return {
         loginUser: (user) => dispatch(loginUser(user)),
+        signup: (user) => dispatch(signup(user)),
         logout: () => dispatch(logout()),
         googlelogout: () => dispatch(googlelogout()),
         sendGreeting: (user) => dispatch(sendGreeting(user))
     }
 }
-export default connect(msp, mdp)(LoginForm)
+export default connect(msp, mdp)(SignupForm)

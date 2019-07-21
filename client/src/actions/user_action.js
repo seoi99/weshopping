@@ -14,6 +14,7 @@ export const receiveUser = (user) => {
 }
 
 export const userError = (error) => {
+    console.log(error);
     return {
         type: USER_ERROR,
         error
@@ -48,9 +49,14 @@ export const signup = (user) => (dispatch) => {
     const url = `/user/signup`;
     axios.post(url, user)
         .then(res => {
-            dispatch(receiveUser())
+            const { token } = res.data;
+            localStorage.setItem('jwtToken', token);
+            APIUtil.setAuthToken(token);
+            const decoded = jwt_decode(token);
+            dispatch(receiveUser(decoded))
         })
         .catch(err => {
+            console.log(err.response.data);
             dispatch(userError(err.response.data))
         })
 }
@@ -62,6 +68,7 @@ export const logout = () => dispatch => {
 };
 export const googlelogout = () => dispatch => {
     const url = '/auth/google/logout'
+    localStorage.removeItem('google')
     axios.delete(url)
     .then(res => {
       dispatch(removeUser())

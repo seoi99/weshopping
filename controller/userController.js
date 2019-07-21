@@ -75,14 +75,13 @@ function userController() {
           email: req.body.email,
           password: req.body.password,
         };
-        debug(newUser);
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, async (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
             user = await client.db(dbname).collection('user').insertOne(newUser);
-            const payload = { id: user._id, name: user.name };
+            const payload = { id: user._id, name: user.name, email: user.email };
             jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
               res.json({
                 success: true,
