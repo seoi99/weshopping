@@ -10,7 +10,6 @@ class LoginForm extends Component {
             password: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
     update(field) {
         return e => this.setState({
@@ -31,7 +30,6 @@ class LoginForm extends Component {
             <div>
 
                 <form onSubmit={this.handleSubmit}>
-
                     <input type="text"
                         value={this.state.email}
                         onChange={this.update('email')}
@@ -44,7 +42,7 @@ class LoginForm extends Component {
                         placeholder="Password"
                     />
                     <br/>
-                    <input type="submit" value="Submit"/>
+                    <input type="submit" value="Login"/>
                 </form>
             </div>
         )

@@ -10,24 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let store;
 
     if (window.location.search) {
-      localStorage.google = window.location.search
-      window.location.search = "";
+        localStorage.google = window.location.search
+        window.location.search = "";
     }
     if (localStorage.google) {
-      return fetch('auth/google/login')
-        .then(res => {
-          return res.json()
-        })
-        .then(user => {
-          const preloadedState = { session: { isAuthenticated: true, user: user } };
-          store = configureStore(preloadedState);
-          const root = document.getElementById('root');
-          ReactDOM.render(<Root store={store} />, root);
-          window.location.search = ""
-        })
+        return fetch('auth/google/login')
+            .then(res => {
+                return res.json()
+            })
+            .then(user => {
+                const preloadedState = { session: { isAuthenticated: true, user: user } };
+                store = configureStore(preloadedState);
+                const root = document.getElementById('root');
+                ReactDOM.render(<Root store={store} />, root);
+                window.location.search = ""
+            })
     }
     else if (localStorage.jwtToken) {
-      console.log('hit here');
+        console.log('hit here');
         setAuthToken(localStorage.jwtToken);
 
         // Decode the token to obtain the user's information

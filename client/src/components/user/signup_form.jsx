@@ -60,7 +60,7 @@ class SignupForm extends Component {
                             placeholder="Password"
                         />
                         <br/>
-                        <input type="submit" value="Submit" data-dismiss="modal"/>
+                        <input type="submit" value="Sign Up" data-dismiss="modal"/>
                     </div>
                 </form>
             </div>
