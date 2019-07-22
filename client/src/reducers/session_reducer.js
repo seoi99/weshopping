@@ -15,8 +15,8 @@ const sessionReducer = (state = nullUser, action) => {
     Object.freeze(state);
     switch (action.type) {
     case RECEIVE_USER:
-        console.log(state);
-        return merge({}, state, action.user);
+        console.log('session reducer',action.user);
+        return { ...state, user: action.user}
     case LOGOUT_USER:
         return nullUser;
     case RECEIVE_EMAIL:

@@ -25,7 +25,7 @@ function googleStrategy() {
           user = userResult;
         } else {
           const newUser = {
-            name: profile.displayName, id: profile.id, email: profile.emails[0].value,
+            name: profile.displayName, googleid: profile.id, email: profile.emails[0].value,
           };
           user = newUser;
           await col.insertOne(newUser);

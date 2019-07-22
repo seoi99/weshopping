@@ -6,12 +6,11 @@ const userController = require('../controller/userController');
 
 
 const {
-  login, logout, signup, demo, loginlocal,
+  login, logout, signup,
 } = userController();
 const userRouter = express.Router();
 function router() {
-  userRouter.post('/login', loginlocal);
-  userRouter.get('/demo', demo);
+  userRouter.post('/login', login);
   userRouter.post('/signup', signup);
   userRouter.delete('/logout', logout);
   userRouter.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {

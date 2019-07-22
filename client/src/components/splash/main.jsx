@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { searchByProducts} from '../../actions/product_action';
 import Session from '../user/session_form'
+import Login from '../user/login_form'
 
 class Main extends Component {
 

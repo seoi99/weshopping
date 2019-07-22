@@ -7,6 +7,7 @@ export const RECEIVE_EMAIL = 'RECEIVE_EMAIL';
 export const USER_ERROR = 'USER_ERROR'
 
 export const receiveUser = (user) => {
+    console.log(user);
     return {
         type: RECEIVE_USER,
         user
@@ -53,6 +54,7 @@ export const signup = (user) => (dispatch) => {
             localStorage.setItem('jwtToken', token);
             APIUtil.setAuthToken(token);
             const decoded = jwt_decode(token);
+
             dispatch(receiveUser(decoded))
         })
         .catch(err => {

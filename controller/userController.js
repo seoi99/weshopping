@@ -10,44 +10,6 @@ const validateRegisterInput = require('./../validation/register');
 const validateLoginInput = require('./../validation/login');
 
 function userController() {
-  function login(req, res) {
-    const { token } = req.session;
-    (async function getUser() {
-      let client;
-      let user;
-      try {
-        client = await MongoClient.connect(uri);
-        if (token !== undefined) {
-          user = await client.db(dbname).collection('user').findOne({ token });
-          user = {
-            googleid: user.googleid, username: user.username, list: user.list, email: user.email,
-          };
-        } else {
-          user = { username: null };
-        }
-      } catch (err) {
-        debug(err);
-      }
-      client.close();
-      res.json(user);
-    }());
-  }
-
-  function demo(req, res) {
-    (async function getUser() {
-      let client;
-      let user;
-      try {
-        client = await MongoClient.connect(uri);
-        user = await client.db(dbname).collection('user').findOne({ email: 'seo9204@gmail.com' });
-      } catch (err) {
-        debug(err);
-      }
-      client.close();
-      res.json(user);
-    }());
-  }
-
   function logout(req, res) {
     req.logout();
     req.session.token = null;
@@ -80,7 +42,8 @@ function userController() {
           bcrypt.hash(newUser.password, salt, async (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
-            user = await client.db(dbname).collection('user').insertOne(newUser);
+            await client.db(dbname).collection('user').insertOne(newUser);
+            user = await client.db(dbname).collection('user').findOne({ email: newUser.email });
             const payload = { id: user._id, name: user.name, email: user.email };
             jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
               res.json({
@@ -96,7 +59,7 @@ function userController() {
     }());
   }
 
-  function loginlocal(req, res) {
+  function login(req, res) {
     const { errors, isValid } = validateLoginInput(req.body);
     let client;
     let user;
@@ -140,8 +103,6 @@ function userController() {
     login,
     logout,
     signup,
-    demo,
-    loginlocal,
   };
 }
 
