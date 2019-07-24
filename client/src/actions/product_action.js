@@ -65,7 +65,6 @@ export const fetchAllProducts = () => (dispatch) => {
     fetch(url)
         .then(response => response.json())
         .then(products => {
-            console.log(products);
             return dispatch(receiveAllProducts(products))
         })
         .catch((err) => dispatch(receiveErrors(err)))

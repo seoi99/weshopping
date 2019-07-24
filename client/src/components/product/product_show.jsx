@@ -52,8 +52,9 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
 
 
 const msp = (state, ownProps) => {
+    console.log(ownProps.item);
     return {
-        product: state.product.items[ownProps.item.id],
+        product: ownProps.item,
         error: state.error,
         fav: state.session.list ? Object.values(state.session.list).includes(ownProps.item.id) : !!state.favList.list[ownProps.item.id],
         loading: state.ui.showLoading,

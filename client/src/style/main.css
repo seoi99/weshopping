@@ -12,7 +12,9 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
-
+.how-it-works {
+  margin: 20px 10px;
+}
 .main-contents > * {
   text-align: center;
 }
@@ -54,11 +56,15 @@ img {
 .login-container {
   margin-top: 10px;
 }
+.brand {
+  margin: 20px 10px;
+  border-bottom: 1px solid #e8e8e8;
 
-.brand h1 {
+}
+.main-contents h1 {
   padding: 10px;
   font-size: 1em;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .brand-list {
@@ -67,8 +73,8 @@ img {
 }
 .brand-list > * {
   padding: 10px;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .procedure {
@@ -88,4 +94,24 @@ img {
 
 .procedure img {
   min-width: 200px;
+}
+
+.main-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.main-center > * {
+  flex-basis: 25%;
+  margin: 0;
+  padding: 10px;
+}
+
+.popular-items {
+  margin: 20px;
+}
+.popular-items h1 {
+  text-align: left;
+  font-size: 1em;
 }

@@ -8,6 +8,7 @@ module.exports = function(app) {
     app.use(proxy('/user/demo', { target: 'http://localhost:4000' }));
     app.use(proxy('/user/logout', { target: 'http://localhost:4000' }));
     app.use(proxy('/user/signup', { target: 'http://localhost:4000' }));
+    app.use(proxy('/products', { target: 'http://localhost:4000' }));
     app.use(proxy('/products/*', { target: 'http://localhost:4000' }));
     app.use(proxy('/products/search/*', { target: 'http://localhost:4000' }));
     app.use(proxy('/products/search/:id', { target: 'http://localhost:4000' }));

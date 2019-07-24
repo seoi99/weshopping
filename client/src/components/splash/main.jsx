@@ -3,7 +3,8 @@ import '../../style/main.css';
 import SearchBar from '../searchBar/search_bar_container';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { searchByProducts} from '../../actions/product_action';
+import { searchByProducts, fetchAllProducts} from '../../actions/product_action';
+import ProductShow from '../product/product_show';
 import Session from '../user/session_form'
 
 class Main extends Component {
@@ -12,9 +13,19 @@ class Main extends Component {
         this.props.searchByProducts(val)
         return this.props.history.push(`/productlists/${val}`)
     }
-
+    componentDidMount() {
+      this.props.fetchAllProducts();
+    }
     render() {
-        const listUrl = this.props.loggedin ? "/favorite" : "/productlists"
+        const listUrl = this.props.loggedin ? "/favorite" : "/productlists";
+        let items;
+        if (this.props.products.length) {
+          items = this.props.products.map((item, i) => {
+              return (
+                      <ProductShow item={item} index={i + 1}/>
+              )
+          })
+        }
         return (
             <div className="main container">
                 <div className="main-contents">
@@ -49,7 +60,7 @@ class Main extends Component {
 
 
                     <div className="how-it-works">
-                        <p> Feature </p>
+                        <h1> Feature </h1>
                         <div className="procedure">
                             <div>
                                 <p> Search Item </p>
@@ -75,9 +86,15 @@ class Main extends Component {
                             <img className="col-sm-3" src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Best_Buy_Logo.svg" alt="BEST BUY"/>
                             <img className="col-sm-3" src="https://cblproperty.blob.core.windows.net/production/assets/blt7a2a824e499bc040-J.Crew_628.png" alt="J CREW"/>
                             <img className="col-sm-3" src="https://www.insight.com/content/dam/insight-web/logos/partner-logos/380x210/lenovo.png" alt="LENOVO"/>
+                            <img className="col-sm-3" src="https://i5.walmartimages.com/asr/ec516b87-1d4b-42b4-a3e7-4c2765c5e71a_1.91b46a03906ac0fc296fe45899d07e7d.jpeg?odnHeight=560&odnWidth=560&odnBg=FFFFFF" alt="WALMART"/>
                         </div>
                     </div>
-
+                    <div className="popular-items">
+                      <h1>Popular Items</h1>
+                        <div className="main-center">
+                          {items}
+                        </div>
+                  </div>
                 </div>
             </div>
         )
@@ -86,12 +103,14 @@ class Main extends Component {
 
 const msp = (state) => {
     return {
-        loggedin : !!state.session.username
+        loggedin : !!state.session.username,
+        products : Object.values(state.product.items)
     }
 }
 const mdp = (dispatch) => {
     return {
-        searchByProducts: (val) => dispatch(searchByProducts(val))
+        searchByProducts: (val) => dispatch(searchByProducts(val)),
+        fetchAllProducts: () => dispatch(fetchAllProducts())
     }
 }
 

@@ -13,17 +13,22 @@ function productController(priceAPI, emailService) {
   function getIndex(req, res) {
     (async function mongo() {
       let client;
+      let products;
       try {
         debug('hit');
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
-        const products = await db.collection('product').find({}).toArray();
-        debug(products);
-        res.json(products);
+        products = await db.collection('product').find({}).limit(8).toArray();
       } catch (err) {
         debug(err.stack);
       }
+      const obj = products.reduce((object, item) => {
+        object[item.id] = item;
+        return object;
+      }, {});
+
       client.close();
+      res.json(obj);
     }());
   }
 
@@ -106,19 +111,19 @@ function productController(priceAPI, emailService) {
       }
       // image filter
 
-      // for (product of productLists) {
-      //   if (product.image_url && typeof product.image_url === 'string' && product.image_url.includes('http')) {
-      //   } else {
-      //     debug('before emailservice');
-      //
-      //     const imageUrl = await emailService.getImage(product.url);
-      //     if (imageUrl === '' || !(imageUrl)) {
-      //       const deleteobject = await db.collection('product').findOneAndDelete({ id: product.id });
-      //     } else {
-      //       await db.collection('product').findOneAndUpdate({ id: product.id }, { $set: { image_url: imageUrl } });
-      //     }
-      //   }
-      // }
+      for (product of productLists) {
+        if (product.image_url.includes('http')) {
+        } else {
+          const imageUrl = await emailService.getImage(product.url);
+          if (imageUrl === '' || !(imageUrl)) {
+            const deleteobject = await db.collection('product').findOneAndDelete({ id: product.id });
+          } else {
+            await db.collection('product').findOneAndUpdate({ id: product.id }, { $set: { image_url: imageUrl } });
+          }
+        }
+      }
+      productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
+
       const obj = productLists.reduce((object, item) => {
         object[item.id] = item;
         return object;
@@ -163,15 +168,15 @@ function productController(priceAPI, emailService) {
     if (name) {
       return byName(name)
         .then((result) => {
-          debug(result);
           res.json(result);
         })
         .catch((err) => {
           debug(err);
         });
     }
-    return res.json('hello');
+    return res.json('complete');
   }
+
 
   function searchById(req, res) {
     const { id } = req.params;

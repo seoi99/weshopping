@@ -35,7 +35,6 @@ function priceAPI() {
         const { status } = response.data;
         debug(status);
         if (status === 'finished') {
-          debug(response.data);
           clearInterval(intervals);
           if (response.data.not_founds === 1) {
             if (response.data.key === 'id') {
