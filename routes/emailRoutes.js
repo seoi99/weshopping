@@ -19,7 +19,7 @@ function router() {
 
   emailRouter.get('/product/:userId', updateUserFavList);
   emailRouter.get('/testing', (req, res) => {
-    const url = 'https://www.jcrew.com/p/mens_category/pants/slim/484-slimfit-pant-in-stretch-chino/E1589';
+    const url = 'https://www.uniqlo.com/us/en/nylon-mini-shoulder-bag-418359COL69SIZ999000.html?s=shopping&&gclid=EAIaIQobChMI7rzbisy84wIVlYRwCh1G5g2XEAkYBCABEgLfQfD_BwE&gclsrc=aw.ds';
     emailService.puppeteerImage(url, 'product__image--hero');
   });
   return emailRouter;

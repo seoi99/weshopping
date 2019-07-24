@@ -79,16 +79,11 @@ export const googlelogout = () => dispatch => {
         })
 };
 
-export const sendGreeting = (user) => (dispatch) => {
-    console.log(user.googleid);
-    const url = `/email/greeting/${user.email}`;
+export const sendGreeting = (email) => (dispatch) => {
+    const url = `/email/greeting/${email}`;
     fetch(url, {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({user})})
+        })
         .then(() => {
             dispatch(receiveEmail())
         })

@@ -4,6 +4,7 @@
   justify-content: flex-start;
   border: 1px solid #e8e8e8;
   padding: 4px 8px;
+  margin-right: 20px;
 }
 
 .filter button {
@@ -32,8 +33,11 @@
   flex-wrap: wrap;
 }
 .items > * {
-  flex-basis: 25%;
-  padding: 10px 15px;
+  flex-basis: 30%;
+  box-sizing: border-box;
+  padding: 5px 15px;
+  margin: 5px;
+
 }
 
 .filter-button:active, .filter-button::after {

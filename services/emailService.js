@@ -25,19 +25,21 @@ function emailService() {
       });
   }
 
-  function getImage(url, company = '') {
+  function getImage(url) {
     return axios.get(url)
       .then((response) => {
         const html = response.data;
         const $ = cheerio.load(html);
         const image = $('img').filter(function findPrice(i, el) {
-          debug('not found', i, $(this).attr('class'));
           return $(this).attr('src').match(/http/) && $(this).attr('class');
         }).slice(0, 1).attr('src');
-        debug(image, 'http image has been found');
         return image;
+      })
+      .catch((err) => {
+        debug(err);
       });
   }
+
   function puppeteerImage(url, company = '') {
     if (company === '') {
       return null;

@@ -11,9 +11,7 @@ const ProductIndex = ({products, error, loading, sortOptions, searchByBrand, use
 
     const items = products.map((item, i) => {
         return (
-            <div className="col-sm-3">
                 <ProductShow item={item} index={i + 1}/>
-            </div>
         )
     })
     const searchError = error;

@@ -74,7 +74,6 @@ function emailController(emailService) {
 
   function sendEmail(req, res) {
     const email = req.params.email;
-    const userId = req.body.user.googleid;
 
     emailFormat(email);
     res.send('complete');

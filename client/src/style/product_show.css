@@ -15,7 +15,7 @@
 }
 
 .image-container {
-  min-width: 200px;
+  min-width: 150px;
   min-height: 200px;
 }
 
@@ -23,6 +23,7 @@
   display: block;
   max-height: 200px;
   max-width: 90%;
+  min-width: 133px;
   margin: auto;
 }
 

@@ -14,8 +14,9 @@ const favReducer = (state = initialState, action) => {
     Object.freeze(state);
     switch (action.type) {
     case ADD_ITEM:
+      return merge({}, state, { list: action.products})
     case GET_FAV:
-        return merge({}, state, { list: action.products})
+      return {list: action.products}
     case ADD_TO_FAV:
         const favList = merge({}, state);
         favList.list[action.product.id] = action.product

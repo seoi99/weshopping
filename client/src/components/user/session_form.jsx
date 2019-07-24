@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {logout, googlelogout} from '../../actions/user_action';
+import {logout, googlelogout, sendGreeting} from '../../actions/user_action';
 import { openModal, closeModal } from '../../actions/modal_action';
 import '../../style/session_form.css'
 
@@ -23,13 +23,14 @@ class SessionForm extends Component {
         return (
           <div className="dropdown">
             <span>Hi, {this.props.user}</span>
-            <button className="drop-toggle">
+            <form className="drop-toggle">
               <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
               <div className="dropdown-content">
                 <Link to='/favorite'><div>Favorite</div></Link>
+                <button onClick={() => this.props.sendGreeting(this.props.email)}>Subscribe</button>
                 {logoutForm}
               </div>
-                </button>
+            </form>
             </div>
         )
     }
@@ -47,6 +48,7 @@ class SessionForm extends Component {
 const msp = (state, ownProps) => {
     return {
         user: state.session.user.name,
+        email: state.session.user.email,
         google: state.session.user.googleid,
     }
 }
@@ -54,6 +56,7 @@ const msp = (state, ownProps) => {
 const mdp = (dispatch) => {
     return {
         logout: () => dispatch(logout()),
+        sendGreeting: (email) => dispatch(sendGreeting(email)),
         googlelogout: () => dispatch(googlelogout()),
         openModal: (modal) => dispatch(openModal(modal)),
         closeModal: () => dispatch(closeModal()),
