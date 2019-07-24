@@ -62,12 +62,12 @@ export const addFavBackend = (product, userId) => (dispatch) => {
         })
 }
 
-export const removeFavBackend = (id) => (dispatch) => {
-    fetch(`/favlist/removeFav/${id}`, {
+export const removeFavBackend = (userId, productId) => (dispatch) => {
+    fetch(`/favlist/removeFav/?userId=${userId}&productId=${productId}`, {
         method: 'DELETE'
     })
         .then((response) => {
-            dispatch(removeFav(id))
+            dispatch(removeFav(productId))
         })
         .then(list => {
             dispatch(getFav(list))

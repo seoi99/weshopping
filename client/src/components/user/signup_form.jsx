@@ -30,6 +30,12 @@ class SignupForm extends Component {
         };
         this.props.signup(user);
     }
+    errorForm(name) {
+        if (this.props.error[name]) {
+            return <p>{this.props.error[name]}</p>
+        }
+        return null
+    }
 
     signupForm() {
         return(
@@ -42,24 +48,28 @@ class SignupForm extends Component {
                             placeholder="Name"
                         />
                         <br/>
+                        {this.errorForm('name')}
                         <input type="text"
                             value={this.state.email}
                             onChange={this.update('email')}
                             placeholder="Email"
                         />
                         <br/>
+                        {this.errorForm('email')}
                         <input type="password"
                             value={this.state.password}
                             onChange={this.update('password')}
                             placeholder="Password"
                         />
                         <br/>
+                        {this.errorForm('password')}
                         <input type="password"
                             value={this.state.password2}
                             onChange={this.update('password2')}
                             placeholder="Password"
                         />
                         <br/>
+                        {this.errorForm('password2')}
                         <input type="submit" value="Sign Up" data-dismiss="modal"/>
                     </div>
                 </form>

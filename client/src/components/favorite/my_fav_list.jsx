@@ -30,9 +30,6 @@ class MyFavList extends Component {
         this.props.addFavBackend(this.state, this.props.userId);
     }
 
-    removeItem(favK) {
-        this.props.removeFavBackend(favK);
-    }
 
     getList() {
         let favObj = this.props.favList;
@@ -46,16 +43,17 @@ class MyFavList extends Component {
                 const fav = favObj[favK]
                 return (
                     <ul key={index} className='fav-image-container'>
-                        <div className="fav-image col-sm-3">
                             <img src={fav.image_url} alt={fav.name}></img>
-                        </div>
-                        <div className="fav-details col-sm-9">
+                            <div className="fav-content">
                             <li>Item : {fav.name}</li>
-                            <li>currentPrice : {fav.price}</li>
-                            <li>updatedPrice : {fav.updatedPrice}</li>
-                            <a target="_blank" rel="noopener noreferrer" href={fav.url} className="store-link">Store</a>
-                        </div>
-                        <button onClick={() => this.props.removeFavBackend(fav.id)}><i className="fa fa-times"></i></button>
+                            <li>current Price : {fav.price}</li>
+                            <li>updated Price : {fav.updatedPrice}</li>
+                            <div className="button-control">
+                              <button><a target="_blank" rel="noopener noreferrer" href={fav.url} className="store-link">To Store</a></button>
+                              <button onClick={() => this.props.removeFavBackend(this.props.userId, fav.id)} className="close-button">Delete</button>
+                            </div>
+                          </div>
+
                     </ul>
                 )
             })
@@ -95,14 +93,16 @@ class MyFavList extends Component {
                     <Link to='/productlists'>Back to Search</Link>
                     <button onClick={() => this.props.requestFavList(this.props.userId, 'requested')} className="update-button">Update List</button>
                 </nav>
+                <div className="fav-list-map">
                 {map}
-                <div className="row">
-                    <form onSubmit={this.addItemList} className="add-form-list col-sm-3">
+                </div>
+                <div className="fav-list-map add-item-list">
+                    <form onSubmit={this.addItemList}>
                         <button  className={`form-button-${toggleStatus}`} onClick={() => this.toggleClass()}>{submitButton}</button>
                         <div className={`form-contents-${toggleStatus}`} >
-                            <label> name: <input type="text" value={this.state.name} onChange={this.update('name')}></input></label>
-                            <label> url:  <input type="text" value={this.state.url} onChange={this.update('url')}></input> </label>
-                            <label> price:  <input type="number" value={this.state.price} onChange={this.update('price')}></input> </label>
+                            <label> <p>name: </p><input type="text" value={this.state.name} onChange={this.update('name')}></input></label>
+                            <label> <p>url: </p> <input type="text" value={this.state.url} onChange={this.update('url')}></input> </label>
+                            <label> <p>price: </p><input type="number" value={this.state.price} onChange={this.update('price')}></input> </label>
                             <button className="fav-submit-button"> submit </button>
                         </div>
                     </form>
@@ -114,10 +114,10 @@ class MyFavList extends Component {
 
 const msp = (state) => {
     return {
-        favUi: state.ui.favLoading,
+        favUi: state.ui.loading.favLoading,
         favList: state.favList.list,
-        user: state.session.username,
-        userId: state.session.googleid
+        user: state.session.user.name,
+        userId: state.session.user.id
     }
 }
 
@@ -125,7 +125,7 @@ const mdp = (dispatch) => {
     return {
         requestFavList: (userId, update) => dispatch(requestFavList(userId, update)),
         addFavBackend: (product,userId) => dispatch(addFavBackend(product,userId)),
-        removeFavBackend: (id) => dispatch(removeFavBackend(id))
+        removeFavBackend: (userId, productId) => dispatch(removeFavBackend(userId, productId))
     }
 }
 export default connect(msp, mdp)(MyFavList);

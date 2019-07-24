@@ -83,56 +83,95 @@ function productController(priceAPI, emailService) {
     }());
   }
 
+  async function byName(name) {
+    let productLists;
+    let client;
+    try {
+      client = await MongoClient.connect(uri);
+      debug('waiting for connection');
+      const db = await client.db(dbname);
+      productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
+      debug('connected');
+      // it list does not exist in my mongodb
+      if (productLists.length === 0) {
+        // request to priceAPI to fetch info
+        productLists = await priceAPI.getSearchResult('search_results', 'term', name);
+        if (productLists.length !== 0) {
+          const updateTable = await db.collection('product').insertMany(productLists);
+        } else {
+          res.status(404).send('Sorry, product you searched is not found');
+        }
+        debug('update Finished');
+      }
+      // image filter
+      // for (product of productLists) {
+      //   if (product.image_url && typeof product.image_url === 'string' && product.image_url.includes('http')) {
+      //   } else {
+      //     const imageUrl = await emailService.getImage(product.url);
+      //     if (imageUrl === '' || !(imageUrl)) {
+      //       debug('image not found', imageUrl);
+      //       const deleteobject = await db.collection('product').findOneAndDelete({ _id: product._id });
+      //     } else {
+      //       await db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
+      //       debug('image is found');
+      //     }
+      //   }
+      // }
+      productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
+      const obj = productLists.reduce((object, item) => {
+        object[item.id] = item;
+        return object;
+      }, {});
+
+      client.close();
+      return obj;
+    } catch (err) {
+      debug(err);
+    }
+  }
+
+
+  async function byCategory(brand) {
+    let productLists;
+    let client;
+    if (brand.length === 0) return {};
+    try {
+      console.log('brand', brand, typeof brand);
+      const filter = brand.split(',').map(el => new RegExp(el, 'i'));
+      console.log(filter);
+      client = await MongoClient.connect(uri);
+      debug('waiting for connection');
+      const db = await client.db(dbname);
+      const product = await db.collection('product');
+      productLists = await product.find({ shop_name: { $in: filter } }).toArray();
+      debug('connected');
+      const obj = productLists.reduce((productObj, item) => {
+        productObj[item.id] = item;
+        return productObj;
+      }, {});
+
+      client.close();
+      return obj;
+    } catch (err) {
+      debug(err);
+    }
+  }
+
   function searchProducts(req, res) {
     const { name } = req.query;
-    (async function go() {
-      let productLists;
-      let client;
-      try {
-        client = await MongoClient.connect(uri);
-        debug('waiting for connection');
-        const db = await client.db(dbname);
-        productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
-        debug('connected');
-        // it list does not exist in my mongodb
-        if (productLists.length === 0) {
-          // request to priceAPI to fetch info
-          productLists = await priceAPI.getSearchResult('search_results', 'term', name);
-          if (productLists.length !== 0) {
-            const updateTable = await db.collection('product').insertMany(productLists);
-          } else {
-            res.status(404).send('Sorry, product you searched is not found');
-          }
-          debug('update Finished');
-        }
-
-        // image filter
-        for (product of productLists) {
-          if (product.image_url && typeof product.image_url === 'string' && product.image_url.includes('http')) {
-            debug('ok');
-          } else {
-            const imageUrl = await emailService.getImage(product.url);
-            debug(product.url);
-            if (imageUrl === '' || !(imageUrl)) {
-              debug('image not found', imageUrl);
-              const deleteobject = await db.collection('product').findOneAndDelete({ _id: product._id });
-            } else {
-              await db.collection('product').findOneAndUpdate({ _id: product._id }, { $set: { image_url: imageUrl } });
-              debug('image is found');
-            }
-          }
-        }
-        productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
-        const obj = productLists.reduce((object, item) => {
-          object[item.id] = item;
-          return object;
-        }, {});
-        res.json(obj);
-      } catch (err) {
-        debug(err);
-      }
-      client.close();
-    }());
+    const { brand } = req.query;
+    debug(brand);
+    if (name) {
+      byName(name)
+        .then((result) => {
+          res.json(result);
+        });
+    } else {
+      byCategory(brand)
+        .then((result) => {
+          res.json(result);
+        });
+    }
   }
 
   function searchById(req, res) {

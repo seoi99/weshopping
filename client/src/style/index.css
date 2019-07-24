@@ -16,9 +16,8 @@
 }
 
 
-.index-nav * > {
-  max-height: 30px;
-  margin: auto 0;
+.index-nav .dropdown {
+  margin-right: 40px;
 }
 
 .index-logo a {
@@ -30,10 +29,15 @@
   padding: 5px 20px 5px 5px;
 }
 
-.index-login, .index-filter {
-  margin: auto;
+.login-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin: auto 0;
 }
 
+.login-filter * > {
+  min-width: 50px;
+}
 .index-nav:last-child {
   display: block;
   max-width: 20px;
@@ -69,6 +73,19 @@
   min-width:200px;
 }
 
+.index-filter {
+  display: flex;
+  justify-content: flex-end;
+}
 input:focus {
     outline: none;
+}
+
+
+.header {
+  display: flex;
+  justify-content: row;
+}
+.header:first-child {
+  max-width: 15%;
 }

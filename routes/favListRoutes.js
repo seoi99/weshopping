@@ -9,7 +9,7 @@ const {
 const favListRouter = express.Router();
 function router() {
   favListRouter.post('/addFav/:userId', addFavList);
-  favListRouter.delete('/removeFav/:productId', removeFavList);
+  favListRouter.delete('/removeFav', removeFavList);
   favListRouter.get('/getFav/:userId', getFavList);
 
   return favListRouter;

@@ -16,6 +16,7 @@ export const receiveAllProducts = (products) => {
 }
 
 export const receiveSearchProduct = (products) => {
+    console.log(products);
     return {
         type: RECEIVE_SEARCH_PRODUCT,
         products
@@ -115,6 +116,18 @@ export const searchByProducts = (name) => (dispatch) => {
             dispatch(receiveSearchProduct(products))
         })
         .catch(() => dispatch(receiveErrors(`no product has been found by ${name}`)))
+}
+
+export const searchByFilter = (brand) => (dispatch) => {
+    dispatch(clearError())
+    dispatch(indexloading())
+    const url = `/products/search?brand=${brand}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(products => {
+            dispatch(receiveSearchProduct(products))
+        })
+        .catch(() => dispatch(receiveErrors(`no product has been found by ${brand}`)))
 }
 
 export const searchById = (id) => (dispatch) => {

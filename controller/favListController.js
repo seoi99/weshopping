@@ -10,6 +10,7 @@ function favListController() {
   function InputValidation(product) {
     return !!product.name && !!product.price && !!product.url;
   }
+
   function addFavList(req, res) {
     const { userId } = req.params;
     const { product } = req.body;
@@ -52,8 +53,9 @@ function favListController() {
   }
 
   function removeFavList(req, res) {
-    const { productId } = req.params;
-    const userId = req.session.passport.user.profile.id;
+    const { productId } = req.query;
+    const { userId } = req.query;
+    debug(req.query);
     const key = `list.${productId}`;
     (async function getUser() {
       let client;

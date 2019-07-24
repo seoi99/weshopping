@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { searchByProducts} from '../../actions/product_action';
 import Session from '../user/session_form'
-import Login from '../user/login_form'
 
 class Main extends Component {
 
@@ -20,7 +19,7 @@ class Main extends Component {
             <div className="main container">
                 <div className="main-contents">
                     <div className="main-login-container">
-                        <Session/>
+                        <Session comp="main"/>
                     </div>
                     <SearchBar comp="main"/>
                     <p>Search for items you want to purchase and save it on weShopping.</p>

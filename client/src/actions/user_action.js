@@ -7,7 +7,6 @@ export const RECEIVE_EMAIL = 'RECEIVE_EMAIL';
 export const USER_ERROR = 'USER_ERROR'
 
 export const receiveUser = (user) => {
-    console.log(user);
     return {
         type: RECEIVE_USER,
         user
@@ -15,7 +14,6 @@ export const receiveUser = (user) => {
 }
 
 export const userError = (error) => {
-    console.log(error);
     return {
         type: USER_ERROR,
         error
@@ -45,6 +43,10 @@ export const loginUser = (user) => (dispatch) => {
             const decoded = jwt_decode(token);
             dispatch(receiveUser(decoded))
         })
+        .catch(err => {
+            console.log(err.response.data);
+            dispatch(userError(err.response.data))
+        })
 }
 export const signup = (user) => (dispatch) => {
     const url = `/user/signup`;
@@ -72,9 +74,9 @@ export const googlelogout = () => dispatch => {
     const url = '/auth/google/logout'
     localStorage.removeItem('google')
     axios.delete(url)
-    .then(res => {
-      dispatch(removeUser())
-    })
+        .then(res => {
+            dispatch(removeUser())
+        })
 };
 
 export const sendGreeting = (user) => (dispatch) => {

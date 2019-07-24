@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
+const puppeteer = require('puppeteer');
 const debug = require('debug')('app:emailService');
-
 
 function emailService() {
   function findPriceThenClass(url, price, className = '') {
@@ -25,32 +25,45 @@ function emailService() {
       });
   }
 
-  function getImage(url) {
+  function getImage(url, company = '') {
     return axios.get(url)
       .then((response) => {
         const html = response.data;
         const $ = cheerio.load(html);
         const image = $('img').filter(function findPrice(i, el) {
-          if ($(this) !== undefined && $(this).attr('class') && $(this).attr('src') && $(this).attr('src').includes('http')) {
-            return $(this);
-          }
+          debug('not found', i, $(this).attr('class'));
+          return $(this).attr('src').match(/http/) && $(this).attr('class');
         }).slice(0, 1).attr('src');
-        debug(image, 'first round');
-        if (image === undefined) {
-          test = $('img').filter(function findPrice(i, el) {
-            if ($(this).attr('src') && $(this).attr('src').includes('http')) {
-              return $(this);
-            }
-          }).slice(0, 1).attr('src');
-        }
-        debug(image, 'second round');
+        debug(image, 'http image has been found');
         return image;
+      });
+  }
+  function puppeteerImage(url, company = '') {
+    if (company === '') {
+      return null;
+    }
+    return puppeteer
+      .launch()
+      .then(browser => browser.newPage())
+      .then(page => page.goto(url).then(() => page.content()))
+      .then((html) => {
+        debug('content loaded');
+        const $ = cheerio.load(html);
+        debug(company);
+        const myMasterPiece = ($('img').attr('class', company).slice(0, 1).attr('src'));
+        debug(myMasterPiece);
+        return myMasterPiece;
+      })
+      .catch((err) => {
+        // handle error
+        debug(err);
       });
   }
 
   return {
     findPriceThenClass,
     getImage,
+    puppeteerImage,
   };
 }
 

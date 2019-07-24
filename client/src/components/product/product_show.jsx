@@ -29,7 +29,7 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
             <div className="image-container">
                 <img src={image_url} alt={product.name}/>
             </div>
-            <div>
+            <div className="show-details">
                 <a target="_blank" rel="noopener noreferrer" href={product.url} className="text-primary"> {index}) {product.name}</a>
                 <p className="show-shop">${product.price} from <a target="_blank" rel="noopener noreferrer" href={product.shop_url}>{product.shop_name}</a></p>
                 <p className="show-rating">{rateToStar} <span>{numOfReview}</span></p>
@@ -57,8 +57,8 @@ const msp = (state, ownProps) => {
         error: state.error,
         fav: state.session.list ? Object.values(state.session.list).includes(ownProps.item.id) : !!state.favList.list[ownProps.item.id],
         loading: state.ui.showLoading,
-        user: state.session.username,
-        userId: state.session.googleid,
+        user: state.session.user.name,
+        userId: state.session.user.id,
     }
 }
 

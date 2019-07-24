@@ -1,0 +1,72 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #e8e8e8;
+  padding: 4px 8px;
+}
+
+.filter button {
+  border: none;
+  text-align: left;
+}
+
+.filter p {
+  text-align: left;
+}
+.filter h3 {
+  font-weight: bold;
+  text-align: left;
+  font-size: 15px;
+}
+.items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.items > * {
+  flex-basis: 25%;
+  padding: 10px 15px;
+}
+
+.filter-button:active, .filter-button::after {
+  background-color: red;
+}
+
+.button-color {
+  color: green;
+  font-weight: bold;
+}
+.current-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.current-filter > * {
+  margin-right: 10px;
+}
+.current-filter button {
+  padding: 0;
+  margin: unset;
+  margin-top: -20px;
+
+}
+
+.current-filter button i {
+  color: black;
+  border: 1px solid black;
+  width: 17px;
+  height: 17px;
+  font-size: 15px;
+  border-radius: 50%;
+  text-align: center;
+}
+.filter form  {
+  border: none;
+  max-width: inherit;
+  padding: 0
+}
+.price-filter > * {
+  max-width: 60px;
+}

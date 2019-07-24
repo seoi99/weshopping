@@ -34,7 +34,7 @@ class SearchBar extends Component {
     render() {
         const mainTheme = this.props.comp === 'main' ? (<h2>Shop at the Best Price at the Right Time</h2>) : <span></span>
         return(
-            <nav>
+            <nav className="search-nav">
                 <div className={`web-content ${this.props.comp}-search-container`}>
                     <Link to="/" className={`${this.props.comp}-logo`}><img src={logo} alt="logo"/></Link>
                     {mainTheme}

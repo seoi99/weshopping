@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {logout, googlelogout} from '../../actions/user_action';
 import { openModal, closeModal } from '../../actions/modal_action';
 import '../../style/session_form.css'
@@ -20,9 +21,15 @@ class SessionForm extends Component {
             <button onClick={() => this.props.googlelogout()}>Logout</button>
             : <button onClick={() => this.props.logout()}>Logout</button>
         return (
-            <div>
-                <h1>Hi {this.props.user}</h1>
+          <div className="dropdown">
+            <span>Hi, {this.props.user}</span>
+            <button className="drop-toggle">
+              <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
+              <div className="dropdown-content">
+                <Link to='/favorite'><div>Favorite</div></Link>
                 {logoutForm}
+              </div>
+                </button>
             </div>
         )
     }
@@ -30,7 +37,7 @@ class SessionForm extends Component {
     render() {
         return this.props.user ? this.greetingForm() :
             (
-                <div>
+                <div className={`${this.props.comp}-button`}>
                     <button onClick={() => this.props.openModal('login')}>Sign In</button>
                 </div>
             )
@@ -38,9 +45,8 @@ class SessionForm extends Component {
 }
 
 const msp = (state, ownProps) => {
-    console.log(state.session.ui);
     return {
-        user: state.session.user.email,
+        user: state.session.user.name,
         google: state.session.user.googleid,
     }
 }

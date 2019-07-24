@@ -85,7 +85,7 @@ function priceAPI() {
               delete el.shop_review_count;
             }
             if (!(el.category)) {
-              el.category = response.data.results[0].query.value;
+              el.category = [response.data.results[0].query.value];
             }
             el.image_url = '';
             return el;

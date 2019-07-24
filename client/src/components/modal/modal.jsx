@@ -6,17 +6,17 @@ import SignUp from '../user/signup_form';
 import '../../style/modal.css';
 import { loginUser, signup} from '../../actions/user_action';
 
-const Modal = ({modal,openModal ,closeModal, loginUser, signup, otherForm}) => {
+const Modal = ({modal,openModal ,closeModal, loginUser, signup, otherForm, error}) => {
     if (!modal) {
         return null;
     }
     let component;
     switch (modal) {
     case 'login':
-        component = <LoginForm loginUser={loginUser} closeModal={closeModal}/>;
+        component = <LoginForm loginUser={loginUser} error={error}/>;
         break;
     case 'Sign Up':
-        component = <SignUp signup={signup} closeModal={closeModal}/>;
+        component = <SignUp signup={signup} error={error}/>;
         break;
     default:
         return null;
@@ -41,10 +41,9 @@ const Modal = ({modal,openModal ,closeModal, loginUser, signup, otherForm}) => {
 }
 
 const msp = state => {
-    console.log(state.session.user);
     return {
         modal: state.ui.modal,
-        user: state.session.user.name
+        error: state.error
     };
 };
 

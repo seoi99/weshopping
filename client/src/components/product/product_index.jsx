@@ -1,12 +1,13 @@
 import React from 'react';
 import ProductShow from './product_show';
+import Filter from './filter';
 import SearchBar from '../searchBar/search_bar_container';
-import Login from '../user/login_form'
+import Session from '../user/session_form'
 import '../../style/index.css'
 import HashLoader from 'react-spinners/HashLoader';
 
 
-const ProductIndex = ({products, error, loading, filterOptions, searchById, user}) => {
+const ProductIndex = ({products, error, loading, filterOptions, searchByBrand, user}) => {
 
     const items = products.map((item, i) => {
         return (
@@ -17,7 +18,7 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
     })
     const searchError = error;
     const modal = loading ? (
-        <div className="col-md-12 d-flex flex-column">
+        <div className="col-md-9 d-flex flex-column">
             <div className='hash-loading'>
                 <HashLoader
                     sizeUnit={"px"}
@@ -29,12 +30,12 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
             <h2 className="align-self-center">searching products...</h2>
         </div>
     ) : (
-        <div className="row">
+        <div className="items">
             {items}
         </div>
     )
 
-    const filter = (
+    const sortOption = (
         <div className="index-filter">
             <button type="button" className="btn dropdown-toggle" data-toggle="dropdown">
                   Sort By:
@@ -47,23 +48,22 @@ const ProductIndex = ({products, error, loading, filterOptions, searchById, user
         </div>
     )
 
+
     return (
         <div className="container index-container">
+
             <div className="row index-nav">
                 <SearchBar comp="index"/>
-                {filter}
-                <div className="index-login">
-                    <Login comp="index"/>
-                </div>
+                <Session comp="index"/>
             </div>
+            {sortOption}
 
-            <div className="row p-3 justify-content-around header">
-            </div>
+            <div className="header">
 
-
+            <Filter/>
             {modal}
-            {searchError}
-        </div>
+            </div>
+      </div>
     )
 }
 

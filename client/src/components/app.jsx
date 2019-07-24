@@ -17,14 +17,12 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Modal />
-                <Switch>
-                    <Route exact path='/productlists/:name' component={ProductIndexContainer}/>
-                    <Route exact path='/productlists/' component={ProductIndexContainer}/>
-                    <Route exact path='/productlists/form' component={ProductForm}/>
-                    <AuthRoute exact path='/favorite' component={Favorite}/>
-                    <Route exact path='/' component={Main}/>
-                </Switch>
+              <Modal/>
+                <Route exact path='/productlists/:name' component={ProductIndexContainer}/>
+                <Route exact path='/productlists' component={ProductIndexContainer}/>
+                <Route exact path='/productlists/form' component={ProductForm}/>
+                <AuthRoute exact path='/favorite' component={Favorite}/>
+                <Route exact path='/' component={Main}/>
                 <Footer/>
             </div>
         )

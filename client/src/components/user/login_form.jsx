@@ -24,7 +24,12 @@ class LoginForm extends Component {
         };
         this.props.loginUser(user);
     }
-
+    errorForm(name) {
+        if (this.props.error[name]) {
+            return <p>{this.props.error[name]}</p>
+        }
+        return null
+    }
     loginForm() {
         return(
             <div>
@@ -36,12 +41,14 @@ class LoginForm extends Component {
                         placeholder="Email"
                     />
                     <br/>
+                    {this.errorForm('email')}
                     <input type="password"
                         value={this.state.password}
                         onChange={this.update('password')}
                         placeholder="Password"
                     />
                     <br/>
+                    {this.errorForm('password')}
                     <input type="submit" value="Login"/>
                 </form>
             </div>
