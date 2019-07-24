@@ -77,7 +77,7 @@ function favListController() {
     const { update } = req.query;
     function receiveUpdate(id) {
       debug('i m hit', id);
-      return axios.get(`http://localhost:8080/email/product/${id}`)
+      return axios.get(`/email/product/${id}`)
         .then(response => response.status);
     }
 

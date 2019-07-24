@@ -43,10 +43,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-app.get('/', (req, res) => {
-  res.send('hello');
-});
-
 app.use('/products', productRouter);
 app.use('/auth', googleRouter);
 app.use('/user', userRouter);

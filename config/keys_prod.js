@@ -14,4 +14,5 @@ module.exports = {
   mainUrl: process.env.callbackURL,
   adminEmail: process.env.ADMIN_ID,
   adminPassword: process.env.ADMIN_PASSWORD,
+  secretOrKey: process.env.SECRETKEY,
 };

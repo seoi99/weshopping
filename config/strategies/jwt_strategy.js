@@ -21,7 +21,6 @@ function jwtStrategy() {
     (async (jwt_payload, done) => {
       let client;
 
-      debug('payload', jwt_payload);
       try {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
