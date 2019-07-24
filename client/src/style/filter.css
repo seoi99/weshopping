@@ -18,6 +18,13 @@
   font-weight: bold;
   text-align: left;
   font-size: 15px;
+  margin: 10px 0;
+  border-bottom: 1px solid #d1d1d1;
+  padding: 3px 0;
+}
+
+.filter h3:first-of-type {
+  border: none;
 }
 .items {
   display: flex;
@@ -49,7 +56,8 @@
 .current-filter button {
   padding: 0;
   margin: unset;
-  margin-top: -20px;
+  margin-top: -4px;
+  height: 15px;
 
 }
 
@@ -69,4 +77,8 @@
 }
 .price-filter > * {
   max-width: 60px;
+}
+
+.price-filter input[type="submit"] {
+  border: none;
 }

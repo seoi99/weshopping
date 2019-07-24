@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchByFilter } from '../../actions/product_action';
+import { filterByPrice, filterByShopName,clearPrice } from '../../actions/filter_action';
 import ButtonFilter from './button_filter';
 import '../../style/filter.css';
 class Filter extends Component {
@@ -11,12 +12,24 @@ class Filter extends Component {
           shop: [],
             minPrice: '',
             maxPrice: '',
-        }
+        },
+        clearFilter: false,
       }
-      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleShopName = this.handleShopName.bind(this);
+      this.handlePrice = this.handlePrice.bind(this);
+      this.cancelPrice = this.cancelPrice.bind(this);
   }
 
-  handleSubmit(el) {
+  update(field) {
+    return(e) => {
+      this.setState({[field]: e.currentTarget.value});
+    };
+  }
+
+
+
+
+  handleShopName(el) {
     const arr = this.state.filter.shop;
     if (arr.includes(el)) {
         arr.splice(el,1)
@@ -24,18 +37,20 @@ class Filter extends Component {
     arr.push(el);
     }
     this.setState({shop: arr})
-    this.props.searchByFilter(this.state.filter);
+    this.props.filterByShopName(this.state.filter.shop);
   }
 
-  update(field) {
-      return(e) => {
-          this.setState({[field]: e.currentTarget.value});
-      };
-  }
-  handleButton(e) {
-    console.log(e)
+
+  handlePrice(e) {
+    e.preventDefault()
+    this.props.filterByPrice({min: this.state.minPrice, max: this.state.maxPrice})
+    this.setState({clearFilter: true})
   }
 
+  cancelPrice() {
+    this.setState({clearFilter: false});
+    this.props.clearPrice();
+  }
   render() {
     console.log('filter',this.state);
     const vendors = [
@@ -49,30 +64,37 @@ class Filter extends Component {
 
     const filter = vendors.map((el, i) => {
       return (
-          <button key={i} onClick={() => this.handleSubmit(el)}>
-            <ButtonFilter name={el} activeState={this.state.filter.shop.includes(el)}/>
-          </button>
+        <button onClick={() => this.handleShopName(el)}>{el}</button>
       )
     })
 
-    const currentFilter = this.state.filter.shop.map((el,i) => {
+    const shopNameFilter = this.state.filter.shop.map((el,i) => {
        return (<div className="current-filter">
          <p>{el}</p>
-         <button onClick={() => this.handleSubmit(el)}><i className="fa fa-remove"></i></button>
+         <button onClick={() => this.handleShopName(el)}><i className="fa fa-remove"></i></button>
        </div>
        )
     })
-    console.log(this.state);
+
+    const priceFilter = this.state.clearFilter ? (
+      <div className="current-filter">
+        <p>Price {this.state.minPrice} to {this.state.maxPrice}</p>
+        <button onClick={ () => this.cancelPrice()}><i className="fa fa-remove"></i></button>
+      </div>
+    ) : null
     return (
       <div className="filter">
         <h3>Filter</h3>
-        {currentFilter}
+        <div>
+        {shopNameFilter}
+        {priceFilter}
+        </div>
         <h3>Shop</h3>
         {filter}
         <h3>Price</h3>
-          <form className="price-filter">
+          <form className="price-filter" onSubmit={this.handlePrice}>
           <input type="number" onChange={this.update('minPrice')}></input> to <input type="number" onChange={this.update('maxPrice')}></input>
-          <button>Go</button>
+            <input type="submit" value="Go" />
         </form>
       </div>
     )
@@ -82,7 +104,9 @@ class Filter extends Component {
 
 const mdp = (dispatch) => {
   return {
-  searchByFilter: (brand) => dispatch(searchByFilter(brand))
+  filterByPrice: (price) => dispatch(filterByPrice(price)),
+  filterByShopName: (price) => dispatch(filterByShopName(price)),
+  clearPrice: () => dispatch(clearPrice()),
   }
 }
 export default connect(null,mdp)(Filter)

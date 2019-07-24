@@ -1,7 +1,7 @@
 import {
     RECEIVE_ALL_PRODUCT,
     RECEIVE_SEARCH_PRODUCT,
-    FILTER_OPTIONS,
+    SORT_OPTIONS,
     RECEIVE_PRODUCT_DETAIL,
 } from '../actions/product_action';
 
@@ -23,7 +23,7 @@ const productReducer = (state = initialState, action) => {
         const newState = merge({}, state);
         newState.items[action.product.id] = action.product;
         return newState
-    case FILTER_OPTIONS:
+    case SORT_OPTIONS:
         const nextOption = merge({}, state);
         nextOption.filter = action.sortOption;
         return nextOption;

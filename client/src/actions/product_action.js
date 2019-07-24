@@ -3,7 +3,8 @@ export const RECEIVE_SEARCH_PRODUCT = 'RECEIVE_SEARCH_PRODUCT'
 export const RECEIVE_PRODUCT_DETAIL = 'RECEIVE_PRODUCT_DETAIL'
 export const RECEIVE_ERROR = 'RECEIVE_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
-export const FILTER_OPTIONS = 'FILTER_OPTIONS'
+export const SORT_OPTIONS = 'SORT_OPTIONS'
+export const FILTER_BY_PRICE = 'FILTER_BY_PRICE'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const INDEX_LOADING = 'INDEX_LOADING'
 export const SHOW_LOADING = 'SHOW_LOADING'
@@ -16,7 +17,6 @@ export const receiveAllProducts = (products) => {
 }
 
 export const receiveSearchProduct = (products) => {
-    console.log(products);
     return {
         type: RECEIVE_SEARCH_PRODUCT,
         products
@@ -43,9 +43,9 @@ export const clearError = () => {
     }
 }
 
-export const filterOptions = (sortOption) => {
+export const sortOptions = (sortOption) => {
     return {
-        type: FILTER_OPTIONS,
+        type: SORT_OPTIONS,
         sortOption
     }
 }

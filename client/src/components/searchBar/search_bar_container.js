@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchAllProducts, searchByProducts, filterOptions} from '../../actions/product_action';
-// import { sortProductByPrice } from '../../reducers/selectors';
+import { fetchAllProducts, searchByProducts} from '../../actions/product_action';
 import { requestFavList } from '../../actions/fav_action';
 import SearchBar from './search_bar'
 
@@ -14,7 +13,6 @@ const mdp = (dispatch, ownProps) => {
     return {
         fetchAll: () => dispatch(fetchAllProducts()),
         searchByProducts: (value) => dispatch(searchByProducts(value)),
-        filterOptions: (filter) => dispatch(filterOptions(filter)),
         requestFavList: (id) => dispatch(requestFavList(id)),
     }
 }

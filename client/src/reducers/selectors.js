@@ -1,10 +1,10 @@
 import merge from 'lodash/merge';
 
 const initialState = {
-    filter: "Default"
+    filter: "Default",
 }
 
-export const sortProductByPrice = (products, option=initialState) => {
+export const sortProduct = (products, option=initialState) => {
     Object.freeze(products)
     switch (option.filter) {
     case "DESC":
@@ -25,6 +25,23 @@ export const sortProductByPrice = (products, option=initialState) => {
     }
 }
 
-export const getFavList = (favlist) => {
+export const filterProduct = (products, filter) => {
+  let filteredProducts = products;
+    if (filter.shop.length > 0) {
+      filteredProducts = filteredProducts.filter(product => {
+        const res = filter.shop.filter(name => name.match(new RegExp(product.shop_name, "i")));
+        return !!res.length
+      })
+    }
+    if (filter.price.min || filter.price.max) {
+      filteredProducts = filteredProducts.filter(product => {
+        product.price = parseInt(product.price);
+        filter.price.min = parseInt(filter.price.min);
+        filter.price.max = parseInt(filter.price.max);
+        return product.price >= filter.price.min && product.price <= filter.price.max
+      })
+    }
+
+    return filteredProducts
 
 }

@@ -7,7 +7,7 @@ import '../../style/index.css'
 import HashLoader from 'react-spinners/HashLoader';
 
 
-const ProductIndex = ({products, error, loading, filterOptions, searchByBrand, user}) => {
+const ProductIndex = ({products, error, loading, sortOptions, searchByBrand, user}) => {
 
     const items = products.map((item, i) => {
         return (
@@ -41,9 +41,9 @@ const ProductIndex = ({products, error, loading, filterOptions, searchByBrand, u
                   Sort By:
             </button>
             <div className="dropdown-menu">
-                <button className="dropdown-item" onClick={() => filterOptions("UP")}>Price: High - Low</button>
-                <button className="dropdown-item" onClick={() => filterOptions("DESC")}>Price: Low - High</button>
-                <button className="dropdown-item" onClick={() => filterOptions("REVIEWS")}> Review Rating </button>
+                <button className="dropdown-item" onClick={() => sortOptions("UP")}>Price: High - Low</button>
+                <button className="dropdown-item" onClick={() => sortOptions("DESC")}>Price: Low - High</button>
+                <button className="dropdown-item" onClick={() => sortOptions("REVIEWS")}> Review Rating </button>
             </div>
         </div>
     )

@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
-import { filterOptions } from '../../actions/product_action';
-import { sortProductByPrice } from '../../reducers/selectors';
+import { sortOptions } from '../../actions/product_action';
+import { sortProduct, filterProduct } from '../../reducers/selectors';
 import ProductIndex from './product_index'
 
 const msp = (state) => {
+    console.log(filtered)
+    let filtered = filterProduct(Object.values(state.product.items), state.filter);
     return {
-        products: state.ui.loading.indexLoading ? [] : sortProductByPrice(Object.values(state.product.items), state.product.filter),
+        products: sortProduct(filtered, state.product.filter),
         error: state.error,
         loading: state.ui.loading.indexLoading,
         user: state.session.username
@@ -14,7 +16,7 @@ const msp = (state) => {
 
 const mdp = dispatch => {
     return {
-        filterOptions: (filterOption) => dispatch(filterOptions({"filter": filterOption})),
+        sortOptions: (filterOption) => dispatch(sortOptions({"filter": filterOption})),
     }
 }
 
