@@ -52,7 +52,6 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
 
 
 const msp = (state, ownProps) => {
-    console.log(ownProps.item);
     return {
         product: ownProps.item,
         error: state.error,

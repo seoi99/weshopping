@@ -36,21 +36,21 @@ class Main extends Component {
                     <p>Search for items you want to purchase and save it on weShopping.</p>
 
                     <div className="row main-list">
-                        <div className="col-sm-2 icon-container">
+                        <div className="col-sm-2 icon-container" onClick={() => this.handleSubmit('electronics') }>
                             <i className="fa fa-television"></i>
-                            <p onClick={() => this.handleSubmit('Electronics')}>Electronics</p>
+                            <p>Electronics</p>
                         </div>
-                        <div className="col-sm-2 icon-container">
+                        <div className="col-sm-2 icon-container" onClick={() => this.handleSubmit('phone') }>
                             <i className="fa fa-mobile"></i>
-                            <p onClick={() => this.handleSubmit('phone')}>Smart Phone</p>
+                            <p>Smart Phone</p>
                         </div>
-                        <div className="col-sm-2 icon-container">
+                        <div className="col-sm-2 icon-container" onClick={() => this.handleSubmit('Laptop') }>
                             <i className="fa fa-laptop"></i>
-                            <p onClick={() => this.handleSubmit('Laptop')}>Laptop</p>
+                            <p>Laptop</p>
                         </div>
-                        <div className="col-sm-2 icon-container">
+                        <div className="col-sm-2 icon-container"  onClick={() => this.handleSubmit('Fashion') }>
                             <i className="fa fa-shopping-bag"></i>
-                            <p onClick={() => this.handleSubmit('Fashion')}>Fashion</p>
+                            <p>Fashion</p>
                         </div>
                         <div className="col-sm-2 icon-container">
                             <i className="fa fa-tags"></i>

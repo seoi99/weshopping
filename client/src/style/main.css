@@ -47,6 +47,7 @@ img {
 }
 .main-list > * {
   color: blue;
+  cursor: pointer;
 }
 
 .main-list .icon-container:hover {
@@ -63,7 +64,7 @@ img {
 }
 .main-contents h1 {
   padding: 10px;
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: 400;
 }
 

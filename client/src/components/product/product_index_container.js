@@ -4,7 +4,6 @@ import { sortProduct, filterProduct } from '../../reducers/selectors';
 import ProductIndex from './product_index'
 
 const msp = (state) => {
-    console.log(filtered)
     let filtered = filterProduct(Object.values(state.product.items), state.filter);
     return {
         products: sortProduct(filtered, state.product.filter),

@@ -110,19 +110,18 @@ function productController(priceAPI, emailService) {
         productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
       }
       // image filter
-
-      for (product of productLists) {
-        if (product.image_url.includes('http')) {
-        } else {
-          const imageUrl = await emailService.getImage(product.url);
-          if (imageUrl === '' || !(imageUrl)) {
-            const deleteobject = await db.collection('product').findOneAndDelete({ id: product.id });
-          } else {
-            await db.collection('product').findOneAndUpdate({ id: product.id }, { $set: { image_url: imageUrl } });
-          }
-        }
-      }
-      productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
+      //
+      // for (product of productLists) {
+      //   if (product.image_url.includes('http')) {
+      //   } else {
+      //     const imageUrl = await emailService.getImage(product.url);
+      //     if (imageUrl === '' || !(imageUrl)) {
+      //       const deleteobject = await db.collection('product').findOneAndDelete({ id: product.id });
+      //     } else {
+      //       await db.collection('product').findOneAndUpdate({ id: product.id }, { $set: { image_url: imageUrl } });
+      //     }
+      //   }
+      // }
 
       const obj = productLists.reduce((object, item) => {
         object[item.id] = item;

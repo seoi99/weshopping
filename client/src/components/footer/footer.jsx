@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="footers">
             <div className="flex-col">
                 <h1>About WeShopping</h1>
-                <a href="https://github.com/seoi99/foodie">Github</a>
+                <a href="https://github.com/seoi99/weshopping">Github</a>
             </div>
             <div className="footer-image"></div>
             <div className="flex-col">

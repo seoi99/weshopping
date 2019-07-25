@@ -25,6 +25,10 @@ export const sortProduct = (products, option=initialState) => {
     }
 }
 
+export const getShopName = (products) => {
+  const vendors = products.map(product => product.shop_name);
+  return [...new Set(vendors)];
+}
 export const filterProduct = (products, filter) => {
   let filteredProducts = products;
     if (filter.shop.length > 0) {
