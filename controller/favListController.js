@@ -14,7 +14,7 @@ function favListController() {
   function addFavList(req, res) {
     const { userId } = req.params;
     const { product } = req.body;
-    debug(userId);
+    debug('input check', userId, product.id);
     const inputCheck = InputValidation(product);
     if (!(inputCheck)) {
       res.status(400);
@@ -59,14 +59,16 @@ function favListController() {
     const key = `list.${productId}`;
     (async function getUser() {
       let client;
+      let list;
       try {
         client = await MongoClient.connect(uri);
         const favList = await client.db(dbname).collection('favlist');
-        const update = await favList.update({ _id: userId }, { $unset: { [key]: productId } });
+        await favList.update({ _id: userId }, { $unset: { [key]: productId } });
+        list = await favList.findOne({ _id: userId });
       } catch (err) {
         debug(err);
       }
-      res.json('complete');
+      res.json(list.list);
       client.close();
     }());
   }

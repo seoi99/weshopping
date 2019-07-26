@@ -21,7 +21,7 @@ const ProductShow  = ({product, searchById, addFavBackend, error, loading, index
     const image_url = product.image_url !== undefined ? image : NoPreview;
     const toggleFav = fav === false ? (
         <button onClick={() => addFavBackend(product, userId)}>ADD <i className="fa fa-heart"></i></button>)
-        : (<button onClick={() => removeFavBackend(product.id)}>REMOVE <i className="fa fa-times"></i></button>)
+        : (<button onClick={() => removeFavBackend(userId,product.id)}>REMOVE <i className="fa fa-times"></i></button>)
     const favButton = !!user ? toggleFav : ""
 
     return (
@@ -66,7 +66,7 @@ const mdp = (dispatch) => {
     return {
         searchById: (id) => dispatch(searchById(id)),
         addFavBackend: (product, userid) => dispatch(addFavBackend(product, userid)),
-        removeFavBackend: (id) => dispatch(removeFavBackend(id))
+        removeFavBackend: (userId, productId) => dispatch(removeFavBackend(userId, productId))
     }
 }
 

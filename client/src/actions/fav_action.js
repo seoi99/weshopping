@@ -53,7 +53,6 @@ export const addFavBackend = (product, userId) => (dispatch) => {
         },
         body: JSON.stringify({product:{id: product.id, name: product.name, url: product.url, price: product.price, image_url: product.image_url}})})
         .then((response) => {
-            console.log(response.status);
             if (response.status === 400) {
                 console.log('error has been found');
             } else {
@@ -68,9 +67,10 @@ export const removeFavBackend = (userId, productId) => (dispatch) => {
     })
         .then((response) => {
             dispatch(removeFav(productId))
+            return response.json();
         })
         .then(list => {
-            dispatch(getFav(list))
+          dispatch(getFav(list));
         })
 }
 
