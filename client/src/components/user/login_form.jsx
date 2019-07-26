@@ -16,6 +16,7 @@ class LoginForm extends Component {
             [field]: e.currentTarget.value
         });
     }
+
     handleSubmit(e) {
         e.preventDefault();
         let user = {
@@ -24,16 +25,25 @@ class LoginForm extends Component {
         };
         this.props.loginUser(user);
     }
+
+    handleDemo() {
+        this.setState({
+            email: 'seoi99@hotmail.com',
+            password: 'asdasd',
+        })
+        this.props.loginUser(this.state);
+    }
+
     errorForm(name) {
         if (this.props.error[name]) {
             return <p>{this.props.error[name]}</p>
         }
         return null
     }
+
     loginForm() {
         return(
             <div>
-
                 <form onSubmit={this.handleSubmit}>
                     <input type="text"
                         value={this.state.email}
@@ -50,6 +60,7 @@ class LoginForm extends Component {
                     <br/>
                     {this.errorForm('password')}
                     <input type="submit" value="Login"/>
+                    <button onClick={() => this.handleDemo()}>Demo</button>
                 </form>
             </div>
         )

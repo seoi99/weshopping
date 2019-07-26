@@ -30,6 +30,9 @@ const Modal = ({modal,openModal ,closeModal, loginUser, signup, otherForm, error
                 <p className="modal-header">WeShopping</p>
                 <div className="modal-body">
                     <a href="/auth/google" className="google"><img src="https://i.stack.imgur.com/22WR2.png)" alt="google"></img>Continue with Google</a>
+                    <div className="or-container">
+                        <span>or</span>
+                    </div>
                     { component }
                     <p>
                         {context} <button onClick={() => otherForm(other)} className="modal-other-form">{other}</button>

@@ -21,16 +21,16 @@ class SessionForm extends Component {
             <button onClick={() => this.props.googlelogout()}>Logout</button>
             : <button onClick={() => this.props.logout()}>Logout</button>
         return (
-          <div className="dropdown">
-            <span>Hi, {this.props.user}</span>
-            <form className="drop-toggle">
-              <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
-              <div className="dropdown-content">
-                <Link to='/favorite'><div>Favorite</div></Link>
-                <button onClick={() => this.props.sendGreeting(this.props.email)}>Subscribe</button>
-                {logoutForm}
-              </div>
-            </form>
+            <div className="dropdown">
+                <span>Hi, {this.props.user}</span>
+                <form className="drop-toggle">
+                    <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
+                    <div className="dropdown-content">
+                        <Link to='/favorite'><div>Favorite</div></Link>
+                        <button onClick={() => this.props.sendGreeting(this.props.email)}>Subscribe</button>
+                        {logoutForm}
+                    </div>
+                </form>
             </div>
         )
     }

@@ -5,7 +5,6 @@ module.exports = function(app) {
     app.use(proxy('/auth/google/login', { target: 'http://localhost:4000' }));
     app.use(proxy('/auth/google/redirect*', { target: 'http://localhost:4000' }));
     app.use(proxy('/user/login', { target: 'http://localhost:4000' }));
-    app.use(proxy('/user/demo', { target: 'http://localhost:4000' }));
     app.use(proxy('/user/logout', { target: 'http://localhost:4000' }));
     app.use(proxy('/user/signup', { target: 'http://localhost:4000' }));
     app.use(proxy('/products', { target: 'http://localhost:4000' }));

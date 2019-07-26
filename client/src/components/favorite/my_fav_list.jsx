@@ -41,18 +41,19 @@ class MyFavList extends Component {
         else {
             map = favkey.map((favK, index) => {
                 const fav = favObj[favK]
+                console.log(fav.id);
                 return (
                     <ul key={index} className='fav-image-container'>
-                            <img src={fav.image_url} alt="img"></img>
-                            <div className="fav-content">
+                        <img src={fav.image_url} alt="img"></img>
+                        <div className="fav-content">
                             <li>Item : {fav.name}</li>
                             <li>current Price : {fav.price}</li>
                             <li>updated Price : {fav.updatedPrice}</li>
                             <div className="button-control">
-                              <button><a target="_blank" rel="noopener noreferrer" href={fav.url} className="store-link">To Store</a></button>
-                              <button onClick={() => this.props.removeFavBackend(this.props.userId, fav.id)} className="close-button">Delete</button>
+                                <button><a target="_blank" rel="noopener noreferrer" href={fav.url} className="store-link">To Store</a></button>
+                                <button onClick={() => this.props.removeFavBackend(this.props.userId, fav.id)} className="close-button">Delete</button>
                             </div>
-                          </div>
+                        </div>
 
                     </ul>
                 )
@@ -94,7 +95,7 @@ class MyFavList extends Component {
                     <button onClick={() => this.props.requestFavList(this.props.userId, 'requested')} className="update-button">Update List</button>
                 </nav>
                 <div className="fav-list-map">
-                {map}
+                    {map}
                 </div>
                 <div className="fav-list-map add-item-list">
                     <form onSubmit={this.addItemList}>
@@ -113,6 +114,7 @@ class MyFavList extends Component {
 }
 
 const msp = (state) => {
+    console.log(state.favList.list);
     return {
         favUi: state.ui.loading.favLoading,
         favList: state.favList.list,
