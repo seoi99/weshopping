@@ -11,7 +11,7 @@ const ProductIndex = ({products, error, loading, sortOptions, searchByBrand, use
 
     const items = products.map((item, i) => {
         return (
-                <ProductShow key={i} item={item} index={i + 1}/>
+            <ProductShow key={i} item={item} index={i + 1}/>
         )
     })
     const searchError = error;
@@ -58,10 +58,10 @@ const ProductIndex = ({products, error, loading, sortOptions, searchByBrand, use
 
             <div className="header">
 
-            <Filter/>
-            {modal}
+                <Filter/>
+                {modal}
             </div>
-      </div>
+        </div>
     )
 }
 

@@ -25,24 +25,29 @@ export const sortProduct = (products, option=initialState) => {
     }
 }
 
-export const getShopName = (products) => {
-    const vendors = products.map(product => product.shop_name);
-    let filtered = [...new Set(vendors)]
-    let sorted = filtered.sort((a, b) =>  {
+const removeSubsidaries = (list) => {
+    return list.reduce((arr, el) => {
+        if (arr.find(v => el.match(new RegExp(v,"i")))) {
+            return arr
+        } else {
+            arr.push(el);
+        }
+        return arr;
+    }, [])
+}
+
+const sortAlphabet = (list) => {
+    return list.sort((a, b) =>  {
         if (a > b) return 1;
         if (b > a) return -1;
         return 0;
     });
-
-    return sorted.reduce((list, el) => {
-        if (list.find(v => el.match(new RegExp(v,"i")))) {
-            console.log(el, list)
-            return list
-        } else {
-            list.push(el);
-        }
-        return list;
-    }, [])
+}
+export const getShopName = (products) => {
+    const vendors = products.map(product => product.shop_name);
+    const filtered = [...new Set(vendors)]
+    const sorted = sortAlphabet(filtered);
+    return removeSubsidaries(sorted);
 }
 
 export const getCategory = (products) => {
@@ -51,19 +56,25 @@ export const getCategory = (products) => {
 }
 
 
+const filterByShop = (shop, products) => {
+    if (!shop.length) return products;
+    return products.filter(product => {
+        return shop.includes(product.shop_name)
+    })
+}
+
+const filterByCat = (cat, products) => {
+    if (!cat.length) return products;
+    return products.filter(product => {
+        const res = product.category.filter(name => cat.includes(name))
+        return !!res.length
+    })
+}
+
+
 export const filterProduct = (products, filter) => {
-    let filteredProducts = products;
-    if (filter.shop.length) {
-        filteredProducts = filteredProducts.filter(product => {
-            return product.shop_name.match(new RegExp(filter.shop,'i'))
-        })
-    }
-    if (filter.category.length > 0) {
-        filteredProducts = filteredProducts.filter(product => {
-            const res = product.category.filter(name => filter.category.includes(name))
-            return !!res.length
-        })
-    }
+    let filteredProducts = filterByShop(filter.shop, products);
+    filteredProducts = filterByCat(filter.category, filteredProducts);
 
     if (filter.price.min || filter.price.max) {
         filteredProducts = filteredProducts.filter(product => {

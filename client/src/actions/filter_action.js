@@ -27,6 +27,7 @@ export const filterByShopName = (shop) => {
         shop
     }
 }
+
 export const filterByCategory = (category) => {
     return {
         type: BY_CATEGORY,
