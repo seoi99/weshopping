@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import { Wave } from 'react-animated-text';
 import { loginUser, sendGreeting,logout, googlelogout} from '../../actions/user_action';
 import '../../style/login_form.css'
 class LoginForm extends Component {
@@ -10,6 +11,7 @@ class LoginForm extends Component {
             password: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemo = this.handleDemo.bind(this);
     }
     update(field) {
         return e => this.setState({
@@ -27,11 +29,8 @@ class LoginForm extends Component {
     }
 
     handleDemo() {
-        this.setState({
-            email: 'seoi99@hotmail.com',
-            password: 'asdasd',
-        })
-        this.props.loginUser(this.state);
+      this.setState({email: 'seoi99@hotmail.com',password: 'asdasd'})
+        this.props.loginUser({email: 'seoi99@hotmail.com',password: 'asdasd'});
     }
 
     errorForm(name) {
@@ -60,7 +59,8 @@ class LoginForm extends Component {
                     <br/>
                     {this.errorForm('password')}
                     <input type="submit" value="Login"/>
-                    <button onClick={() => this.handleDemo()}>Demo</button>
+
+                    <button onClick={this.handleDemo}>Demo</button>
                 </form>
             </div>
         )

@@ -52,7 +52,7 @@ class Main extends Component {
                             <i className="fa fa-shopping-bag"></i>
                             <p>Fashion</p>
                         </div>
-                        <div className="col-sm-2 icon-container">
+                        <div className="col-sm-2 icon-container" onClick={() => this.handleSubmit('all')} >
                             <i className="fa fa-tags"></i>
                             <p>All Categories</p>
                         </div>
