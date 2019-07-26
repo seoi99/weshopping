@@ -88,3 +88,7 @@
 .price-filter input[type="submit"] {
   border: none;
 }
+
+.check-box-testing{
+  align-self: flex-start;
+}
