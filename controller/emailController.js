@@ -9,7 +9,7 @@ const adminKeys = require('../config/keys');
 function emailController(emailService) {
   function updateUserFavList(req, res) {
     const { userId } = req.params;
-
+    debug(userId);
     (async function readPriceFromURL() {
       let client;
       let result;
@@ -18,6 +18,7 @@ function emailController(emailService) {
         const favList = await client.db(dbname).collection('favlist');
         const findUser = await favList.findOne({ _id: userId });
         const list = findUser.list;
+        debug('list', list);
         for (let i = 0; i < Object.keys(list).length; i++) {
           const key = Object.keys(list)[i];
           const { url } = list[key];

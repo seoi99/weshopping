@@ -22,13 +22,12 @@ class Main extends Component {
         if (this.props.products.length) {
           items = this.props.products.map((item, i) => {
               return (
-                      <ProductShow item={item} index={i + 1}/>
+                      <ProductShow key={i} item={item} index={i + 1}/>
               )
           })
         }
         return (
-            <div className="main container">
-                <div className="main-contents">
+            <div className="main-contents container">
                     <div className="main-login-container">
                         <Session comp="main"/>
                     </div>
@@ -95,7 +94,6 @@ class Main extends Component {
                           {items}
                         </div>
                   </div>
-                </div>
             </div>
         )
     }

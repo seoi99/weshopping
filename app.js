@@ -49,12 +49,6 @@ app.use('/user', userRouter);
 app.use('/favlist', favListRouter);
 app.use('/email', emailRouter);
 
-// schedule.scheduleJob({ minute: 40 }, () => {
-//   axios.get('http://localhost:8080/email/product/104968562447721743715')
-//     .then((response) => {
-//       console.log(response.status);
-//     });
-// });
 
 app.listen(port, () => {
   debug(`listening at server ${chalk.green(port)}`);

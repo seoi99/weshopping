@@ -39,7 +39,6 @@
   box-sizing: border-box;
   padding: 5px 15px;
   margin: 5px;
-  max-height: 450px;
 }
 
 .filter-button:active, .filter-button::after {

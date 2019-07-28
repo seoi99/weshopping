@@ -28,9 +28,11 @@ class LoginForm extends Component {
         this.props.loginUser(user);
     }
 
+    togglePause() {
+    }
     handleDemo() {
       this.setState({email: 'seoi99@hotmail.com',password: 'asdasd'})
-        this.props.loginUser({email: 'seoi99@hotmail.com',password: 'asdasd'});
+      this.props.loginUser({email: 'seoi99@hotmail.com',password: 'asdasd'});
     }
 
     errorForm(name) {

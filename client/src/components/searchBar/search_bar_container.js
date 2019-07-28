@@ -5,7 +5,7 @@ import SearchBar from './search_bar'
 
 const msp = (state, ownProps) => {
     return {
-        id: state.session.googleid
+        id: state.session.user.id
     }
 }
 

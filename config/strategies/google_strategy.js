@@ -20,12 +20,12 @@ function googleStrategy() {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
         const col = await db.collection('user');
-        const userResult = await col.findOne({ googleid: profile.id });
+        const userResult = await col.findOne({ id: profile.id });
         if (userResult) {
           user = userResult;
         } else {
           const newUser = {
-            name: profile.displayName, googleid: profile.id, email: profile.emails[0].value,
+            name: profile.displayName, id: profile.id, email: profile.emails[0].value,
           };
           user = newUser;
           await col.insertOne(newUser);

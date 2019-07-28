@@ -1,12 +1,12 @@
 .footers {
+  padding: 10px;
+  background: #fff;
   display: flex;
-  justify-content: center;
-  margin-top: 50px;
+  flex-direction: column;
 
 }
 
 .footer-image {
-    background-image: url("https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/ce4d102c522c/assets/img/structural/footer_cityscape@2x.png");
     height: 140px;
     width: 50%;
     background-size: 660px 140px;
@@ -14,23 +14,66 @@
     background-repeat: no-repeat;
 }
 
-.flex-col {
-  justify-content: flex-start;
+.flex-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 94.5%;
+  background: #f9f9f9;
+  margin: auto;
+
+}
+.flex-row p {
+  font-size: 16px;
+  font-weight: 700;
+  border-bottom: 1px solid black;
+  padding: 1px;
 }
 
-.flex-col h1{
+.flex-row > * {
+  margin: 5px 15px;
+  padding: 2px 10px;
+  color: #333;
+}
+.flex-row h1{
   color: #d32323;
-  font-weight: 700;
-  margin-bottom: 6px;
   font-size: 16px;
 }
 
-.flex-col a {
-  color: #0073bb;
-  font-weight: 400;
+.image-footer {
+  background: url("https://tiedinmedia.com/wp-content/uploads/2017/01/background-footer-dean.jpg");
+  background-size: 100% 100%;
+  width: 500px;
+  height: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.footer-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background:#f33c00;
+  width: 94.5%;
+  margin: auto;
+}
+.footer-line > * {
+  padding: 1px 10px;
+  color: #fff;
+}
+.flex-col > * {
+  text-align: left;
+  font-size: 1em;
 }
 .flex-col a:hover {
   text-decoration: underline;
+}
+
+.footer-line a i {
+  padding-right: 8px;
 }
