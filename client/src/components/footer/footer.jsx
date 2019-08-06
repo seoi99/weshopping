@@ -8,9 +8,9 @@ const Footer = () => {
             <div className="flex-row">
                 <div className="flex-col">
                     <p>About WeShopping</p>
-                    <a href="how-it-works">How it works?</a>
-                    <a href="features">Features</a>
-                    <a href="about">Shopping Data</a>
+                    <Link to="how-it-works">How it works?</Link>
+                    <Link to="features">Features</Link>
+                    <Link to="about">Shopping Data</Link>
                 </div>
                 <div className="flex-col">
                     <p>Popular Searches</p>
