@@ -75,7 +75,6 @@ function emailController(emailService) {
 
   function sendEmail(req, res) {
     const email = req.params.email;
-
     emailFormat(email);
     res.send('complete');
   }

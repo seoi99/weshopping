@@ -15,6 +15,11 @@ class SessionForm extends Component {
     toggleName() {
         this.setState({toggle: !this.state.toggle})
     }
+    sendEmail(e) {
+        e.preventDefault();
+        debugger
+        this.props.sendGreeting(this.props.email)
+    }
     greetingForm() {
         this.props.closeModal();
         const logoutForm = this.props.google ?
@@ -27,7 +32,7 @@ class SessionForm extends Component {
                     <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
                     <div className="dropdown-content">
                         <Link to='/favorite'><div>Favorite</div></Link>
-                        <button onClick={() => this.props.sendGreeting(this.props.email)}>Subscribe</button>
+                        <button onClick={(e) => this.sendEmail(e)}>Subscribe</button>
                         {logoutForm}
                     </div>
                 </form>
