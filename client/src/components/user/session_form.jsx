@@ -57,7 +57,7 @@ const msp = (state, ownProps) => {
         user: state.session.user.name,
         subscription: state.session.user.subscription,
         email: state.session.user.email,
-        google: state.session.user.googleid,
+        google: state.session.user._id,
     }
 }
 

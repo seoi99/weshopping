@@ -83,7 +83,7 @@ export const sendGreeting = (email) => (dispatch) => {
     const url = `/email/greeting/${email}`;
     fetch(url, {
         method: 'POST',
-        })
+    })
         .then(() => {
             dispatch(receiveEmail())
         })
