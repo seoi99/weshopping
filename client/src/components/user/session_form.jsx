@@ -17,11 +17,13 @@ class SessionForm extends Component {
     }
     sendEmail(e) {
         e.preventDefault();
-        debugger
         this.props.sendGreeting(this.props.email)
     }
+
+
     greetingForm() {
         this.props.closeModal();
+        let subs = !this.props.subscription ? <button onClick={(e) => this.sendEmail(e)}>Subscribe</button> : <button>unSubscribe</button>
         const logoutForm = this.props.google ?
             <button onClick={() => this.props.googlelogout()}>Logout</button>
             : <button onClick={() => this.props.logout()}>Logout</button>
@@ -32,7 +34,7 @@ class SessionForm extends Component {
                     <i className="fa fa-user-circle-o user-icon" aria-hidden="true"></i>
                     <div className="dropdown-content">
                         <Link to='/favorite'><div>Favorite</div></Link>
-                        <button onClick={(e) => this.sendEmail(e)}>Subscribe</button>
+                        {subs}
                         {logoutForm}
                     </div>
                 </form>
@@ -53,6 +55,7 @@ class SessionForm extends Component {
 const msp = (state, ownProps) => {
     return {
         user: state.session.user.name,
+        subscription: state.session.user.subscription,
         email: state.session.user.email,
         google: state.session.user.googleid,
     }

@@ -81,7 +81,7 @@ function userController() {
         bcrypt.compare(password, user.password)
           .then((isMatch) => {
             if (isMatch) {
-              const payload = { id: user._id, email: user.email, name: user.name };
+              const payload = { id: user._id, email: user.email, name: user.name, subscription: user.subscription};
 
               jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
                 res.json({

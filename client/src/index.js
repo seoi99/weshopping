@@ -8,7 +8,6 @@ import { logout } from './actions/user_action';
 
 document.addEventListener('DOMContentLoaded', () => {
     let store;
-
     if (window.location.search) {
         localStorage.google = window.location.search
         window.location.search = "";
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
     }
     else if (localStorage.jwtToken) {
-        console.log('hit here');
         setAuthToken(localStorage.jwtToken);
 
         // Decode the token to obtain the user's information
