@@ -47,8 +47,21 @@ function emailController(emailService) {
       res.send(result);
     }());
   }
-
+  async function findUser(email) {
+      let client;
+      let result;
+      try {
+        client = await MongoClient.connect(uri);
+        const favList = await client.db(dbname).collection('user');
+        let subStatus = await favList.findOne({ email }).subscription;
+        return subStatus;
+      }
+  }
   function emailFormat(email) {
+    if (findUser(email) !== true) {
+      console.log("No Subs");
+      return "No Subscription"
+    }
     const transporter = nodeMailer.createTransport({
       service: 'gmail',
       auth: {
