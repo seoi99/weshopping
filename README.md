@@ -1,5 +1,3 @@
-# weshopping
-
 
 [Live!](http://weshopping.herokuapp.com/)
 
