@@ -113,9 +113,9 @@ async function byName(name) {
   }
 ```
 
-![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_1.png)
-![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_2.png)
-![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_3.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/web_scrap_1.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/web_scrap_2.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/web_scrap_3.png)
 
 
 
