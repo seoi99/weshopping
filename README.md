@@ -11,7 +11,7 @@
 
 
 
-![alt text](https://github.com/seoi99/foodie/blob/master/app/assets/images/main.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/main.png)
 
 ## Feature
 
@@ -72,13 +72,16 @@ async function byName(name) {
     }
   }
 ```
-![alt text](https://github.com/seoi99/foodie/blob/master/app/assets/images/name.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/list.png)
 
 
 ### Passport (Google O_Auth, JWT_Token)
 * integrated google/jwt strategy using passport library. 
 * bcrypt to hash + salt user password
 * used localstorage to log user activity while browsing
+
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/user_login.png)
+
 
 ### WEB Scraping
 * On your profile, your can add personal favorite item that is not listed on WeShopping
@@ -110,7 +113,9 @@ async function byName(name) {
   }
 ```
 
-![alt text](https://github.com/seoi99/foodie/blob/master/app/assets/images/map.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_1.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_2.png)
+![alt text](https://github.com/seoi99/weshopping/blob/master/client/public/images/webPscrap_3.png)
 
 
 
