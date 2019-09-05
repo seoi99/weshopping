@@ -1,0 +1,9 @@
+
+Rjavascript:UnusedVariable
+"(Remove unused function 'updateAllImage'.(­¹Ø¾þÿÿÿÿ
+cjavascript:S3686Ö"FCorrect the use of this function; on line 42 it was called with "new".(î†éª
+fjavascript:UnusedVariablei"<Remove the declaration of the unused 'updateTable' variable.(â¬ýÿÿÿÿ
+Vjavascript:S1854I"5Remove this useless assignment to local variable "id"(Ã¹€‘üÿÿÿÿ
+Njavascript:UnusedVariableH")Remove unused function 'requestProducts'.(ÂŠç 
+Ojavascript:UnusedVariableŠ"$Remove unused function 'byCategory'.(¯¨úóüÿÿÿÿ
+]javascript:UnusedVariableI"3Remove the declaration of the unused 'id' variable.(Ã¹€‘üÿÿÿÿ
