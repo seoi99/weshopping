@@ -7,8 +7,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const axios = require('axios');
-const schedule = require('node-schedule');
 
 const productRouter = require('./routes/productRoutes')();
 const googleRouter = require('./routes/googleRoutes')();
