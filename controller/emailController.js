@@ -47,6 +47,7 @@ function emailController(emailService) {
       res.send(result);
     }());
   }
+
   async function findUser(email) {
     let client;
     let result;
@@ -59,6 +60,7 @@ function emailController(emailService) {
       console.log(err);
     }
   }
+
   function emailFormat(email) {
     if (findUser(email) !== true) {
       console.log('No Subs');

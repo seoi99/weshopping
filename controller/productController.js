@@ -127,7 +127,6 @@ function productController(priceAPI, emailService) {
         object[item.id] = item;
         return object;
       }, {});
-
       client.close();
       return obj;
     } catch (err) {

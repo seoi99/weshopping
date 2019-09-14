@@ -35,10 +35,18 @@ app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
+  app.use(function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] === 'https') {
+      res.redirect('http://' + req.hostname + req.url);
+    } else {
+      next();
+    }
+  });
   app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
 
 
 app.use('/products', productRouter);

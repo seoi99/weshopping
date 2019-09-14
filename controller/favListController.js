@@ -4,6 +4,7 @@ const { uri } = require('../config/keys');
 const { dbname } = require('../config/keys');
 const { ObjectID } = require('mongodb');
 const axios = require('axios');
+const { mainUrl } = require('../config/keys');
 
 
 function favListController() {
@@ -79,9 +80,13 @@ function favListController() {
     const { update } = req.query;
     function receiveUpdate(id) {
       debug('i m hit', id);
-      return axios.get(`http://localhost:4000/email/product/${id}`)
-        .then(response => response.status)
+      return axios.get(`${mainUrl}/email/product/${id}`)
+        .then(response => {
+
+          console.log(response.status, mainUrl);
+        })
         .catch((err) => {
+          console.log(mainUrl);
           debug(err);
         });
     }
