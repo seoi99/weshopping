@@ -88,7 +88,7 @@ function productController(priceAPI, emailService) {
     }());
   }
 
-  async function byName(name) {
+  async function byKeyword(name) {
     let productLists;
     let client;
     try {
@@ -98,30 +98,27 @@ function productController(priceAPI, emailService) {
       productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
       debug('connected');
       // it list does not exist in my mongodb
-      if (productLists.length === 0) {
+      if (!productLists.length) {
         // request to priceAPI to fetch info
         productLists = await priceAPI.getSearchResult('search_results', 'term', name);
-        if (productLists.length !== 0) {
+
+        if (productLists.length) {
+          const res = [];
+          for (const list of productLists) {
+            res.push(emailService.getImage(list.url));
+          }
+          const imageURLs = await Promise.all(res);
+          for (let i = 0; i < productLists.length; i++) {
+            productLists[i].image_url = imageURLs[i];
+          }
+
           const updateTable = await db.collection('product').insertMany(productLists);
         } else {
           res.status(404).send('Sorry, product you searched is not found');
         }
-        debug('line hit here');
+
         productLists = await db.collection('product').find({ $or: [{ name: new RegExp(name, 'i') }, { category: new RegExp(name, 'i') }] }).toArray();
       }
-      // image filter
-      //
-      // for (product of productLists) {
-      //   if (product.image_url.includes('http')) {
-      //   } else {
-      //     const imageUrl = await emailService.getImage(product.url);
-      //     if (imageUrl === '' || !(imageUrl)) {
-      //       const deleteobject = await db.collection('product').findOneAndDelete({ id: product.id });
-      //     } else {
-      //       await db.collection('product').findOneAndUpdate({ id: product.id }, { $set: { image_url: imageUrl } });
-      //     }
-      //   }
-      // }
 
       const obj = productLists.reduce((object, item) => {
         object[item.id] = item;
@@ -164,10 +161,8 @@ function productController(priceAPI, emailService) {
   function searchProducts(req, res) {
     const { name } = req.query;
     if (name) {
-      return byName(name)
-        .then((result) => {
-          res.json(result);
-        })
+      return byKeyword(name)
+        .then(result => res.json(result))
         .catch((err) => {
           debug(err);
         });
@@ -178,7 +173,6 @@ function productController(priceAPI, emailService) {
 
   function searchById(req, res) {
     const { id } = req.params;
-    debug(id);
     (async function updateDetail() {
       let product;
       let client;
@@ -187,8 +181,7 @@ function productController(priceAPI, emailService) {
         const db = await client.db(dbname);
         product = await db.collection('product').findOne({ id });
         debug(product.image_url);
-        if (product.image_url === '' || !product.image_url) {
-          debug('hit under if statement');
+        if (!product.image_url) {
           const image = await emailService.getImage(product.url);
           debug(image);
           await db.collection('product').findOneAndUpdate({ id }, { $set: { image_url: image } });

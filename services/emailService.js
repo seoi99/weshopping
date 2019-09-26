@@ -27,10 +27,14 @@ function emailService() {
 
   function getImage(url) {
     return axios.get(url)
+      .catch((err) => {
+        debug(err);
+      })
       .then((response) => {
         const html = response.data;
         const $ = cheerio.load(html);
         const image = $('img').filter(function findPrice(i, el) {
+          if (!($(this).attr('src'))) return null;
           return $(this).attr('src').match(/http/) && $(this).attr('class');
         }).slice(0, 1).attr('src');
         return image;
