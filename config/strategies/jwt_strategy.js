@@ -1,6 +1,6 @@
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const { ExtractJwt } = require('passport-jwt');
 const debug = require('debug')('app:jwtStrategy');
 const { ObjectID } = require('mongodb');
 
@@ -24,7 +24,6 @@ function jwtStrategy() {
       try {
         client = await MongoClient.connect(uri);
         const db = await client.db(dbname);
-        debug('hit here');
         const user = await db.collection('user').findOne({ _id: ObjectID(jwt_payload.id) });
         debug(user);
         if (user) {
